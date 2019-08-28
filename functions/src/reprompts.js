@@ -5,18 +5,19 @@ const reprompts = {
       case 'welcome':
         return ['101K','DefaultWelcomeIntent-followup','1_1event','ready'];
       case '1_1event':
-        return ['102K','int1','1_2event','two'];
+        return ['199K','int1_1','1_2event','ready'];
       case '1_2event':
-        return ['104K','int2','1_3event','one'];
+        return ['102K','int1_2','1_3event','one'];
       case '1_3event':
-        //TODO: XXXK
-        return ['104K','int3','1_4event','ready'];
+        return ['104K','int1_3','1_4event','one'];
       case '1_4event':
-        return ['109K','int4','1_5event','one'];
+        return ['107K','int1_4','1_5event','ready'];
       case '1_5event':
-        return ['110K','int5','1_6event','two'];
+        return ['109K','int1_5','1_6event','two'];
       case '1_6event':
-        return ['111K','int6','2_1event','one'];
+        return ['110K','int1_6','1_7event','one'];
+	  case '1_7event':
+		return ['111K','int1_7','2_1event','one'];
       case '2_2event':
         return ['117K','int2_2','2_3event','two'];
       case '2_3event':

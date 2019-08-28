@@ -102,14 +102,13 @@ app.intent('Default Fallback Intent', (conv) => {
   if (conv.data.fallbackCount < fbc) {
   conv.ask(Utils.playSimple(audiourl));
   } else {
-    //VUHUU EI TARVII ROIKOTTAA SITÄ MUKANA
     conv.data.fallbackCount = 0;
     conv.followup(eve, {
       response: cparam
     });
   }
 });
-
+//Fallback for intents that accept any input
 app.intent('AnyFallback', (conv) => {
   const cevent = conv.data.previous[0];
   const prompt = Reprompts.getURL(cevent);
@@ -125,45 +124,35 @@ app.intent('AnyFallback', (conv) => {
 app.intent('1_1Start', (conv) => {
     conv.data.fallbackCount = 0;
     conv.data.previous = ['1_1event','ready','DefaultWelcomeIntent-followup'];
-    const audiourl = host + 'Tattarishort.mp3';
-    const audiourl2 = host + '102.mp3';
-    //soundlvl how?
-    conv.ask(Utils.playMulti(
-    `<media xml:id="audio1">
-      <audio src="${audiourl}" clipBegin="4s" clipEnd="20s"/>
-    </media>
-    <media xml:id="audio2" begin="audio1.end-0.0s">
-      <audio src="${audiourl2}" clipBegin="9.5s" clipEnd="100s"/>
-    </media>`
-    ));
-    //<media xml:id="audio3" begin="audio2.end-12.0s" fadeInDur="6.0s" fadeOutDur="3.0s" soundLevel="-10.0dB">
-    //<audio src="${audiourl3}" clipBegin="0s" clipEnd="25s"/>
-    //</media>
+    const audiourl = host + '102.mp3';
+    conv.ask(Utils.playSimple(audiourl));
 
 });
-//The result of the first selection
-app.intent('1_2bossresponse', (conv, {response}) => {
-    conv.data.fallbackCount = 0;
+
+app.intent('1_2boss', (conv) => {
+    conv.data.previous = ['1_2event','ready','int1_1'];
+    const audiourl = host + '197.mp3';
+    conv.ask(Utils.playSimple(audiourl));
+});
+
+app.intent('1_3bossresponse', (conv, {response}) => {
     const answ = response;
-    conv.data.previous = ['1_2event',answ,'int1'];
-    var audiourl = host+ 'End.mp3';
-    //const dialog = storageRef.child('a1d2.txt');
+    conv.data.previous = ['1_3event',answ,'int1_2'];
+    audiourl = host;
     if (answ === 'one') {
-        audiourl = host + '104.mp3';
+        audiourl += '104.mp3';
     } else if (answ === 'two') {
-        audiourl = host + '105.mp3';
+        audiourl += '105.mp3';
     } else {
         conv.data.bpoints++;
-        audiourl = host + '106.mp3';
+        audiourl += '106.mp3';
     }
-    conv.ask( Utils.playAudio(audiourl,0,120));
-    //conv.close( Utils.playMulti(`<media xml:id="speech"><speak>${msg}</speak></media>
-      //<media begin="speech.end-1.0s" fadeInDur="3.0s"><audio src="${raudio}"/></media>`));
+    conv.ask(Utils.playSimple(audiourl));
 });
-  app.intent('1_3entervanamo', (conv, {response}) => {
-    conv.data.fallbackCount = 0;
+
+  app.intent('1_4entervanamo', (conv, {response}) => {
     const answ = response;
-    conv.data.previous = ['1_3event',answ,'int2'];
+    conv.data.previous = ['1_4event',answ,'int1_3'];
     var audiourl = host+ 'End.mp3';
     if (answ === 'one') {
         audiourl = host+ '107.mp3';
@@ -174,18 +163,16 @@ app.intent('1_2bossresponse', (conv, {response}) => {
     conv.ask(Utils.playSimple(audiourl));
   });
 
-  app.intent('1_4phone', (conv) => {
-    conv.data.fallbackCount = 0;
-    conv.data.previous = ['1_4event','one','int3'];
+  app.intent('1_5phone', (conv) => {
+    conv.data.previous = ['1_5event','ready','int1_4'];
     const audiourl = host+ '109.mp3';
     conv.ask(Utils.playSimple(audiourl));
   });
 
-  app.intent('1_5koski', (conv, {response}) => {
-    conv.data.fallbackCount = 0;
+  app.intent('1_6koski', (conv, {response}) => {
     const audiourl = host+ '110.mp3';
     const answ = response;
-    conv.data.previous = ['1_5event',answ,'int4'];
+    conv.data.previous = ['1_6event',answ,'int1_5'];
     if (answ === 'one') {
       conv.contexts.set('kerrov', 5, {nice:true});
       conv.data.vpoints++;
@@ -195,10 +182,10 @@ app.intent('1_2bossresponse', (conv, {response}) => {
     conv.ask(Utils.playSimple(audiourl));
   });
 
-  app.intent('1_6matka', (conv, {response}) => {
+  app.intent('1_7matka', (conv, {response}) => {
     conv.data.fallbackCount = 0;
     const answ = response;
-    conv.data.previous = ['1_6event',answ, 'int5'];
+    conv.data.previous = ['1_7event',answ, 'int1_6'];
     // Tähän failsafe?
     const param = conv.contexts.get('kerrov').parameters;
     var audiourl = host + '111T.mp3';
