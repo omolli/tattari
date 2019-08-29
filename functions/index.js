@@ -170,9 +170,9 @@ app.intent('1_3bossresponse', (conv, {response}) => {
     const audiourl = host+ '110.mp3';
     const answ = response;
     conv.data.previous = ['1_6event',answ,'int1_5'];
-    conv.contexts.data.nice = false;
+    conv.data.nice = false;
     if (answ === 'one') {
-      conv.contexts.data.nice = true;
+      conv.data.nice = true;
       conv.data.vpoints++;
     }
     conv.ask(Utils.playSimple(audiourl));
@@ -183,7 +183,7 @@ app.intent('1_3bossresponse', (conv, {response}) => {
     const answ = response;
     conv.data.previous = ['1_7event',answ, 'int1_6'];
     // Tähän failsafe?
-    const param = conv.contexts.data.nice;
+    const param = conv.data.nice;
     var audiourl = host + '111T.mp3';
     var urlc = '';
     if (param) {
