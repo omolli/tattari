@@ -138,7 +138,7 @@ app.intent('1_2boss', (conv) => {
 app.intent('1_3bossresponse', (conv, {response}) => {
     const answ = response;
     conv.data.previous = ['1_3event',answ,'int1_2'];
-    audiourl = host;
+    var audiourl = host;
     if (answ === 'one') {
         audiourl += '104.mp3';
     } else if (answ === 'two') {
@@ -153,12 +153,10 @@ app.intent('1_3bossresponse', (conv, {response}) => {
   app.intent('1_4entervanamo', (conv, {response}) => {
     const answ = response;
     conv.data.previous = ['1_4event',answ,'int1_3'];
-    var audiourl = host+ 'End.mp3';
+    var audiourl = host+ '108.mp3';
     if (answ === 'one') {
         audiourl = host+ '107.mp3';
         conv.data.vpoints++;
-    } else {
-        audiourl = host+ '108.mp3';
     }
     conv.ask(Utils.playSimple(audiourl));
   });
