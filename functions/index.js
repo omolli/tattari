@@ -42,8 +42,7 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
     conv.data.peliansw = [0,0,0];
     const audiourl = host + '101.mp3';
     conv.data.kysurl = '';
-    //conv.ask(Utils.playAudio(audiourl, 0, 120))
-    conv.ask('Say ready. Or take a shortcut!')
+    conv.ask(Utils.playSimple(audiourl));
 });
 
 app.intent('repeat', (conv) =>{
@@ -421,7 +420,6 @@ app.intent('1_3bossresponse', (conv, {response}) => {
     conv.data.previous = ['3D_4event',answ,'int3D_3'];
     const audiourl = host + '133.mp3';
     conv.ask(Utils.playSimple(audiourl));
-    conv.ask(Utils.speak('Shall we go with these answers?'))
   });
 
   app.intent('3D_5minipeli', (conv, {response}) => {
