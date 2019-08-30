@@ -51,20 +51,20 @@ app.intent('repeat', (conv) =>{
   const cparam = conv.data.previous[1];
   const ccontext = conv.data.previous[2];
   conv.contexts.set(ccontext,1,{})
-  const arr = Array.from(conv.data.addarr);
   const param = Reprompts.getParam(cevent);
-  //If additional contexts are used, they are iterated from the arddarr
-  //array and set, the array is cleared afterwards
-  if (arr.length !== 0) {
-    for (var i = 0; i < arr.length; i++) {
-      var e = arr[i];
-      conv.contexts.set(e,1,{})
-    }
-    conv.data.addarr = [];
-  }
+  if (cevent === '20_2event') {
+    conv.followup(cevent, {
+      ent20_2: cparam
+    });
+  } else if (cevent === '20_3event') {
+    conv.followup(cevent, {
+      'ent20_2': cparam
+    });
+  } else {
   conv.followup(cevent, {
     param: cparam
   });
+  }
 });
 
 //Default NoInput intent
@@ -1644,73 +1644,32 @@ app.intent('1_3bossresponse', (conv, {response}) => {
     }
     conv.ask(Utils.playSimple(audiourl));
   });
-//FALLBACKS
-  app.intent('Start - fallback', (conv) => {
-    conv.data.fallbackCount++;
-    const audiourl = host + '102K.mp3';
-    if (conv.data.fallbackCount < fbc) {
-      return conv.ask(Utils.playSimple(audiourl));
-    } else {
-      return conv.followup('1_2event', {
-        response: "one"
-      });
-    }
-  });
+//FALLBACKS and NoInputs
 
-  app.intent('1_2bossresponse - fallback', (conv) => {
-    const audiourl = host + '104K.mp3';
-    conv.data.fallbackCount++;
-    if (conv.data.fallbackCount < fbc) {
-      return conv.ask(Utils.playSimple(audiourl));
-    } else {
-      return conv.followup('1_3event', {
-        response: "one"
-      });
-    }
-  });
-
-  app.intent('1_3entervanamo - fallback', (conv) => {
-    return conv.followup('1_4event', {
-      response: "one"
+app.intent('Default Welcome Intent - fallback', (conv) => {
+  const audiourl = host + '101.mp3';
+  conv.data.fallbackCount++;
+  if (conv.data.fallbackCount < fbc) {
+    return conv.ask(Utils.playAudio(audiourl,23,60));
+  } else {
+    return conv.followup('2_3event', {
+      response: "two"
     });
-  });
+  }
+});
 
-  app.intent('1_4phone - fallback', (conv) => {
-    const audiourl = host + '109K.mp3';
-    conv.data.fallbackCount++;
-    if (conv.data.fallbackCount < fbc) {
-      return conv.ask(Utils.playSimple(audiourl));
-    } else {
-      conv.followup('1_5event', {
-        response: "one"
-      });
-    }
-  });
-
-  app.intent('1_5koski - fallback', (conv) => {
-    const audiourl = host + '110K.mp3';
-    conv.data.fallbackCount++;
-    if (conv.data.fallbackCount < fbc) {
-      return conv.ask(Utils.playSimple(audiourl));
-    } else {
-      conv.followup('1_6event', {
-        response: "one"
-      });
-    }
-  });
-
-  app.intent('1_6matka - fallback', (conv) => {
-    const audiourl = host + '111K.mp3';
-    conv.data.fallbackCount++;
-    if (conv.data.fallbackCount < fbc) {
-      return conv.ask(Utils.playSimple(audiourl));
-    } else {
-      conv.followup('2_1event', {
-        response: "one"
-      });
-    }
-  });
-
+app.intent('1_1Start NoInput', (conv) => {
+  var audiourl = host + '199K.mp3';
+  const repromptCount = parseInt(conv.arguments.get('REPROMPT_COUNT'));
+  if (repromptCount === 0) {
+    return conv.ask(Utils.playSimple(audiourl));
+  } else if (conv.arguments.get('IS_FINAL_REPROMPT')){
+    conv.close('The talking dead is now closing. Try this another time.');
+  } else {
+    audiourl = host + '198K.mp3';
+    return conv.ask(Utils.playSimple(audiourl));
+  }
+});
   app.intent('2_1kuski - fallback', (conv) => {
     var audiourl = '';
     conv.data.fallbackCount++;
