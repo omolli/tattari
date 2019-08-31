@@ -189,14 +189,15 @@ const reprompts = {
   getParam(e) {
     switch (e) {
       case 'XX_Xevent':
-        return 'XX_specialparam';
-      default:
-        if (e.slice(-5) === 'event') {
-          const indx = e.indexOf('e');
+        return 'XX_specialparam'; //ESIM BINARR
+      default: {
+        const indx = e.indexOf('event');
+        if (indx !== -1) {
           return 'ent' + e.slice(0,indx);
         } else {
           return 'response';
         }
+      }
     }
   }
 }

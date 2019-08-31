@@ -44,7 +44,26 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
     conv.data.kysurl = '';
     conv.ask(Utils.playSimple(audiourl));
 });
-
+app.intent('Save', (conv) => {
+  // conv.user.storage.sum = conv.data.sum;
+  // conv.user.storage.fallbackCount = conv.data.fallbackCount;
+  // conv.user.storage.day = conv.data.day;
+  // conv.user.storage.vpoints = conv.data.vpoints;
+  // conv.user.storage.bpoints = conv.data.bpoints;
+  // conv.user.storage.minipeli = conv.data.minipeli;
+  // conv.user.storage.addarr = conv.data.addarr;
+  // conv.user.storage.vanamo = conv.data.vanamo;
+  // conv.user.storage.experts = conv.data.experts;
+  // conv.user.storage.testi = conv.data.testi;
+  // conv.user.storage.visits = conv.data.visits;
+  // conv.user.storage.kyyhky = conv.data.kyyhky;
+  // conv.user.storage.rethink = conv.data.rethink;
+  // conv.user.storage.sreveal = conv.data.sreveal;
+  // conv.user.storage.previous = conv.data.previous;
+  // conv.user.storage.peliansw = conv.data.peliansw;
+  // conv.user.storage.kysurl = conv.data.kysurl;
+  conv.close(`The game is now saved!`);
+});
 app.intent('repeat', (conv) =>{
   //helper intent for replaying the current event (intent) with the current choice
   const cevent = conv.data.previous[0];
@@ -52,17 +71,15 @@ app.intent('repeat', (conv) =>{
   const ccontext = conv.data.previous[2];
   conv.contexts.set(ccontext,1,{})
   const param = Reprompts.getParam(cevent);
+  const followupstr = cevent + ', { ' +  param + ': ' + cparam + '}';
   if (cevent === '20_2event') {
     conv.followup(cevent, {
       ent20_2: cparam
     });
-  } else if (cevent === '20_3event') {
-    conv.followup(cevent, {
-      'ent20_2': cparam
-    });
   } else {
+  conv.data.testi = followupstr;
   conv.followup(cevent, {
-    param: cparam
+    response: cparam
   });
   }
 });
@@ -1231,6 +1248,7 @@ app.intent('1_3bossresponse', (conv, {response}) => {
       }
     }
     conv.data.previous = ['20_3event',ent20_3,'int20_2'];
+    //conv.ask(`You said ${conv.input.raw}`); TÄLLÄÄ SAA INPUTIN, MUTTEI EVENT INVOKEE
     conv.ask(Utils.playSimple(audiourl));
   });
 
