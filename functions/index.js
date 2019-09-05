@@ -256,35 +256,39 @@ app.intent('1_2boss', (conv) => {
     conv.ask(Utils.playSimple(audiourl));
 });
 
-app.intent('1_3bossresponse', (conv, {response}) => {
-    const answ = response;
-    conv.data.previous = ['1_3event',answ,'int1_2'];
+app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
+    var answ = '';
     var audiourl = host;
-    if (answ === 'one') {
+    if (response === 'one' || ent1_3 === 'better') {
+        answ = 'one';
         audiourl += '104.mp3';
-    } else if (answ === 'two') {
+    } else if (answ === 'two' || ent1_3 === 'work') {
         audiourl += '105.mp3';
+        answ = 'two';
     } else {
       if (!conv.data.points.includes('1_3event')) {
         conv.data.bpoints++;
         conv.data.points.push('1_3event')
       }
         audiourl += '106.mp3';
+        answ = 'three';
     }
+    conv.data.previous = ['1_3event',answ,'int1_2'];
     conv.ask(Utils.playSimple(audiourl));
 });
 
-  app.intent('1_4entervanamo', (conv, {response}) => {
-    const answ = response;
-    conv.data.previous = ['1_4event',answ,'int1_3'];
+  app.intent('1_4entervanamo', (conv, {response,ent1_4}) => {
+    var answ = 'two';
     var audiourl = host+ '108.mp3';
-    if (answ === 'one') {
+    if (response === 'one' || ent1_4 === 'pleased') {
         audiourl = host+ '107.mp3';
+        answ = 'one';
         if (!conv.data.points.includes('1_4event')) {
           conv.data.vpoints++;
           conv.data.points.push('1_4event')
         }
     }
+    conv.data.previous = ['1_4event',answ,'int1_3'];
     conv.ask(Utils.playSimple(audiourl));
   });
 
@@ -294,25 +298,24 @@ app.intent('1_3bossresponse', (conv, {response}) => {
     conv.ask(Utils.playSimple(audiourl));
   });
 
-  app.intent('1_6koski', (conv, {response}) => {
+  app.intent('1_6koski', (conv, {response, ent1_6}) => {
     const audiourl = host+ '110.mp3';
-    const answ = response;
-    conv.data.previous = ['1_6event',answ,'int1_5'];
+    var answ = 'two';
     conv.data.nice = false;
-    if (answ === 'one') {
+    if (response === 'one' || ent1_6 === 'fill') {
       conv.data.nice = true;
       if (!conv.data.points.includes('1_6event')) {
         conv.data.vpoints++;
         conv.data.points.push('1_6event')
       }
     }
+    conv.data.previous = ['1_6event',answ,'int1_5'];
     conv.ask(Utils.playSimple(audiourl));
   });
 
-  app.intent('1_7matka', (conv, {response}) => {
+  app.intent('1_7matka', (conv, {response,ent1_7}) => {
     conv.data.fallbackCount = 0;
-    const answ = response;
-    conv.data.previous = ['1_7event',answ, 'int1_6'];
+    var answ = 'three';
     // Tähän failsafe?
     const param = conv.data.nice;
     var audiourl = host + '111T.mp3';
@@ -322,54 +325,54 @@ app.intent('1_3bossresponse', (conv, {response}) => {
     } else {
       urlc = host + '112';
     }
-    if (answ === 'one') {
+    if (response === 'one' || ent1_7 === 'cab') {
       audiourl = urlc + 'T.mp3';
-    } else if (answ ==='two') {
+      answ = 'one';
+    } else if (response ==='two' || ent1_7 === 'bus') {
       audiourl = urlc + 'A.mp3';
+      answ = 'two';
     } else {
       audiourl = urlc + 'V.mp3';
     }
+    conv.data.previous = ['1_7event',answ,'int1_6'];
     conv.ask(Utils.playSimple(audiourl));
   });
 
-  app.intent('2_1kuski', (conv, {response, kuskikys}) => {
+  app.intent('2_1kuski', (conv, {response, ent2_1}) => {
     conv.data.fallbackCount = 0;
     var audiourl = '';
-    var audiourl2 = '';
-    const answ = response;
+    var answ = 'four';
     conv.data.previous = ['2_1event',answ,'int6'];
-    if (answ === 'one' || kuskikys === 'why') {
+    if (response === 'one' || ent2_1 === 'why') {
       audiourl = host + '113.mp3';
-      audiourl2 = host + '111K1.mp3';
       conv.contexts.set('kysykuski', 5, {kys: 'A'});
-    } else if (answ === 'two' || kuskikys === 'see') {
+      answ = 'one';
+    } else if (response === 'two' || ent2_1 === 'see') {
       audiourl = host + '114.mp3';
-      audiourl2 = host + '111K2.mp3';
       conv.contexts.set('kysykuski', 5, {kys: 'B'});
-    } else if (answ === 'three' || kuskikys === 'when') {
+      answ = 'two';
+    } else if (response === 'three' || ent2_1 === 'when') {
       audiourl = host + '115.mp3';
-      audiourl2 = host + '111K3.mp3';
       conv.contexts.set('kysykuski', 5, {kys: 'C'});
+      answ = 'three';
     } else {
       audiourl = host + '116.mp3';
-      audiourl2 = host + '111K4.mp3';
       conv.contexts.set('kysykuski', 5, {kys: 'D'});
     }
     conv.ask(Utils.playSimple(audiourl));
-    conv.ask(Utils.playSimple(audiourl2));
   });
 
-  app.intent('2_2kuski2', (conv, {response,kuskikys}) => {
+  app.intent('2_2kuski2', (conv, {response,ent2_1}) => {
     conv.data.fallbackCount = 0;
     var audiourl = '';
-    const answ = response;
+    var answ = response;
     const ctx = conv.contexts.get('kysykuski').parameters['kys'];
     var answ2 = Utils.switcher(answ,ctx);
     if (answ2 === 'kysy') {
-      answ2 = kuskikys;
+      answ2 = ent2_1;
     }
     conv.contexts.set('kysykuski', 5, {kys: ctx})
-    conv.data.previous = ['2_2event',answ,'int2_1'];
+
     if (answ2 === 'why') {
       audiourl = host + '117.mp3';
     } else if (answ2 === 'see') {
@@ -379,34 +382,33 @@ app.intent('1_3bossresponse', (conv, {response}) => {
     } else {
       audiourl = host + '120.mp3';
     }
+    conv.data.previous = ['2_2event',answ2,'int2_1'];
     conv.ask(Utils.playSimple(audiourl));
   });
 
-  app.intent('2_3handuja', (conv, {response}) => {
+  app.intent('2_3handuja', (conv, {response, ent2_3}) => {
     conv.data.fallbackCount = 0;
-    const answ = response;
-    conv.data.previous = ['2_3event',answ,'int2_2'];
+    var answ = 'two';
     var audiourl = '';
-    if (answ === 'one') {
+    if (response === 'one' || ent2_3 === 'bootlegger') {
       audiourl = host + '121.mp3';
       conv.data.sreveal = true;
     } else {
       audiourl = host + '122.mp3';
     }
+    conv.data.previous = ['2_3event',answ,'int2_2'];
     conv.ask(Utils.playSimple(audiourl));
   });
 
-  app.intent('2_4kelo', (conv, {response}) => {
-    conv.data.fallbackCount = 0;
-    const answ = response;
-    conv.data.previous = ['2_4event',answ,'int2_3'];
+  app.intent('2_4kelo', (conv) => {
+    conv.data.previous = ['2_4event','one','int2_3'];
     const audiourl = host + '123.mp3';
     conv.ask(Utils.playSimple(audiourl));
   });
 
-  app.intent('2_5choice', (conv, {response}) => {
-    const answ = response;
-    if (answ === 'one') {
+  app.intent('2_5choice', (conv, {response, ent2_5}) => {
+    var answ = 'two';
+    if (response === 'one' || ent2_5 === 'go') {
       if (!conv.data.points.includes('2_5event')) {
         conv.data.bpoints++;
         conv.data.points.push('2_5event')
