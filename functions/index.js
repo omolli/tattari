@@ -2120,19 +2120,9 @@ app.intent('1_1Start NoInput', (conv) => {
     }
   });
 
-  app.intent('5A_1magnus - fallback', (conv) => {
-    const audiourl = host + '141K.mp3';
-    conv.data.fallbackCount++;
-    if (conv.data.fallbackCount < 2) {
-      return conv.ask(Utils.playSimple(audiourl));
-    } else {
-      return conv.followup('5A_2event', {
-        response: 'professor'
-      });
-    }
-  });
   //TÄSSÄ NAPATAAN conv, {response?/vai sys.any param?}
-  app.intent('5A_2magnus - fallback', (conv) => {
+  app.intent('5A_2magnus - fallback', (conv,input) => {
+      conv.data.testi = input;
       return conv.followup('5A_3event', {
         response: 'one'
       });
@@ -2199,31 +2189,7 @@ app.intent('1_1Start NoInput', (conv) => {
       }
     }
   });
-
-  app.intent('5B_1fabritius - fallback', (conv) => {
-    const audiourl = host + '144K.mp3';
-    conv.data.fallbackCount++;
-    if (conv.data.fallbackCount < fbc) {
-      return conv.ask(Utils.playSimple(audiourl));
-    } else {
-      return conv.followup('5B_2event', {
-        response: 'no'
-      });
-    }
-  });
-
-  app.intent('5B_2fabritius - fallback', (conv) => {
-    const audiourl = host + '147K.mp3';
-    conv.data.fallbackCount++;
-    if (conv.data.fallbackCount < fbc) {
-      return conv.ask(Utils.playSimple(audiourl));
-    } else {
-      return conv.followup('5B_3event', {
-        response: 'no'
-      });
-    }
-  });
-
+  //TODOO SIISTI JA YHDISTÄ NOINPUTIT
   app.intent('5B_3fabritius - fallback', (conv) => {
     var audiourl = '';
     conv.data.fallbackCount++;
@@ -2283,18 +2249,6 @@ app.intent('1_1Start NoInput', (conv) => {
           response: 'repeat'
         });
       }
-    }
-  });
-
-  app.intent('5C_1police - fallback', (conv) => {
-    const audiourl = host + '152K.mp3';
-    conv.data.fallbackCount++;
-    if (conv.data.fallbackCount < 2) {
-      return conv.ask(Utils.playSimple(audiourl));
-    } else {
-      return conv.followup('5C_2event', {
-        response: 'one'
-      });
     }
   });
 
@@ -2365,18 +2319,6 @@ app.intent('1_1Start NoInput', (conv) => {
     }
   });
 
-  app.intent('6_1ilta - fallback', (conv) => {
-    const audiourl = host + '157K.mp3';
-    conv.data.fallbackCount++;
-    if (conv.data.fallbackCount < fbc) {
-      return conv.ask(Utils.playSimple(audiourl));
-    } else {
-      return conv.followup('7_1event', {
-        response: 'two'
-      });
-    }
-  });
-
   app.intent('7_1aamu - fallback', (conv) => {
     var audiourl = host + '201K';
     var eve = '';
@@ -2429,42 +2371,13 @@ app.intent('1_1Start NoInput', (conv) => {
     }
   });
 
-  app.intent('9_1anatomy - fallback', (conv) => {
-    return conv.followup('9_2event', {
-      response: 'yes'
-    });
-  });
-
-  app.intent('9_2anatomy - fallback', (conv) => {
-    const audiourl = host + '204K.mp3';
-    conv.data.fallbackCount++;
-    if (conv.data.fallbackCount < fbc) {
-      return conv.ask(Utils.playSimple(audiourl));
-    } else {
-      return conv.followup('9_3event', {
-        response: 'yes'
-      });
-    }
-  });
-
-  app.intent('9_3anatomy - fallback', (conv) => {
-    return conv.followup('9_4event', {
-      response: 'ready'
-    });
-  });
-
-  app.intent('9_4anatomy - fallback', (conv) => {
-    return conv.followup('10_1event', {
-      response: 'ready'
-    });
-  });
-
   app.intent('10_1kuulustelu - fallback', (conv) => {
     const audiourl = host + '208K.mp3';
     conv.data.fallbackCount++;
-    if (conv.data.fallbackCount < fbc) {
+    if (conv.data.fallbackCount < 2) {
       return conv.ask(Utils.playSimple(audiourl));
     } else {
+      conv.data.fallbackCount = 0;
       return conv.followup('10_2event', {
         response: 'three'
       });
@@ -2486,6 +2399,7 @@ app.intent('1_1Start NoInput', (conv) => {
     if (conv.data.fallbackCount < fbc) {
       return conv.ask(Utils.playSimple(audiourl));
     } else {
+      conv.data.fallbackCount = 0;
       return conv.followup('10_4event', {
         response: 'two'
       });
@@ -2513,6 +2427,7 @@ app.intent('1_1Start NoInput', (conv) => {
     if (conv.data.fallbackCount < fbc) {
       return conv.ask(Utils.playSimple(audiourl));
     } else {
+      conv.data.fallbackCount = 0;
       return conv.followup('11A_1event', {
         response: 'article'
       });
@@ -2537,6 +2452,7 @@ app.intent('1_1Start NoInput', (conv) => {
     if (conv.data.fallbackCount < fbc) {
       return conv.ask(Utils.playSimple(audiourl));
     } else {
+      conv.data.fallbackCount = 0;
       return conv.followup('11A_2event', {
         response: 'yes'
       });
@@ -2549,6 +2465,7 @@ app.intent('1_1Start NoInput', (conv) => {
     if (conv.data.fallbackCount < fbc) {
       return conv.ask(Utils.playSimple(audiourl));
     } else {
+      conv.data.fallbackCount = 0;
       return conv.followup('11A_3event', {
         response: 'no'
       });
@@ -2746,34 +2663,6 @@ app.intent('1_1Start NoInput', (conv) => {
     }
   });
 
-  app.intent('12_1cemetery - fallback', (conv) => {
-    const audiourl = host + '240K.mp3';
-    conv.data.fallbackCount++;
-    if (conv.data.fallbackCount < fbc) {
-      return conv.ask(Utils.playSimple(audiourl));
-    } else {
-      return conv.followup('12_2event', {
-        response: 'two'
-      });
-    }
-  });
-
-  app.intent('12_2cemetery - fallback', (conv) => {
-    //const audiourl = host + '240K.mp3';
-    //conv.data.fallbackCount++;
-    return conv.followup('12_3event', {
-      response: 'ready'
-    });
-  });
-
-  app.intent('12_3cemetery - fallback', (conv) => {
-    //const audiourl = host + '240K.mp3';
-    //conv.data.fallbackCount++;
-    return conv.followup('12_4event', {
-      response: 'ready'
-    });
-  });
-
   app.intent('12_4cemetery - fallback', (conv) => {
     const audiourl = host + '244K.mp3';
     conv.data.fallbackCount++;
@@ -2797,39 +2686,6 @@ app.intent('1_1Start NoInput', (conv) => {
           response: 'ready'
         });
       }
-  });
-
-  app.intent('12_6cemetery - fallback', (conv) => {
-    const audiourl = host + '247K.mp3';
-    conv.data.fallbackCount++;
-    if (conv.data.fallbackCount < fbc) {
-      return conv.ask(Utils.playSimple(audiourl));
-    } else {
-      return conv.followup('12_7event', {
-        response: 'two'
-      });
-    }
-  });
-
-  app.intent('12_7cemetery - fallback', (conv) => {
-    //const audiourl = host + '240K.mp3';
-    //conv.data.fallbackCount++;
-    return conv.followup('13_1event', {
-      response: 'ready'
-    });
-  });
-
-  app.intent('13_1toimitus - fallback', (conv) => {
-    const audiourl = host + '250K.mp3';
-    conv.data.fallbackCount++;
-    if (conv.data.fallbackCount < fbc) {
-      return conv.ask(Utils.playSimple(audiourl));
-    } else {
-      conv.data.fallbackCount = 0;
-      return conv.followup('13_2event', {
-        response: 'two'
-      });
-    }
   });
 
   app.intent('14_1aamu - fallback', (conv) => {

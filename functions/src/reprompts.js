@@ -51,7 +51,7 @@ const reprompts = {
       case '3D_5event':
         return ['133K','int4_E','4_1event','ready'];
       case '5A_1event':
-        return ['141K','int5A_1','5A_2event','docent'];
+        return ['141K','int5A_1','5A_2event','professor'];
       case '5A_2event':
         return ['142K','int5A_2','5A_3event','ready'];
       case '5B_1event':
