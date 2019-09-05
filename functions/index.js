@@ -31,7 +31,7 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
     conv.data.bpoints = 0;
     conv.data.minipeli = -1;
     conv.data.checkpoint = [];
-    conv.data.vanamo = [];
+    conv.data.points = [];
     conv.data.experts = '';
     conv.data.testi = '';
     conv.data.visits = '';
@@ -71,7 +71,7 @@ app.intent('Load', (conv) => {
         conv.data.bpoints = conv.user.storage.bpoints;
         conv.data.minipeli = conv.user.storage.minipeli;
         conv.data.checkpoint = conv.user.storage.checkpoint;
-        conv.data.vanamo = conv.user.storage.vanamo;
+        conv.data.points = conv.user.storage.points;
         conv.data.experts = conv.user.storage.experts;
         conv.data.testi = conv.user.storage.testi;
         conv.data.visits = conv.user.storage.visits;
@@ -100,7 +100,7 @@ app.intent('Save', (conv) => {
     conv.user.storage.bpoints = conv.data.bpoints;
     conv.user.storage.minipeli = conv.data.minipeli;
     conv.user.storage.checkpoint = conv.data.checkpoint;
-    conv.user.storage.vanamo = conv.data.vanamo;
+    conv.user.storage.points = conv.data.points;
     conv.user.storage.experts = conv.data.experts;
     conv.user.storage.testi = conv.data.testi;
     conv.user.storage.visits = conv.data.visits;
@@ -127,7 +127,7 @@ app.intent('SaveSilent', (conv) => {
     conv.user.storage.bpoints = conv.data.bpoints;
     conv.user.storage.minipeli = conv.data.minipeli;
     conv.user.storage.checkpoint = conv.data.checkpoint;
-    conv.user.storage.vanamo = conv.data.vanamo;
+    conv.user.storage.points = conv.data.points;
     conv.user.storage.experts = conv.data.experts;
     conv.user.storage.testi = conv.data.testi;
     conv.user.storage.visits = conv.data.visits;
@@ -137,9 +137,14 @@ app.intent('SaveSilent', (conv) => {
     conv.user.storage.previous = conv.data.previous;
     conv.user.storage.peliansw = conv.data.peliansw;
     conv.user.storage.kysurl = conv.data.kysurl;
+    conv.user.storage.julkaise = conv.data.julkaise;
   }
-  conv.followup('repeat', {
-    response: 'repeat'
+  const cevent = conv.data.previous[0];
+  const cparam = conv.data.previous[1];
+  const ccontext = conv.data.previous[2];
+  conv.contexts.set(ccontext,1,{})
+  conv.followup(cevent, {
+    response: cparam
   });
 });
 
@@ -257,7 +262,10 @@ app.intent('1_3bossresponse', (conv, {response}) => {
     } else if (answ === 'two') {
         audiourl += '105.mp3';
     } else {
+      if (!conv.data.points.includes('1_3event')) {
         conv.data.bpoints++;
+        conv.data.points.push('1_3event')
+      }
         audiourl += '106.mp3';
     }
     conv.ask(Utils.playSimple(audiourl));
@@ -287,7 +295,10 @@ app.intent('1_3bossresponse', (conv, {response}) => {
     conv.data.nice = false;
     if (answ === 'one') {
       conv.data.nice = true;
-      conv.data.vpoints++;
+      if (!conv.data.points.includes('1_6event')) {
+        conv.data.vpoints++;
+        conv.data.points.push('1_6event')
+      }
     }
     conv.ask(Utils.playSimple(audiourl));
   });
@@ -390,11 +401,14 @@ app.intent('1_3bossresponse', (conv, {response}) => {
   app.intent('2_5choice', (conv, {response}) => {
     const answ = response;
     if (answ === 'one') {
+      if (!conv.data.points.includes('2_5event')) {
         conv.data.bpoints++;
-        conv.contexts.set('leave3B', 1, {});
-        return conv.followup('3B_Eevent', {
-          response: "ready"
-        });
+        conv.data.points.push('2_5event')
+      }
+      conv.contexts.set('leave3B', 1, {});
+      return conv.followup('3B_Eevent', {
+        response: "ready"
+      });
     } else {
         conv.contexts.set('stay3A', 1, {});
         return conv.followup('3A_1event', {
@@ -545,6 +559,12 @@ app.intent('1_3bossresponse', (conv, {response}) => {
       });
     } else {
       const audiourl = host + '133.mp3';
+    }
+    if (!conv.data.points.includes('3D_5event')) {
+      if (conv.data.minipeli > 0) {
+        conv.data.bpoints += (conv.data.minipeli + 1) / 2;
+      }
+      conv.data.points.push('3D_5event')
     }
     conv.ask(Utils.speak('And now go write that damn article and fast! Say ready.'));
   });
@@ -713,13 +733,14 @@ app.intent('1_3bossresponse', (conv, {response}) => {
     conv.data.day = 2;
     conv.data.fallbackCount = 0;
     const answ = response;
+    var accuse = 0;
     conv.data.previous = ['7_1event',answ,'int6_1'];
-    if (!conv.data.checkpoint.includes('7_1event')) {
-      conv.data.checkpoint.push('7_1event');
-      conv.followup('save_silently', {
-        response: 'save silently'
-      });
-    }
+     if (!conv.data.checkpoint.includes('7_1event')) {
+       conv.data.checkpoint.push('7_1event');
+       conv.followup('save_silently', {
+         response: 'save silently'
+       });
+     }
     //Himomurhaajaan Pomo +1
     //Anatomian laitoksen opiskelijoihin
     //Romaanien hautajaismenoihin Pomo +1
@@ -727,12 +748,18 @@ app.intent('1_3bossresponse', (conv, {response}) => {
     var audiourl = host + '201';
     if (answ === 'one') {
       audiourl += 'C';
+      accuse++;
     } else if (answ === 'two') {
       audiourl += 'A';
     } else if (answ === 'three') {
       audiourl += 'B';
+      accuse++;
     } else {
       audiourl += 'C';
+    }
+    if (!conv.data.points.includes('7_1event')) {
+      conv.data.bpoints += accuse;
+      conv.data.points.push('7_1event')
     }
     if (conv.data.experts.indexOf('A') === -1) {
       audiourl += 'H.mp3';
@@ -794,7 +821,10 @@ app.intent('1_3bossresponse', (conv, {response}) => {
     var audiourl = host;
     if (response === 'one' || response === 'two') {
       audiourl += '209';
-      conv.data.vpoints++;
+      if (!conv.data.points.includes('10_2event')) {
+        conv.data.vpoints++;
+        conv.data.points.push('10_2event')
+      }
     } else {
       audiourl += '210';
     }
@@ -893,9 +923,10 @@ app.intent('1_3bossresponse', (conv, {response}) => {
     conv.data.previous = ['11A_3event',binarr,'int11A_2'];
     var audiourl = host + '219';
     if (binarr === 'yes') {
-      conv.data.bpoints++;
-    } else {
-      conv.data.vpoints++;
+      if (!conv.data.points.includes('11A_3event')) {
+        conv.data.bpoints++;
+        conv.data.points.push('11A_3event')
+      }
     }
     if (conv.data.visits.length > 1) {
       audiourl += 'B.mp3';
@@ -1103,7 +1134,10 @@ app.intent('1_3bossresponse', (conv, {response}) => {
     var answ = 'no';
     if (response === 'one' || binarr === 'yes') {
       audiourl += '251.mp3';
-      conv.data.vpoints++;
+      if (!conv.data.points.includes('13_2event')) {
+        conv.data.vpoints++;
+        conv.data.points.push('13_2event')
+      }
       conv.data.julkaise = true;
       answ = 'yes';
     } else {
@@ -1332,12 +1366,14 @@ app.intent('1_3bossresponse', (conv, {response}) => {
   app.intent('20_2call', (conv,{ent20_2}) => {
     //HOX MITÄS JOS ent20_2 sisältää one,first,two jne..
     var audiourl = host + '408.mp3';
+    conv.data.nice = false;
     if (ent20_2 === 'one') {
       audiourl = host + '407.mp3';
+      conv.data.nice = true;
       //TODO
-      if (!conv.data.vanamo.includes('20_2event')) {
+      if (!conv.data.points.includes('20_2event')) {
         conv.data.vpoints++;
-        conv.data.vanamo.push('20_2event')
+        conv.data.points.push('20_2event')
       }
     }
     conv.data.previous = ['20_2event',ent20_2,'int20_1'];
@@ -1349,9 +1385,12 @@ app.intent('1_3bossresponse', (conv, {response}) => {
     if (ent20_3 === 'one') {
       audiourl = host + '409.mp3';
       //TODO
-      if (!conv.data.vanamo.includes('20_3event')) {
+      if (!conv.data.points.includes('20_3event')) {
         conv.data.vpoints++;
-        conv.data.vanamo.push('20_3event')
+        conv.data.points.push('20_3event')
+        if (conv.data.nice) {
+          conv.data.vpoints++;
+        }
       }
     }
     conv.data.previous = ['20_3event',ent20_3,'int20_2'];
@@ -1695,8 +1734,12 @@ app.intent('1_3bossresponse', (conv, {response}) => {
   app.intent('25A_end', (conv,{binarr}) => {
     var audiourl = host;
     if (binarr === 'yes') {
+      if (!conv.data.points.includes('25Aevent')) {
+        conv.data.bpoints += 2;
+        conv.data.points.push('25Aevent')
+      }
       conv.contexts.set('int26A',1,{});
-      if (conv.data.vpoints > 0) {
+      if (conv.data.vpoints > 3) {
         audiourl += '450.mp3';
       } else {
         audiourl += '451.mp3';
@@ -1716,7 +1759,7 @@ app.intent('1_3bossresponse', (conv, {response}) => {
     var audiourl = host;
     if (binarr === 'yes') {
       conv.contexts.set('int26B',1,{});
-      if (conv.data.vpoints > 0) {
+      if (conv.data.vpoints > 3) {
         audiourl += '450.mp3';
       } else {
         audiourl += '451.mp3';
@@ -1754,14 +1797,14 @@ app.intent('1_3bossresponse', (conv, {response}) => {
   app.intent('26BEpilogue', (conv) => {
     var audiourl = host;
     conv.data.previous = ['26Bevent','ready','int26B'];
-    if (conv.data.vpoints > 2) {
-      if (conv.data.bpoints > 2) {
+    if (conv.data.vpoints > 3) {
+      if (conv.data.bpoints > 3) {
         audiourl += 'END5.mp3';
       } else {
         audiourl += 'END7.mp3';
       }
     } else {
-      if (conv.data.bpoints > 2) {
+      if (conv.data.bpoints > 3) {
         audiourl += 'END6.mp3';
       } else {
         audiourl += 'END8.mp3';
