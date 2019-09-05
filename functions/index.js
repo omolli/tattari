@@ -910,7 +910,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     const answ = response;
     if (answ === 'one') {
       return conv.followup('11A_1event', {
-        response: "telegram"
+        response: "article"
       });
     } else if (answ === 'two') {
       return conv.followup('11B_1event', {
@@ -926,7 +926,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   app.intent('11A_1sanoma', (conv) => {
     conv.data.fallbackCount = 0;
     conv.data.visits = Utils.appender(conv.data.visits,'A');
-    conv.data.previous = ['11A_1event','telegram','int11A_E'];
+    conv.data.previous = ['11A_1event','article','int11A_E'];
     var audiourl = '';
     if (conv.data.visits.length > 1) {
       audiourl = host + '214B.mp3';
@@ -985,40 +985,48 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.ask(Utils.playSimple(audiourl));
   });
 
-  app.intent('11B_2wife', (conv, {response}) => {
+  app.intent('11B_2wife', (conv, {response,ent11B_2}) => {
     conv.data.fallbackCount = 0;
-    conv.data.previous = ['11B_2event',response,'int11B_1'];
     var audiourl = host;
+    var answ = 'three';
+    //TODO AJANKOHTA MÄÄRÄÄ VAIKKA 225, vastaus plussat!
     //Jos ei ole käyty silminnäkijällä
     if (conv.data.visits.indexOf('C') === -1) {
-      conv.contexts.set('int11C_1', 1, {});
-      if (response === 'one') {
+      conv.contexts.set('int11C_E', 1, {});
+      if (response === 'one' || ent11B_2 === 'morgue') {
         audiourl += '227.mp3';
-      } else if (response === 'two') {
+        answ = 'one';
+      } else if (response === 'two' || ent11B_2 === 'society') {
         audiourl += '228.mp3';
+        answ = 'two';
       } else {
         audiourl += '229.mp3';
       }
     } else if (conv.data.visits.indexOf('A') === -1) {
       //Jos on käyty silminnäkijällä, mutta sähkösanomaa ei olla tehty.
       conv.contexts.set('int11A_E', 1, {});
-      if (response === 'one') {
+      if (response === 'one' || ent11B_2 === 'morgue') {
         audiourl += '221.mp3';
-      } else if (response === 'two') {
+        answ = 'one';
+      } else if (response === 'two' || ent11B_2 === 'society') {
         audiourl += '222.mp3';
+        answ = 'two';
       } else {
         audiourl += '223.mp3';
       }
     } else  {
       conv.contexts.set('int12_E', 1, {});
-      if (response === 'one') {
+      if (response === 'one' || ent11B_2 === 'morgue') {
         audiourl += '224.mp3';
-      } else if (response === 'two') {
+        answ = 'one';
+      } else if (response === 'two' || ent11B_2 === 'society') {
         audiourl += '225.mp3';
+        answ = 'two';
       } else {
         audiourl += '226.mp3';
       }
     }
+    conv.data.previous = ['11B_2event',answ,'int11B_1'];
     conv.ask(Utils.playSimple(audiourl));
   });
 
@@ -1026,16 +1034,17 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.data.fallbackCount = 0;
     conv.data.previous = ['11C_1event','cafe','int11C_E'];
     //oikeesti eri
-    const audiourl = host + '227.mp3';
-    conv.ask(Utils.playAudio(audiourl,33,120));
+    const audiourl = host + '299.mp3';
+    conv.ask(Utils.playSimple(audiourl));
   });
 
-  app.intent('11C_2cafe', (conv,{response}) => {
+  app.intent('11C_2cafe', (conv,{response,ent11C_2}) => {
     conv.data.fallbackCount = 0;
     conv.data.visits = Utils.appender(conv.data.visits,'C');
-    conv.data.previous = ['11C_2event',response,'int11C_1'];
     var audiourl = host;
-    if (response === 'three') {
+    var answ = 'one';
+    if (response === 'three' || ent11C_2 === 'die') {
+      answ = 'three';
       if (conv.data.sreveal) {
         audiourl += '231.mp3';
       } else {
@@ -1048,17 +1057,19 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
         audiourl += '232.mp3';
       }
     }
+    conv.data.previous = ['11C_2event',answ,'int11C_1'];
     conv.ask(Utils.playSimple(audiourl));
   });
 
-  app.intent('11C_3cafe', (conv, {response}) => {
+  app.intent('11C_3cafe', (conv, {response,ent11C_3}) => {
     conv.data.fallbackCount = 0;
-    conv.data.previous = ['11C_3event',response,'int11C_2'];
     var audiourl = host;
+    var answ = 'two';
     //Vaimon luona ei olla käyty
     if (conv.data.visits.indexOf('B') === -1) {
       conv.contexts.set('int11B_E', 1, {});
-      if (response === 'one') {
+      if (response === 'one' || ent11C_3 === 'seen') {
+        answ = 'one';
         audiourl += '236.mp3';
       } else {
         audiourl += '239.mp3';
@@ -1066,19 +1077,22 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     } else if (conv.data.visits.indexOf('A') === -1) {
       //sanomaa ei ole kirjoitettu
       conv.contexts.set('int11A_E', 1, {});
-      if (response === 'one') {
+      if (response === 'one' || ent11C_3 === 'seen') {
+        answ = 'one';
         audiourl += '234.mp3';
       } else {
         audiourl += '237.mp3';
       }
     } else {
       conv.contexts.set('int12_E', 1, {});
-      if (response === 'one') {
+      if (response === 'one' || ent11C_3 === 'seen') {
+        answ = 'one';
         audiourl += '235.mp3';
       } else {
         audiourl += '238.mp3';
       }
     }
+    conv.data.previous = ['11C_3event',answ,'int11C_2'];
     conv.ask(Utils.playSimple(audiourl));
   });
 
@@ -1117,22 +1131,26 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.ask(Utils.playSimple(audiourl));
   });
 
-  app.intent('12_5cemetery', (conv, {response}) => {
+  app.intent('12_5cemetery', (conv, {response,ent12_5}) => {
     conv.data.fallbackCount = 0;
     var audiourl = host;
-    conv.data.previous = ['12_5event',response,'int12_4'];
+    var answ = 'four';
     var ctx = 'int13_E';
-    if (response === 'one') {
+    if (response === 'one' || ent12_5 === 'grave') {
       audiourl +=  '245.mp3';
-    } else if (response === 'two') {
+      answ = 'one';
+    } else if (response === 'two' || ent12_5 === 'chief') {
       //conv.contexts.set('diversion',1,{state: 'failed'})
       audiourl += '246.mp3';
       ctx = 'int12_5';
-    } else if (response === 'three') {
+      answ = 'two';
+    } else if (response === 'three' || ent12_5 === 'seizure') {
       audiourl += '248.mp3';
+      answ = 'three';
     } else {
       audiourl += '249.mp3';
     }
+    conv.data.previous = ['12_5event',answ,'int12_4'];
     conv.contexts.set(ctx, 1, {});
     conv.ask(Utils.playSimple(audiourl));
   });
@@ -1144,18 +1162,20 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.ask(Utils.playSimple(audiourl));
   });
 
-  app.intent('12_7cemetery', (conv, {response}) => {
+  app.intent('12_7cemetery', (conv, {response,ent12_5}) => {
     conv.data.fallbackCount = 0;
     var audiourl = host;
-    conv.data.previous = ['12_7event',response,'int12_6'];
-    if (response === 'one') {
+    var answ = 'three';
+    if (response === 'one'|| ent12_5 === 'grave') {
       audiourl += '245.mp3';
-    } else if (response === 'two') {
+      answ = 'one';
+    } else if (response === 'two'|| ent12_5 === 'seizure') {
       audiourl += '248.mp3';
-      ctx = 'int12_5';
+      answ = 'two';
     } else {
       audiourl += '249.mp3';
     }
+    conv.data.previous = ['12_7event',answ,'int12_6'];
     conv.ask(Utils.playSimple(audiourl));
   });
 
@@ -2494,7 +2514,7 @@ app.intent('1_1Start NoInput', (conv) => {
       return conv.ask(Utils.playSimple(audiourl));
     } else {
       return conv.followup('11A_1event', {
-        response: 'telegram'
+        response: 'article'
       });
     }
   });
@@ -2594,8 +2614,8 @@ app.intent('1_1Start NoInput', (conv) => {
 
   app.intent('11B_2wife - fallback', (conv) => {
     if (conv.data.visits.indexOf('C') === -1) {
-      const audiourl = host + '227K.mp3';
-      conv.contexts.set('int11C_1', 1, {});
+      const audiourl = host + valmis;
+      conv.contexts.set('int11C_E', 1, {});
       conv.data.fallbackCount++;
       if (conv.data.fallbackCount < fbc) {
         return conv.ask(Utils.playSimple(audiourl));
@@ -2607,7 +2627,7 @@ app.intent('1_1Start NoInput', (conv) => {
     } else if (conv.data.visits.indexOf('A') === -1) {
       conv.contexts.set('int11A_E', 1, {});
       return conv.followup('11A_1event', {
-        response: 'telegram'
+        response: 'article'
       });
     } else {
       conv.contexts.set('int12_E', 1, {});
@@ -2622,7 +2642,7 @@ app.intent('1_1Start NoInput', (conv) => {
     var audiourl = host + valmis;
     if (conv.data.visits.indexOf('C') === -1) {
       audiourl = host + '227K.mp3';
-      conv.contexts.set('int11C_1', 1, {});
+      conv.contexts.set('int11C_E', 1, {});
       if (repromptCount < repc) {
         return conv.ask(Utils.playSimple(audiourl));
       } else {
@@ -2683,7 +2703,7 @@ app.intent('1_1Start NoInput', (conv) => {
     } else if (conv.data.visits.indexOf('A') === -1) {
       conv.contexts.set('int11A_E', 1, {});
       return conv.followup('11A_1event', {
-        response: 'telegram'
+        response: 'article'
       });
     } else {
       conv.contexts.set('int12_E', 1, {});
