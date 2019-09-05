@@ -199,6 +199,16 @@ const reprompts = {
         }
       }
     }
+  },
+  getType(e) {
+    switch (e) {
+      case 'yes':
+      return 'binarr';
+      case 'no':
+      return 'binarr';
+      default:
+      return 'response';      
+    }
   }
 }
 module.exports = reprompts

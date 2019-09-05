@@ -42,42 +42,88 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
     conv.data.peliansw = [0,0,0];
     const audiourl = host + '101.mp3';
     conv.data.kysurl = '';
-    conv.ask(Utils.playSimple(audiourl));
+    if (conv.user.last.seen) {
+      conv.contexts.set('loadgame',5,{})
+      conv.ask('Welcome back! If you wish to continue a saved game, say load game. For a new game say ready.')
+    } else {
+      if (conv.user.verification === 'VERIFIED') {
+        conv.user.storage.day = 0;
+      }
+      conv.ask(Utils.playSimple(audiourl));
+    }
+});
+app.intent('Load', (conv) => {
+    if (conv.user.verification === 'VERIFIED') {
+      if (conv.user.storage.day !== 0) {
+        conv.data.sum = conv.user.storage.sum;
+        conv.data.fallbackCount = conv.user.storage.fallbackCount;
+        conv.data.day = conv.user.storage.day;
+        conv.data.vpoints = conv.user.storage.vpoints;
+        conv.data.bpoints = conv.user.storage.bpoints;
+        conv.data.minipeli = conv.user.storage.minipeli;
+        conv.data.addarr = conv.user.storage.addarr;
+        conv.data.vanamo = conv.user.storage.vanamo;
+        conv.data.experts = conv.user.storage.experts;
+        conv.data.testi = conv.user.storage.testi;
+        conv.data.visits = conv.user.storage.visits;
+        conv.data.kyyhky = conv.user.storage.kyyhky;
+        conv.data.rethink = conv.user.storage.rethink;
+        conv.data.sreveal = conv.user.storage.sreveal;
+        conv.data.previous = conv.user.storage.previous;
+        conv.data.peliansw = conv.user.storage.peliansw;
+        conv.data.kysurl = conv.user.storage.kysurl;
+      }
+      conv.followup(cevent, {
+        response: cparam
+      });
+  } else {
+    conv.ask('Loading is possible only for verified users. Say start again!')
+  }
 });
 app.intent('Save', (conv) => {
-  // conv.user.storage.sum = conv.data.sum;
-  // conv.user.storage.fallbackCount = conv.data.fallbackCount;
-  // conv.user.storage.day = conv.data.day;
-  // conv.user.storage.vpoints = conv.data.vpoints;
-  // conv.user.storage.bpoints = conv.data.bpoints;
-  // conv.user.storage.minipeli = conv.data.minipeli;
-  // conv.user.storage.addarr = conv.data.addarr;
-  // conv.user.storage.vanamo = conv.data.vanamo;
-  // conv.user.storage.experts = conv.data.experts;
-  // conv.user.storage.testi = conv.data.testi;
-  // conv.user.storage.visits = conv.data.visits;
-  // conv.user.storage.kyyhky = conv.data.kyyhky;
-  // conv.user.storage.rethink = conv.data.rethink;
-  // conv.user.storage.sreveal = conv.data.sreveal;
-  // conv.user.storage.previous = conv.data.previous;
-  // conv.user.storage.peliansw = conv.data.peliansw;
-  // conv.user.storage.kysurl = conv.data.kysurl;
-  conv.close(`The game is now saved!`);
+  if (conv.user.verification === 'VERIFIED') {
+    conv.user.storage.sum = conv.data.sum;
+    conv.user.storage.fallbackCount = conv.data.fallbackCount;
+    conv.user.storage.day = conv.data.day;
+    conv.user.storage.vpoints = conv.data.vpoints;
+    conv.user.storage.bpoints = conv.data.bpoints;
+    conv.user.storage.minipeli = conv.data.minipeli;
+    conv.user.storage.addarr = conv.data.addarr;
+    conv.user.storage.vanamo = conv.data.vanamo;
+    conv.user.storage.experts = conv.data.experts;
+    conv.user.storage.testi = conv.data.testi;
+    conv.user.storage.visits = conv.data.visits;
+    conv.user.storage.kyyhky = conv.data.kyyhky;
+    conv.user.storage.rethink = conv.data.rethink;
+    conv.user.storage.sreveal = conv.data.sreveal;
+    conv.user.storage.previous = conv.data.previous;
+    conv.user.storage.peliansw = conv.data.peliansw;
+    conv.user.storage.kysurl = conv.data.kysurl;
+   //conv.close(`The game is now saved!`);
+    conv.close('The game is now saved!');
+  } else {
+    conv.ask('Only verified users can save progress. Say quit if you wish to exit and repeat if you wish to continue');
+  }
 });
+
+app.intent('Exit', (conv) => {
+   conv.user.storage.testi = conv.data.testi;
+    conv.close('Goodbye for now!');
+});
+
 app.intent('repeat', (conv) =>{
   //helper intent for replaying the current event (intent) with the current choice
   const cevent = conv.data.previous[0];
   const cparam = conv.data.previous[1];
   const ccontext = conv.data.previous[2];
   conv.contexts.set(ccontext,1,{})
-  const param = Reprompts.getParam(cevent);
-  const followupstr = cevent + ', { ' +  param + ': ' + cparam + '}';
-  if (cevent === '20_2event') {
+  //const param = Reprompts.getParam(cevent);
+  const param = Reprompts.getType(cparam);
+  if (param === 'binarr') {
     conv.followup(cevent, {
-      ent20_2: cparam
+      binarr: cparam
     });
   } else {
-  conv.data.testi = followupstr;
   conv.followup(cevent, {
     response: cparam
   });
@@ -114,6 +160,7 @@ app.intent('Default Fallback Intent', (conv) => {
   if (prompt[0] === 'repeater') {
     eve = 'repeat';
     cparam = 'repeat';
+    conv.data.fallbackCount = fbc;
   }
   if (conv.data.fallbackCount < fbc) {
   conv.ask(Utils.playSimple(audiourl));
