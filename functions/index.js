@@ -2835,10 +2835,10 @@ app.intent('1_1Start NoInput', (conv) => {
   app.intent('14_1aamu - fallback', (conv) => {
     var audiourl = host + valmis;
     conv.data.fallbackCount++;
-    var contx = 'int14_1';
+    var ctx = 'int14_1';
     var eve = '14_2event';
     if (conv.data.julkaise) {
-      contx = 'int15_E';
+      ctx = 'int15_E';
       eve = '15_1event';
     }
       conv.contexts.set(ctx,1,{});
