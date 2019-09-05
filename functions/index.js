@@ -56,9 +56,12 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
         conv.ask(Utils.playSimple(audiourl));
       }
     } else {
+      conv.ask('Welcome to the dead are speaking!')
       conv.ask(Utils.playSimple(audiourl));
     }
 });
+//app.intent('pause', (conv) => { });
+
 app.intent('Load', (conv) => {
     conv.data.previous = ['1_1event','ready','DefaultWelcomeIntent-followup'];
     if (conv.user.verification === 'VERIFIED') {
@@ -277,7 +280,10 @@ app.intent('1_3bossresponse', (conv, {response}) => {
     var audiourl = host+ '108.mp3';
     if (answ === 'one') {
         audiourl = host+ '107.mp3';
-        conv.data.vpoints++;
+        if (!conv.data.points.includes('1_4event')) {
+          conv.data.vpoints++;
+          conv.data.points.push('1_4event')
+        }
     }
     conv.ask(Utils.playSimple(audiourl));
   });
@@ -574,7 +580,6 @@ app.intent('1_3bossresponse', (conv, {response}) => {
     conv.data.previous = ['4_1event','ready','int4_E'];
     const audiourl = host + '140.mp3';
     conv.ask(Utils.playSimple(audiourl));
-    //conv.ask(Utils.speak('Hammarström, fabritius or police?'))
   });
 
   app.intent('4_2router', (conv, {response}) => {
@@ -1060,7 +1065,6 @@ app.intent('1_3bossresponse', (conv, {response}) => {
     } else {
       audiourl = host + '242.mp3';
       answ = 'two';
-      conv.data.vpoints++;
     }
     conv.data.previous = ['12_2event',answ,'int12_1'];
     conv.ask(Utils.playSimple(audiourl));
@@ -1240,8 +1244,6 @@ app.intent('1_3bossresponse', (conv, {response}) => {
     conv.data.previous = ['16_2event',response,'int16_1'];
     if (response === 'one') {
       audiourl += '308.mp3';
-    } else if (response === 'two') {
-      audiourl += '309.mp3';
     } else {
       audiourl += '310.mp3';
     }
@@ -1250,7 +1252,10 @@ app.intent('1_3bossresponse', (conv, {response}) => {
 
   app.intent('17_1faktat', (conv) => {
     conv.data.fallbackCount = 0;
-    const audiourl = host + '311.mp3';
+    var audiourl = host + '311.mp3';
+    if (conv.data.kyyhky) {
+      audiourl = host + '311KY.mp3';
+    }
     conv.data.previous = ['17_1event','ready','int16_2'];
     conv.ask(Utils.playSimple(audiourl));
   });

@@ -106,11 +106,11 @@ const reprompts = {
       case '15_1event':
       return ['301K','int15_1','15_2event','yes'];
       case '15_2event':
-      return ['301K','int15_2','15_3event','yes'];
+      return ['303K','int15_2','15_3event','yes'];
       case '15_3event':
-      return ['301K','int15_3','15_4event','no'];
+      return ['304K','int15_3','15_4event','no'];
       case '15_4event':
-      return ['301K','int15_4','15_5event','no'];
+      return ['305K','int15_4','15_5event','no'];
       case '15_5event':
       return ['306K','int16_E','16_1event','one'];
       case '16_1event':
@@ -207,7 +207,7 @@ const reprompts = {
       case 'no':
       return 'binarr';
       default:
-      return 'response';      
+      return 'response';
     }
   }
 }
