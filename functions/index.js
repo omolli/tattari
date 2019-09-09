@@ -39,6 +39,7 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
     conv.data.rethink = false;
     conv.data.sreveal = false;
     conv.data.julkaise = false;
+    conv.data.nice = false;
     conv.data.previous = ['Welcome','start again','welcome'];
     conv.data.peliansw = [0,0,0];
     const audiourl = host + '101.mp3';
@@ -85,6 +86,7 @@ app.intent('Load', (conv) => {
         conv.data.peliansw = conv.user.storage.peliansw;
         conv.data.kysurl = conv.user.storage.kysurl;
         conv.data.julkaise = conv.user.storage.kysurl;
+        conv.data.nice = conv.user.storage.nice;
       }
       conv.followup('repeat', {
         response: 'repeat'
@@ -114,15 +116,9 @@ app.intent('Save', (conv) => {
     conv.user.storage.peliansw = conv.data.peliansw;
     conv.user.storage.kysurl = conv.data.kysurl;
     conv.user.storage.julkaise = conv.data.julkaise;
+    conv.user.storage.nice = conv.data.nice;
    //conv.close(`The game is now saved!`);
-    //conv.close('The game is now saved!');
-    const cevent = conv.data.previous[0];
-    const cparam = conv.data.previous[1];
-    const ccontext = conv.data.previous[2];
-    conv.contexts.set(ccontext,1,{})
-    conv.followup(cevent, {
-      response: cparam
-    });
+    conv.close('The game is now saved!');
   } else {
     conv.ask('Only verified users can save progress. Say quit if you wish to exit and repeat if you wish to continue');
   }
@@ -149,14 +145,27 @@ app.intent('SaveSilent', (conv) => {
     conv.user.storage.peliansw = conv.data.peliansw;
     conv.user.storage.kysurl = conv.data.kysurl;
     conv.user.storage.julkaise = conv.data.julkaise;
+    conv.user.storage.nice = conv.data.nice;
   }
   const cevent = conv.data.previous[0];
   const cparam = conv.data.previous[1];
   const ccontext = conv.data.previous[2];
   conv.contexts.set(ccontext,1,{})
-  conv.followup(cevent, {
-    response: cparam
-  });
+  conv.ask('Your game has been saved, say ready to continue!')
+   // conv.followup(cevent, {
+   //   response: cparam
+   // });
+});
+
+app.intent('SaveContinue', (conv) => {
+  const cevent = conv.data.previous[0];
+  const cparam = conv.data.previous[1];
+  const ccontext = conv.data.previous[2];
+  conv.contexts.set(ccontext,1,{})
+   conv.followup(cevent, {
+     response: cparam
+   });
+
 });
 
 app.intent('Exit', (conv) => {
@@ -188,6 +197,10 @@ app.intent('repeat', (conv) =>{
   if (param === 'binarr') {
     conv.followup(cevent, {
       binarr: cparam
+    });
+  } else if (cevent === '2_2event') {
+    conv.followup(cevent, {
+      ent2_1: cparam
     });
   } else {
   conv.followup(cevent, {
@@ -252,7 +265,7 @@ app.intent('AnyFallback', (conv) => {
 app.intent('CheckTest', (conv) => {
     const teest = 'test is ' + conv.user.storage.testi;
     const prev = 'previous is ' + conv.user.storage.previous;
-    const str =  + teest + ' and ' + prev;
+    const str = teest + ' and ' + prev;
     conv.ask(Utils.speak(str));
 
 });
@@ -314,19 +327,17 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   });
 
   app.intent('1_6koski', (conv, {response, ent1_6}) => {
-    const audiourl = host+ '110.mp3';
+    const audiourl = host + '110.mp3';
     var answ = 'two';
-    conv.data.nice = false;
     if (response === 'one' || ent1_6 === 'fill') {
       conv.data.nice = true;
+      answ = 'one';
       if (!conv.data.points.includes('1_6event')) {
         conv.data.vpoints++;
         conv.data.points.push('1_6event')
       }
     }
-    conv.user.storage.nice = conv.data.nice;
     conv.data.previous = ['1_6event',answ,'int1_5'];
-    conv.user.storage.previous = conv.data.previous;
     conv.ask(Utils.playSimple(audiourl));
   });
 
@@ -359,7 +370,6 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.data.fallbackCount = 0;
     var audiourl = '';
     var answ = 'four';
-    conv.data.previous = ['2_1event',answ,'int6'];
     if (response === 'one' || ent2_1 === 'why') {
       audiourl = host + '113.mp3';
       conv.contexts.set('kysykuski', 5, {kys: 'A'});
@@ -376,6 +386,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       audiourl = host + '116.mp3';
       conv.contexts.set('kysykuski', 5, {kys: 'D'});
     }
+    conv.data.previous = ['2_1event',answ,'int1_7'];
     conv.ask(Utils.playSimple(audiourl));
   });
 
@@ -467,7 +478,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.ask(Utils.playSimple(audiourl));
   });
 
-  app.intent('3A_2round', (conv, {response,binarr}) => {
+  app.intent('3A_3round', (conv, {response,binarr}) => {
     conv.data.kyyhky = true;
     conv.data.fallbackCount = 0;
     var answ = 'no';
@@ -479,7 +490,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     } else {
         audiourl = host + '128.mp3';
     }
-    conv.data.previous = ['3A_2revent',answ,'3Around'];
+    conv.data.previous = ['3A_3event',answ,'3Around'];
     conv.ask(Utils.playSimple(audiourl));
   });
 
@@ -766,9 +777,29 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
 
      if (!conv.data.checkpoint.includes('7_1event')) {
        conv.data.checkpoint.push('7_1event');
-       conv.followup('save_silently', {
-         response: 'save silently'
-       });
+       // Wish this worked
+       // conv.followup('save_silently', {
+       //   response: 'save silently'
+       // });
+       conv.user.storage.sum = conv.data.sum;
+       conv.user.storage.fallbackCount = conv.data.fallbackCount;
+       conv.user.storage.day = conv.data.day;
+       conv.user.storage.vpoints = conv.data.vpoints;
+       conv.user.storage.bpoints = conv.data.bpoints;
+       conv.user.storage.minipeli = conv.data.minipeli;
+       conv.user.storage.checkpoint = conv.data.checkpoint;
+       conv.user.storage.points = conv.data.points;
+       conv.user.storage.experts = conv.data.experts;
+       conv.user.storage.testi = conv.data.testi;
+       conv.user.storage.visits = conv.data.visits;
+       conv.user.storage.kyyhky = conv.data.kyyhky;
+       conv.user.storage.rethink = conv.data.rethink;
+       conv.user.storage.sreveal = conv.data.sreveal;
+       conv.user.storage.previous = conv.data.previous;
+       conv.user.storage.peliansw = conv.data.peliansw;
+       conv.user.storage.kysurl = conv.data.kysurl;
+       conv.user.storage.julkaise = conv.data.julkaise;
+       conv.user.storage.nice = conv.data.nice;
      }
     //Himomurhaajaan Pomo +1
     //Anatomian laitoksen opiskelijoihin
@@ -1222,6 +1253,28 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   });
 
   app.intent('14_1aamu', (conv) => {
+    if (!conv.data.checkpoint.includes('14_1event')) {
+      conv.data.checkpoint.push('14_1event');
+      conv.user.storage.sum = conv.data.sum;
+      conv.user.storage.fallbackCount = conv.data.fallbackCount;
+      conv.user.storage.day = conv.data.day;
+      conv.user.storage.vpoints = conv.data.vpoints;
+      conv.user.storage.bpoints = conv.data.bpoints;
+      conv.user.storage.minipeli = conv.data.minipeli;
+      conv.user.storage.checkpoint = conv.data.checkpoint;
+      conv.user.storage.points = conv.data.points;
+      conv.user.storage.experts = conv.data.experts;
+      conv.user.storage.testi = conv.data.testi;
+      conv.user.storage.visits = conv.data.visits;
+      conv.user.storage.kyyhky = conv.data.kyyhky;
+      conv.user.storage.rethink = conv.data.rethink;
+      conv.user.storage.sreveal = conv.data.sreveal;
+      conv.user.storage.previous = conv.data.previous;
+      conv.user.storage.peliansw = conv.data.peliansw;
+      conv.user.storage.kysurl = conv.data.kysurl;
+      conv.user.storage.julkaise = conv.data.julkaise;
+      conv.user.storage.nice = conv.data.nice;
+    }
     var audiourl = host;
     conv.data.previous = ['14_1event','ready','int13_2'];
     if (!conv.data.checkpoint.includes('14_1event')) {
@@ -1406,6 +1459,28 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   });
 
   app.intent('19_1aamu', (conv) => {
+    if (!conv.data.checkpoint.includes('19_1event')) {
+      conv.data.checkpoint.push('19_1event');
+      conv.user.storage.sum = conv.data.sum;
+      conv.user.storage.fallbackCount = conv.data.fallbackCount;
+      conv.user.storage.day = conv.data.day;
+      conv.user.storage.vpoints = conv.data.vpoints;
+      conv.user.storage.bpoints = conv.data.bpoints;
+      conv.user.storage.minipeli = conv.data.minipeli;
+      conv.user.storage.checkpoint = conv.data.checkpoint;
+      conv.user.storage.points = conv.data.points;
+      conv.user.storage.experts = conv.data.experts;
+      conv.user.storage.testi = conv.data.testi;
+      conv.user.storage.visits = conv.data.visits;
+      conv.user.storage.kyyhky = conv.data.kyyhky;
+      conv.user.storage.rethink = conv.data.rethink;
+      conv.user.storage.sreveal = conv.data.sreveal;
+      conv.user.storage.previous = conv.data.previous;
+      conv.user.storage.peliansw = conv.data.peliansw;
+      conv.user.storage.kysurl = conv.data.kysurl;
+      conv.user.storage.julkaise = conv.data.julkaise;
+      conv.user.storage.nice = conv.data.nice;
+    }
     const audiourl = host + '401.mp3';
     conv.data.previous = ['19_1event','ready','int18_4'];
     conv.ask(Utils.playSimple(audiourl));
@@ -1441,7 +1516,6 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   app.intent('20_2call', (conv,{ent20_2}) => {
     //HOX MITÄS JOS ent20_2 sisältää one,first,two jne..
     var audiourl = host + '408.mp3';
-    conv.data.nice = false;
     if (ent20_2 === 'one') {
       audiourl = host + '407.mp3';
       conv.data.nice = true;
@@ -1573,6 +1647,28 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   });
 
   app.intent('23_1aftermath', (conv) => {
+    if (!conv.data.checkpoint.includes('23_1event')) {
+      conv.data.checkpoint.push('23_1event');
+      conv.user.storage.sum = conv.data.sum;
+      conv.user.storage.fallbackCount = conv.data.fallbackCount;
+      conv.user.storage.day = conv.data.day;
+      conv.user.storage.vpoints = conv.data.vpoints;
+      conv.user.storage.bpoints = conv.data.bpoints;
+      conv.user.storage.minipeli = conv.data.minipeli;
+      conv.user.storage.checkpoint = conv.data.checkpoint;
+      conv.user.storage.points = conv.data.points;
+      conv.user.storage.experts = conv.data.experts;
+      conv.user.storage.testi = conv.data.testi;
+      conv.user.storage.visits = conv.data.visits;
+      conv.user.storage.kyyhky = conv.data.kyyhky;
+      conv.user.storage.rethink = conv.data.rethink;
+      conv.user.storage.sreveal = conv.data.sreveal;
+      conv.user.storage.previous = conv.data.previous;
+      conv.user.storage.peliansw = conv.data.peliansw;
+      conv.user.storage.kysurl = conv.data.kysurl;
+      conv.user.storage.julkaise = conv.data.julkaise;
+      conv.user.storage.nice = conv.data.nice;
+    }
     const audiourl = host + '427.mp3';
     conv.data.previous = ['23_1event','ready','int23_E'];
     conv.ask(Utils.playSimple(audiourl));
@@ -1997,60 +2093,6 @@ app.intent('1_1Start NoInput', (conv) => {
         response: "one"
       });
     }
-  });
-
-  app.intent('3A_1stay - fallback', (conv) => {
-    const audiourl = host + '124K.mp3';
-    conv.data.fallbackCount++;
-    if (conv.data.fallbackCount < fbc) {
-      return conv.ask(Utils.playSimple(audiourl));
-    } else {
-      return conv.followup('3A_2event', {
-        response: "one"
-      });
-    }
-  });
-
-  app.intent('3A_2round - fallback', (conv) => {
-      return conv.followup('3A_4event', {
-        response: "one"
-      });
-  });
-
-  app.intent('3A_3rake - fallback', (conv) => {
-      return conv.followup('3A_4event', {
-        response: "one"
-      });
-  });
-
-  app.intent('3A_4wrap - fallback', (conv) => {
-      return conv.followup('3D_1event', {
-        response: "ready"
-      });
-  });
-
-  app.intent('3B_1wrap - fallback', (conv) => {
-      return conv.followup('3B_2event', {
-        response: "ready"
-      });
-  });
-
-  app.intent('3B_2wrap - fallback', (conv) => {
-      return conv.followup('3B_3event', {
-        response: "ready"
-      });
-  });
-
-  app.intent('3B_3call - fallback', (conv) => {
-    return conv.followup('3B_4event', {
-      response: "one"
-    });
-  });
-
-  app.intent('3B_4call - fallback', (conv) => {
-      return conv.followup('4_1event', {
-        response: "ready"
-      });
   });
 
   app.intent('3D_1minipeli - fallback', (conv) => {

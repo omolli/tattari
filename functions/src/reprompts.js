@@ -26,7 +26,7 @@ const reprompts = {
         return ['123K','int2_4','2_5event','two'];
       case '3A_1event':
         return ['124K','int3A_1','3A_2event','one'];
-      case '3A_2revent':
+      case '3A_3event':
         return [valmis,'int3A_W','3A_4event','ready'];
       case '3A_4event':
         return [valmis,'int3A_4','3D_1event','ready'];
