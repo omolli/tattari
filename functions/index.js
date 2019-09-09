@@ -115,7 +115,14 @@ app.intent('Save', (conv) => {
     conv.user.storage.kysurl = conv.data.kysurl;
     conv.user.storage.julkaise = conv.data.julkaise;
    //conv.close(`The game is now saved!`);
-    conv.close('The game is now saved!');
+    //conv.close('The game is now saved!');
+    const cevent = conv.data.previous[0];
+    const cparam = conv.data.previous[1];
+    const ccontext = conv.data.previous[2];
+    conv.contexts.set(ccontext,1,{})
+    conv.followup(cevent, {
+      response: cparam
+    });
   } else {
     conv.ask('Only verified users can save progress. Say quit if you wish to exit and repeat if you wish to continue');
   }
@@ -123,6 +130,7 @@ app.intent('Save', (conv) => {
 
 app.intent('SaveSilent', (conv) => {
   if (conv.user.verification === 'VERIFIED') {
+    conv.data.testi = 'VERIFIEEEEEDD';
     conv.user.storage.sum = conv.data.sum;
     conv.user.storage.fallbackCount = conv.data.fallbackCount;
     conv.user.storage.day = conv.data.day;
@@ -241,8 +249,15 @@ app.intent('AnyFallback', (conv) => {
     response: cparam
   });
 });
+app.intent('CheckTest', (conv) => {
+    const teest = 'test is ' + conv.user.storage.testi;
+    const prev = 'previous is ' + conv.user.storage.previous;
+    const str =  + teest + ' and ' + prev;
+    conv.ask(Utils.speak(str));
 
+});
 app.intent('1_1Start', (conv) => {
+    conv.user.storage.testi = 'toimiiko';
     conv.data.fallbackCount = 0;
     conv.data.previous = ['1_1event','ready','DefaultWelcomeIntent-followup'];
     const audiourl = host + '102.mp3';
@@ -309,7 +324,9 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
         conv.data.points.push('1_6event')
       }
     }
+    conv.user.storage.nice = conv.data.nice;
     conv.data.previous = ['1_6event',answ,'int1_5'];
+    conv.user.storage.previous = conv.data.previous;
     conv.ask(Utils.playSimple(audiourl));
   });
 
