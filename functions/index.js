@@ -202,6 +202,10 @@ app.intent('repeat', (conv) =>{
     conv.followup(cevent, {
       ent2_1: cparam
     });
+  } else if (cevent === '3D_2event' || cevent === '3D_3event' || cevent === '3D_4event') {
+    conv.followup(cevent, {
+      number: cparam
+    });
   } else {
   conv.followup(cevent, {
     response: cparam
