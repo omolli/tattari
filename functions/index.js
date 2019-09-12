@@ -618,7 +618,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.data.fallbackCount = 0;
     const answ = response;
     conv.data.previous = ['3D_5event',answ,'int3D_3'];
-    if (answ === 'two' || binarr === 'no') {
+    if (answ === 'one' || binarr === 'yes') {
       conv.contexts.set('int3A_4', 1, {});
       conv.data.minipeli = 0;
       return conv.followup('3D_1event', {
@@ -1909,7 +1909,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     }
     conv.data.previous = ['24_5event',answ,'int24_4'];
     const txt = `The question was ${answ}.`;
-    const ssml = Utils.playSimple(audiourl));
+    const ssml = Utils.playSimple(audiourl);
     conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
@@ -2832,9 +2832,9 @@ app.intent('1_1Start NoInput', (conv) => {
   app.intent('14_1aamu NoInput', (conv) => {
     const repromptCount = parseInt(conv.arguments.get('REPROMPT_COUNT'));
     var audiourl = host + valmis;
-    var contx = 'int14_1';
+    var ctx = 'int14_1';
     if (conv.data.julkaise) {
-      contx = 'int15_E';
+      ctx = 'int15_E';
     }
     conv.contexts.set(ctx,1,{});
     if (repromptCount < repc) {
