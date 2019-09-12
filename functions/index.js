@@ -11,16 +11,6 @@ const fbc = 3;
 const repc = 1;
 const valmis = '100K.mp3';
 
-//conv is undefined..
-//function repeater(conv) {
-//  return conv.followup('repeat', {
-//    response: 'repeat'
-//  });
-//}
-//function nuller(conv){
-//  conv.data.fallbackCount = 0;
-//  conv.arguments.set('REPROMPT_COUNT') = 0;
-//}
 //INTENTS
 app.intent('Default Welcome Intent', (conv, {response}) => {
     //Muuttujia
@@ -49,6 +39,7 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
     }
     if (conv.user.last.seen) {
       conv.ask('Welcome back to the dead are speaking!')
+      conv.contexts.set('loadgame',5,{})
       if (testday > 0) {
         conv.contexts.set('loadgame',5,{})
         conv.ask('If you wish to continue a saved game, say load game. For a new game say ready.')
@@ -213,6 +204,10 @@ app.intent('repeat', (conv) =>{
   } else if (cevent === '23_2event') {
     conv.followup(cevent, {
       ent23_2: cparam
+    });
+  } else if (cevent === '24_3event' || cevent === '24_4event' || cevent === '24_5event') {
+    conv.followup(cevent, {
+      ent24: cparam
     });
   } else {
   conv.followup(cevent, {
@@ -1279,6 +1274,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       conv.data.julkaise = true;
       answ = 'yes';
     } else {
+      conv.data.julkaise = false;
       audiourl += '252.mp3';
     }
     conv.data.previous = ['13_2event',answ,'int13_1'];
@@ -1768,12 +1764,14 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     audiourl2 += '.mp3';
     conv.data.kysurl = audiourl2;
     conv.data.previous = ['24_2event',answ,'int24_1'];
-    conv.ask(Utils.playMulti(`<media xml:id="audio1">
+    const txt = `The question was ${answ}.`;
+    const ssml = Utils.playMulti(`<media xml:id="audio1">
       <audio src="${audiourl}"/></media>
     <media xml:id="audio2" begin="audio1.end-0.0s">
       <audio src="${audiourl2}" clipBegin="0s" clipEnd="100s"/>
     </media>`
-    ));
+    );
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('24_3car', (conv,{ent24,response}) => {
@@ -1818,12 +1816,14 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     audiourl2 =  host + audiourl2 + '.mp3';
     conv.data.kysurl = audiourl2;
     conv.data.previous = ['24_3event',answ,'int24_2'];
-    conv.ask(Utils.playMulti(`<media xml:id="audio1">
+    const txt = `The question was ${answ}.`;
+    const ssml = Utils.playMulti(`<media xml:id="audio1">
       <audio src="${audiourl}"/></media>
     <media xml:id="audio2" begin="audio1.end-0.0s">
       <audio src="${audiourl2}" clipBegin="0s" clipEnd="100s"/>
     </media>`
-    ));
+    );
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('24_4car', (conv,{ent24,response}) => {
@@ -1866,12 +1866,14 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     audiourl2 = host + audiourl2 + '.mp3';
     conv.data.kysurl = audiourl2;
     conv.data.previous = ['24_4event',answ,'int24_3'];
-    conv.ask(Utils.playMulti(`<media xml:id="audio1">
+    const txt = `The question was ${answ}.`;
+    const ssml = Utils.playMulti(`<media xml:id="audio1">
       <audio src="${audiourl}"/></media>
     <media xml:id="audio2" begin="audio1.end-0.0s">
       <audio src="${audiourl2}" clipBegin="0s" clipEnd="100s"/>
     </media>`
-    ));
+    );
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('24_5car', (conv,{ent24,response}) => {
@@ -1906,7 +1908,9 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       });
     }
     conv.data.previous = ['24_5event',answ,'int24_4'];
-    conv.ask(Utils.playSimple(audiourl));
+    const txt = `The question was ${answ}.`;
+    const ssml = Utils.playSimple(audiourl));
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('25_1choice', (conv) => {
