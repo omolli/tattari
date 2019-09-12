@@ -45,10 +45,10 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
     conv.data.kysurl = '';
     var testday = 0;
     if (conv.user.verification === 'VERIFIED') {
-      testday = conv.user.storage.day;
+      //testday = conv.user.storage.day;
     }
     if (conv.user.last.seen) {
-      conv.ask('Welcome back!')
+      conv.ask('Welcome back to the dead are speaking!')
       if (testday > 0) {
         conv.contexts.set('loadgame',5,{})
         conv.ask('If you wish to continue a saved game, say load game. For a new game say ready.')
@@ -237,6 +237,18 @@ app.intent('NoInput', (conv) => {
       response: 'repeat'
     });
   }
+});
+//Noinput intent for intents that go to the next directly
+app.intent('AnyNoInput', (conv) => {
+  const cevent = conv.data.previous[0];
+  const prompt = Reprompts.getURL(cevent);
+  const ctx = prompt[1];
+  const eve = prompt[2];
+  const cparam = prompt[3];
+  conv.contexts.set(ctx,1,{})
+  conv.followup(eve, {
+    response: cparam
+  });
 });
 //Default fallback, i.e when no specific fallback is declared
 app.intent('Default Fallback Intent', (conv) => {
@@ -1480,7 +1492,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   });
 
   app.intent('18_4ennustaja', (conv) => {
-    const audiourl = host + '322.mp3';
+    const audiourl = host + '323.mp3';
     conv.data.previous = ['18_4event','ready','int18_3'];
     conv.ask(Utils.playSimple(audiourl));
   });
