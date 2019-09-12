@@ -1649,10 +1649,12 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.ask(Utils.playSimple(audiourl));
   });
 
-  app.intent('22A_2grave', (conv) => {
+  app.intent('22A_2grave', (conv,input) => {
     const audiourl = host + '419.mp3';
     conv.data.previous = ['22A_2event','ready','int22A_1'];
-    conv.ask(Utils.playSimple(audiourl));
+    const ssml = Utils.playSimple(audiourl);
+    const txt = `${conv.input.raw}. Right, now we know that. Listen ${conv.input.raw}, or nevermind.`;
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('22A_3grave', (conv) => {
@@ -2021,6 +2023,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       }
     }
     conv.ask(Utils.playSimple(audiourl));
+    conv.close(Utils.playSimple(host+'CREDITS.mp3'));
   });
 
   app.intent('26BEpilogue', (conv) => {
@@ -2040,6 +2043,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       }
     }
     conv.ask(Utils.playSimple(audiourl));
+    conv.close(Utils.playSimple(host+'CREDITS.mp3'));
   });
 //FALLBACKS and NoInputs
 
