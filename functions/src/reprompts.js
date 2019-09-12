@@ -1,6 +1,6 @@
 const reprompts = {
   getURL(e) {
-    const valmis = 'valmis';
+    const valmis = '100K';
     switch (e) {
       case 'welcome':
         return ['101K','DefaultWelcomeIntent-followup','1_1event','ready'];
@@ -39,7 +39,7 @@ const reprompts = {
       case '3B_3event':
         return ['138K','int3B_3','3B_4event','ready'];
       case '3B_4event':
-        return [valmis,'int3B_4','3B_5event','ready'];
+        return [valmis,'int4_E','4_1event','ready'];
       case '3D_1event':
         return ['130K','int3D_1','3D_2event','one'];
       case '3D_2event':
@@ -118,7 +118,7 @@ const reprompts = {
       case '16_2event':
       return [valmis,'int16_2','17_1event','ready'];
       case '17_1event':
-      return [valmis,'int17_1','17_2event','ready'];
+      return ['311K','int17_1','17_2event','ready'];
       case '17_2event':
       return ['312K','int17_2','17_3event','one'];
       case '17_4Aevent':
@@ -174,6 +174,8 @@ const reprompts = {
       return [valmis,'int23_2','24_1event','ready'];
       case '24_5event':
       return [valmis,'int24_5','25_1event','ready'];
+      case '24_1event':
+      return ['430K','int24_1','24_2event','one'];
       case '25_1event':
       return ['441K','int25_1','25_2event','one'];
       case '25_2event':
