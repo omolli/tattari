@@ -488,11 +488,11 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     var audiourl = '';
      if (response === 'one' || ent3A_2 === 'comb') {
         answ = 'one';
-        conv.contexts.set('int3A_W', 5, {});
+        conv.contexts.set('int3A_W', 2, {});
         audiourl = host+ '125.mp3';
     } else {
          audiourl = host + '126.mp3';
-         conv.contexts.set('3Around', 5, {});
+         conv.contexts.set('3Around', 2, {});
     }
     conv.data.previous = ['3A_2event',answ,'int3A_1'];
     conv.ask(Utils.playSimple(audiourl));
@@ -515,7 +515,6 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   });
 
   app.intent('3A_4wrap', (conv) => {
-    conv.data.fallbackCount = 0;
     conv.data.previous = ['3A_4event','ready','int3A_W'];
     conv.contexts.set('int3A_W', 0, {});
     const audiourl = host + '129.mp3';
@@ -523,14 +522,12 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   });
 
   app.intent('3B_Eleave', (conv) => {
-    conv.data.fallbackCount = 0;
     conv.data.previous = ['3B_Eevent','ready','leave3B'];
     const audiourl = host + '134.mp3';
     conv.ask(Utils.playSimple(audiourl));
   });
 
   app.intent('3B_1leave', (conv, {response,ent3B_1}) => {
-    conv.data.fallbackCount = 0;
     var answ = 'two';
     var audiourl = '';
      if (response === 'one' || ent3B_1 === 'murder') {
@@ -544,28 +541,24 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   });
 
   app.intent('3B_2sanoma', (conv) => {
-    conv.data.fallbackCount = 0;
     conv.data.previous = ['3B_2event','ready','int3B_1'];
     const audiourl = host + '137.mp3';
     conv.ask(Utils.playSimple(audiourl));
   });
 
   app.intent('3B_3call', (conv) => {
-    conv.data.fallbackCount = 0;
     conv.data.previous = ['3B_3event','ready','int3B_2'];
     const audiourl = host + '138.mp3';
     conv.ask(Utils.playSimple(audiourl));
   });
 
   app.intent('3B_4call', (conv) => {
-    conv.data.fallbackCount = 0;
     conv.data.previous = ['3B_4event','one','int3B_3'];
     const audiourl = host + '139.mp3';
     conv.ask(Utils.playSimple(audiourl));
   });
 
   app.intent('3D_1minipeli', (conv) => {
-    conv.data.fallbackCount = 0;
     conv.data.previous = ['3D_1event','ready','int3A_4'];
     conv.data.minipeli = 0;
     const audiourl = host + '130.mp3';
@@ -2161,6 +2154,30 @@ app.intent('1_1Start NoInput', (conv) => {
     }
   });
 
+  app.intent('3A_2r - fallback', (conv) => {
+    const audiourl = host + '126K.mp3';
+    const repromptCount = parseInt(conv.arguments.get('REPROMPT_COUNT'));
+    conv.data.fallbackCount++;
+    if (conv.data.fallbackCount < fbc && repromptCount === 0) {
+      return conv.ask(Utils.playSimple(audiourl));
+    } else if (repromptCount > 0) {
+      return conv.followup('repeat', {
+        response: 'repeat'
+      });
+    } else {
+      return conv.followup('3A_3event', {
+        binarr: 'no'
+      });
+    }
+  });
+
+  app.intent('3A_2w - fallback', (conv) => {
+    const audiourl = host + valmis;
+      return conv.followup('3A_4event', {
+        response: 'ready'
+      });
+  });
+
   app.intent('3D_1minipeli - fallback', (conv) => {
     const audiourl = host + '130K.mp3';
     conv.data.fallbackCount++;
@@ -2198,7 +2215,7 @@ app.intent('1_1Start NoInput', (conv) => {
   });
 
   app.intent('3D_4minipeli - fallback', (conv) => {
-    const audiourl = host + '132K.mp3';
+    const audiourl = host + '133K.mp3';
     conv.data.fallbackCount++;
     if (conv.data.fallbackCount < fbc) {
       return conv.ask(Utils.speak('Yes or no, Taipale?'));
@@ -2210,15 +2227,9 @@ app.intent('1_1Start NoInput', (conv) => {
   });
 
   app.intent('3D_5minipeli - fallback', (conv) => {
-    const audiourl = host + '132K.mp3';
-    conv.data.fallbackCount++;
-    if (conv.data.fallbackCount < fbc) {
-      return conv.ask(Utils.speak('Say ready!'));
-    } else {
-      return conv.followup('4_1event', {
-        response: 'ready'
-      });
-    }
+    return conv.followup('4_1event', {
+      response: 'ready'
+    });
   });
 
   app.intent('4_1ilta - fallback', (conv) => {
