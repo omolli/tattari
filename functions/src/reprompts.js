@@ -112,7 +112,7 @@ const reprompts = {
       case '15_4event':
       return ['305K','int15_4','15_5event','no'];
       case '15_5event':
-      return ['306K','int16_E','16_1event','one'];
+      return ['306K','int16_1','16_2event','one'];
       case '16_1event':
       return ['306K','int16_1','16_2event','one'];
       case '16_2event':
@@ -164,8 +164,6 @@ const reprompts = {
       case '22D_2event':
       return [valmis,'int22D_2','22D_3event','ready'];
       case '22D_3event':
-      return [valmis,'int22D_3','22D_4event','ready'];
-      case '22D_4event':
       return [valmis,'int23_E','23_1event','ready'];
       case '23_1event':
       return ['427K','int23_1','23_2event','three'];

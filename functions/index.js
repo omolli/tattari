@@ -364,7 +364,6 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   app.intent('1_7matka', (conv, {response,ent1_7}) => {
     conv.data.fallbackCount = 0;
     var answ = 'three';
-    // Tähän failsafe?
     const param = conv.data.nice;
     var audiourl = host + '111T.mp3';
     var urlc = '';
@@ -560,13 +559,15 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
 
   app.intent('3D_1minipeli', (conv) => {
     conv.data.previous = ['3D_1event','ready','int3A_4'];
-    conv.data.minipeli = 0;
-    const audiourl = host + '130.mp3';
+    var audiourl = host + '130.mp3';
+    if (conv.data.minipeli !== -1) {
+      audiourl = host + '180.mp3';
+    }
     conv.ask(Utils.playSimple(audiourl));
   });
 
   app.intent('3D_2minipeli', (conv, {number}) => {
-    conv.data.fallbackCount = 0;
+    conv.data.minipeli = 0;
     const answ = number;
     conv.data.peliansw[0] = answ;
     if (answ === '4') {
@@ -747,7 +748,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   app.intent('5C_1police', (conv) => {
     conv.data.fallbackCount = 0;
     conv.data.experts = Utils.appender(conv.data.experts,'C');
-    conv.data.previous = ['5_1Cevent','police','hkipolice'];
+    conv.data.previous = ['5C_1event','police','hkipolice'];
     const audiourl = host + '152.mp3';
     conv.ask(Utils.playSimple(audiourl));
   });
@@ -1146,7 +1147,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     } else if (conv.data.visits.indexOf('A') === -1) {
       //sanomaa ei ole kirjoitettu
       conv.contexts.set('int11A_E', 1, {});
-      if (response === 'one' || ent11C_3 === 'seen') {
+      if (response === 'one' || ent11C_3 === 'ask') {
         answ = 'one';
         audiourl += '234.mp3';
       } else {
@@ -1154,7 +1155,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       }
     } else {
       conv.contexts.set('int12_E', 1, {});
-      if (response === 'one' || ent11C_3 === 'seen') {
+      if (response === 'one' || ent11C_3 === 'ask') {
         answ = 'one';
         audiourl += '235.mp3';
       } else {
@@ -1673,20 +1674,22 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   app.intent('22D_2vanamo', (conv) => {
     const audiourl = host + '424.mp3';
     conv.data.previous = ['22D_2event','ready','int22D_1'];
-    conv.ask(Utils.playSimple(audiourl));
+    const ssml = Utils.playSimple(audiourl);
+    const txt = `${conv.input.raw}. Right, now we know that. Listen ${conv.input.raw}, or nevermind.`;
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('22D_3vanamo', (conv) => {
-    const audiourl = host + '425.mp3';
+    const audiourl = host + '426.mp3';
     conv.data.previous = ['22D_3event','ready','int22D_2'];
     conv.ask(Utils.playSimple(audiourl));
   });
 
-  app.intent('22D_4vanamo', (conv) => {
-    const audiourl = host + '426.mp3';
-    conv.data.previous = ['22D_4event','ready','int22D_3'];
-    conv.ask(Utils.playSimple(audiourl));
-  });
+  // app.intent('22D_4vanamo', (conv) => {
+  //   const audiourl = host + '426.mp3';
+  //   conv.data.previous = ['22D_4event','ready','int22D_3'];
+  //   conv.ask(Utils.playSimple(audiourl));
+  // });
 
   app.intent('23_1aftermath', (conv) => {
     if (!conv.data.checkpoint.includes('23_1event')) {
@@ -2178,6 +2181,18 @@ app.intent('1_1Start NoInput', (conv) => {
       });
   });
 
+  app.intent('3A_2w NoInput', (conv) => {
+    const audiourl = host + valmis;
+    const repromptCount = parseInt(conv.arguments.get('REPROMPT_COUNT'));
+    if (repromptCount > 0) {
+      return conv.followup('repeat', {
+        response: 'repeat'
+      });
+    } else {
+      return conv.ask(Utils.playSimple(audiourl));
+    }
+  });
+
   app.intent('3D_1minipeli - fallback', (conv) => {
     const audiourl = host + '130K.mp3';
     conv.data.fallbackCount++;
@@ -2218,7 +2233,7 @@ app.intent('1_1Start NoInput', (conv) => {
     const audiourl = host + '133K.mp3';
     conv.data.fallbackCount++;
     if (conv.data.fallbackCount < fbc) {
-      return conv.ask(Utils.speak('Yes or no, Taipale?'));
+      return conv.ask(Utils.playSimple(audiourl));
     } else {
       return conv.followup('3D_5event', {
         response: 'one'
