@@ -261,6 +261,9 @@ app.intent('Default Fallback Intent', (conv) => {
     conv.data.fallbackCount = fbc;
   }
   if (conv.data.fallbackCount < fbc) {
+  if (cevent === '1_2event' || cevent === '1_3event' || cevent === '1_5event' ||cevent === '1_6event' || cevent === '1_7event') {
+    conv.ask(Utils.playSimple(host+'99K.mp3'))
+  }
   conv.ask(Utils.playSimple(audiourl));
   } else {
     conv.data.fallbackCount = 0;
@@ -272,6 +275,7 @@ app.intent('Default Fallback Intent', (conv) => {
 //Fallback for intents that accept any input
 app.intent('AnyFallback', (conv) => {
   const cevent = conv.data.previous[0];
+  conv.data.testi = 'anyfall';
   const prompt = Reprompts.getURL(cevent);
   const ctx = prompt[1];
   const eve = prompt[2];
@@ -1006,23 +1010,25 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.ask(Utils.playSimple(audiourl));
   });
 
-  app.intent('11A_2sanoma', (conv, {binarr}) => {
-    conv.data.fallbackCount = 0;
-    conv.data.previous = ['11A_2event',binarr,'int11A_1'];
+  app.intent('11A_2sanoma', (conv, {binarr,berhaps}) => {
     var audiourl = '';
+    var answ = 'yes';
     if (conv.data.visits.length > 1) {
-      if (binarr === 'yes') {
-          audiourl = host + '217.mp3';
-      } else {
+      if (binarr === 'no' && berhaps === 'perhaps') {
           audiourl = host + '218.mp3';
+          answ = 'no';
+      } else {
+          audiourl = host + '217.mp3';
       }
     } else {
-      if (binarr === 'yes') {
-          audiourl = host + '215.mp3';
-      } else {
+      if (binarr === 'no' || berhaps === 'perhaps') {
           audiourl = host + '216.mp3';
+          answ = 'no';
+      } else {
+          audiourl = host + '215.mp3';
       }
     }
+    conv.data.previous = ['11A_2event',answ,'int11A_1'];
     conv.ask(Utils.playSimple(audiourl));
   });
 
@@ -2931,14 +2937,25 @@ app.intent('1_1Start NoInput', (conv) => {
     } else {
       conv.contexts.set('int21_3',1,{});
       resp = 'one';
-      audio = host +'416.mp3';
+      audio = host +'416K.mp3';
     }
-    return conv.followup(eve, {
-      response: resp
-    });
+    const repromptCount = parseInt(conv.arguments.get('REPROMPT_COUNT'));
+    if (conv.data.fallbackCount < fbc && repromptCount < repc) {
+    return conv.ask(Utils.playSimple(audiourl));
+    } else if (repromptCOunt === 1) {
+       return conv.followup('repeat', {
+         response: 'repeat'
+       });
+       } else {
+      conv.data.fallbackCount = 0;
+      return conv.followup(eve, {
+        response: resp
+      });
+    }
   });
 
   app.intent('21_4prep - fallback', (conv) => {
+    const audiourl = host + valmis;
     var eve = '22D_1event';
     if (conv.data.previous[1] === 'one') {
       conv.contexts.set('int22A_E',1,{});
@@ -2946,9 +2963,14 @@ app.intent('1_1Start NoInput', (conv) => {
     } else {
       conv.contexts.set('int22D_E',1,{});
     }
-    return conv.followup(eve, {
-      response: 'ready'
-    });
+    if (conv.data.fallbackCount < fbc) {
+    return conv.ask(Utils.playSimple(audiourl));
+    } else {
+      conv.data.fallbackCount = 0;
+      return conv.followup(eve, {
+        response: 'ready'
+      });
+    }
   });
 
   app.intent('24car - fallback', (conv) => {
