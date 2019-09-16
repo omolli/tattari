@@ -2942,11 +2942,11 @@ app.intent('1_1Start NoInput', (conv) => {
     const repromptCount = parseInt(conv.arguments.get('REPROMPT_COUNT'));
     if (conv.data.fallbackCount < fbc && repromptCount < repc) {
     return conv.ask(Utils.playSimple(audiourl));
-    } else if (repromptCOunt === 1) {
+    } else if (repromptCount === 1) {
        return conv.followup('repeat', {
          response: 'repeat'
        });
-       } else {
+     } else {
       conv.data.fallbackCount = 0;
       return conv.followup(eve, {
         response: resp
@@ -2963,12 +2963,17 @@ app.intent('1_1Start NoInput', (conv) => {
     } else {
       conv.contexts.set('int22D_E',1,{});
     }
-    if (conv.data.fallbackCount < fbc) {
+    const repromptCount = parseInt(conv.arguments.get('REPROMPT_COUNT'));
+    if (conv.data.fallbackCount < fbc && repromptCount < repc) {
     return conv.ask(Utils.playSimple(audiourl));
-    } else {
+    } else if (repromptCount === 1) {
+       return conv.followup('repeat', {
+         response: 'repeat'
+       });
+     } else {
       conv.data.fallbackCount = 0;
       return conv.followup(eve, {
-        response: 'ready'
+        response: resp
       });
     }
   });
