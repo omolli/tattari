@@ -21,11 +21,11 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
     conv.data.minipeli = -1;
     conv.data.checkpoint = [];
     conv.data.points = [];
+    conv.data.rethink = [];
     conv.data.experts = '';
     conv.data.testi = '';
     conv.data.visits = '';
     conv.data.kyyhky = false;
-    conv.data.rethink = false;
     conv.data.sreveal = false;
     conv.data.julkaise = false;
     conv.data.nice = false;
@@ -1950,13 +1950,20 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   app.intent('25_5choice', (conv,{binarr}) => {
     var audiourl = host + '447.mp3';
     if (binarr === 'yes') {
+      if (conv.data.rethink.indexOf('A') !== -1) {
+        audiourl = host + '449.mp3';
+      } else {
+        conv.data.rethink += 'A';
+      }
       conv.contexts.set('int25A',1,{});
     } else {
-      conv.contexts.set('int25B',1,{});
       audiourl = host + '448.mp3';
-    }
-    if (conv.data.rethink) {
-      audiourl = host + '449.mp3';
+      if (conv.data.rethink.indexOf('B') !== -1) {
+        audiourl = host + '449.mp3';
+      } else {
+        conv.data.rethink += 'B';
+      }
+      conv.contexts.set('int25B',1,{});
     }
     conv.data.previous = ['25_5event',binarr,'int25_4'];
     conv.ask(Utils.playSimple(audiourl));
@@ -1976,7 +1983,6 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
         audiourl += '451.mp3';
       }
     } else {
-      conv.data.rethink = true;
       conv.contexts.set('int25_3',1,{});
       return conv.followup('25_4event', {
         response: 'ready'
@@ -1996,7 +2002,6 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
         audiourl += '451.mp3';
       }
     } else {
-      conv.data.rethink = true;
       conv.contexts.set('int25_3',1,{});
       return conv.followup('25_4event', {
         response: 'ready'
@@ -2009,8 +2014,8 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   app.intent('26AEpilogue', (conv) => {
     var audiourl = host;
     conv.data.previous = ['26Aevent','ready','int26A'];
-    if (conv.data.vpoints > 2) {
-      if (conv.data.bpoints > 2) {
+    if (conv.data.vpoints > 3) {
+      if (conv.data.bpoints > 3) {
         audiourl += 'END1.mp3';
       } else {
         audiourl += 'END3.mp3';
