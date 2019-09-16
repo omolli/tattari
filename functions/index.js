@@ -2930,14 +2930,14 @@ app.intent('1_1Start NoInput', (conv) => {
   app.intent('21_3prep - fallback', (conv) => {
     var eve = '21_4event';
     var resp = 'ready';
-    var audio = host + valmis;
+    var audiourl = host + valmis;
     if (conv.data.previous[1] === 'one') {
       conv.contexts.set('int22A_E',1,{});
       eve = '22A_1event';
     } else {
       conv.contexts.set('int21_3',1,{});
       resp = 'one';
-      audio = host +'416K.mp3';
+      audiourl = host +'416K.mp3';
     }
     const repromptCount = parseInt(conv.arguments.get('REPROMPT_COUNT'));
     if (conv.data.fallbackCount < fbc && repromptCount < repc) {
