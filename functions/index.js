@@ -2896,7 +2896,7 @@ app.intent('1_1Start NoInput', (conv) => {
   });
 
   app.intent('17_3 NoInput', (conv) => {
-    const ctx = previous[1];
+    const ctx = conv.data.previous[1];
     var audiourl = host + '314K.mp3';
     if (ctx === 'one') {
       conv.contexts.set('int17_3A',1,{});
