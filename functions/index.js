@@ -2895,10 +2895,15 @@ app.intent('1_1Start NoInput', (conv) => {
     });
   });
 
-  app.intent('17_3A - NoInput', (conv) => {
-    //MUISTA SISÄKONTEKSTIIN ALLAOLEVA
-    conv.contexts.set('int17_3A',1,{});
-    const audiourl = host + '313K.mp3';
+  app.intent('17_3 NoInput', (conv) => {
+    const ctx = previous[1];
+    var audiourl = host + '314K.mp3';
+    if (ctx === 'one') {
+      conv.contexts.set('int17_3A',1,{});
+      audiourl = host + '313K.mp3';
+    } else {
+      conv.contexts.set('int17_3B',1,{});
+    }
     const repromptCount = parseInt(conv.arguments.get('REPROMPT_COUNT'));
     if (repromptCount < repc) {
       return conv.ask(Utils.playSimple(audiourl));
@@ -2909,19 +2914,6 @@ app.intent('1_1Start NoInput', (conv) => {
     }
   });
 
-  app.intent('17_3B - NoInput', (conv) => {
-    //MUISTA SISÄKONTEKSTIIN ALLAOLEVA
-    conv.contexts.set('int17_3B',1,{});
-    const audiourl = host + '314K.mp3';
-    const repromptCount = parseInt(conv.arguments.get('REPROMPT_COUNT'));
-    if (repromptCount < repc) {
-      return conv.ask(Utils.playSimple(audiourl));
-    } else {
-      return conv.followup('repeat', {
-        response: 'repeat'
-      });
-    }
-  });
   //Tämä samalla noInput
   app.intent('18_2ennustaja NoInput', (conv) => {
     return conv.followup('18_3event', {
