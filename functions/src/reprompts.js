@@ -2,8 +2,8 @@ const reprompts = {
   getURL(e) {
     const valmis = '100K';
     switch (e) {
-      case 'welcome':
-        return ['101K','DefaultWelcomeIntent-followup','1_1event','ready'];
+      case 'Welcome':
+        return ['100K','DefaultWelcomeIntent-followup','1_1event','ready'];
       case '1_1event':
         return ['199K','int1_1','1_2event','ready'];
       case '1_2event':

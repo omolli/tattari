@@ -1953,7 +1953,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
 
   app.intent('25_4choice', (conv) => {
     var audiourl = host + '446';
-    if (conv.data.rethink) {
+    if (conv.data.rethink.length > 0) {
       audiourl += 'B';
     }
     audiourl += '.mp3';
