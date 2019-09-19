@@ -154,7 +154,7 @@ const reprompts = {
       case '22A_3event':
       return [valmis,'int22A_3','22B_1event','ready'];
       case '22B_1event':
-      return ['421K','int22B_1','22B_2event','ready'];
+      return ['421K','int22B_1','22B_2event','rolf rivasto'];
       case '22B_2event':
       return [valmis,'int23_E','23_1event','ready'];
       case '22D_1event':

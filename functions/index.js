@@ -218,6 +218,7 @@ app.intent('repeat', (conv) =>{
 
 //Default NoInput intent
 app.intent('NoInput', (conv) => {
+  conv.data.testi='ohonoinput';
   const repromptCount = parseInt(conv.arguments.get('REPROMPT_COUNT'));
   const cevent = conv.data.previous[0];
   const prompt = Reprompts.getURL(cevent);
@@ -248,6 +249,7 @@ app.intent('AnyNoInput', (conv) => {
 //Default fallback, i.e when no specific fallback is declared
 app.intent('Default Fallback Intent', (conv) => {
   conv.data.fallbackCount++;
+  conv.data.testi = 'defaultiin men';
   const cevent = conv.data.previous[0];
   const prompt = Reprompts.getURL(cevent);
   const audiourl = host + prompt[0] + '.mp3';
@@ -255,13 +257,18 @@ app.intent('Default Fallback Intent', (conv) => {
   var eve = prompt[2];
   var cparam = prompt[3];
   conv.contexts.set(ctx,1,{})
+  if(cevent === '22B_1event') {
+    conv.followup('22B_2action', {
+      response: cparam
+    });
+  }
   if (prompt[0] === 'repeater') {
     eve = 'repeat';
     cparam = 'repeat';
     conv.data.fallbackCount = fbc;
   }
   if (conv.data.fallbackCount < fbc) {
-  if (cevent === '1_2event' || cevent === '1_3event' || cevent === '1_5event' ||cevent === '1_6event' || cevent === '1_7event') {
+  if ((cevent === '1_2event' || cevent === '1_3event' || cevent === '1_5event' ||cevent === '1_6event' || cevent === '1_7event') && conv.data.fallbackCount > 1) {
     conv.ask(Utils.playSimple(host+'99K.mp3'))
   }
   conv.ask(Utils.playSimple(audiourl));
@@ -1661,6 +1668,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
 
   app.intent('22B_1action', (conv) => {
     const audiourl = host + '421.mp3';
+    conv.data.testi = 'notsoany'
     conv.data.previous = ['22B_1event','ready','int22A_3'];
     conv.ask(Utils.playSimple(audiourl));
   });
@@ -2973,7 +2981,7 @@ app.intent('1_1Start NoInput', (conv) => {
      } else {
       conv.data.fallbackCount = 0;
       return conv.followup(eve, {
-        response: resp
+        response: 'ready'
       });
     }
   });
