@@ -2882,7 +2882,12 @@ app.intent('1_1Start NoInput', (conv) => {
       ctx = 'int15_E';
     }
     conv.contexts.set(ctx,1,{});
-    if (repromptCount < repc) {
+    if (!conv.data.julkaise) {
+      return conv.followup('14_2event', {
+        response: 'ready'
+      });
+    }
+    else if (repromptCount < repc) {
       return conv.ask(Utils.playSimple(audiourl));
     } else {
       return conv.followup('repeat', {
