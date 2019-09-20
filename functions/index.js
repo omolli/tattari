@@ -1021,7 +1021,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     var audiourl = '';
     var answ = 'yes';
     if (conv.data.visits.length > 1) {
-      if (binarr === 'no' && berhaps === 'perhaps') {
+      if (binarr === 'no' || berhaps === 'perhaps') {
           audiourl = host + '218.mp3';
           answ = 'no';
       } else {
@@ -2035,7 +2035,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
         audiourl += 'END3.mp3';
       }
     } else {
-      if (conv.data.bpoints > 2) {
+      if (conv.data.bpoints > 3) {
         audiourl += 'END2.mp3';
       } else {
         audiourl += 'END4.mp3';
