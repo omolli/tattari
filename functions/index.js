@@ -333,6 +333,10 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
         answ = 'three';
     }
     conv.data.previous = ['1_3event',answ,'int1_2'];
+    if (conv.user.verification === 'VERIFIED') {
+      conv.user.storage.previous = conv.data.previous;
+      conv.user.storage.bpoints = conv.data.bpoints;
+    }
     conv.ask(Utils.playSimple(audiourl));
 });
 
@@ -393,6 +397,11 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       audiourl = urlc + 'V.mp3';
     }
     conv.data.previous = ['1_7event',answ,'int1_6'];
+    if (conv.user.verification === 'VERIFIED') {
+      conv.user.storage.previous = conv.data.previous;
+      conv.user.storage.bpoints = conv.data.vpoints;
+      conv.user.storage.nice = conv.data.nice;
+    }
     conv.ask(Utils.playSimple(audiourl));
   });
 
@@ -788,7 +797,8 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     var audiourl = host;
     if (conv.data.minipeli < 0) {
       audiourl += '157';
-    } else if (conv.data.minipeli > 0) {
+      //VAI VAAN KAKS?
+    } else if (conv.data.minipeli > 2) {
       audiourl += '155';
     } else {
       audiourl += '156';
