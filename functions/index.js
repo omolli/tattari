@@ -2130,29 +2130,29 @@ app.intent('1_1Start NoInput', (conv) => {
     }
   });
 
-  app.intent('2_3handuja - fallback', (conv) => {
-    const audiourl = host + '121K.mp3';
-    conv.data.fallbackCount++;
-    if (conv.data.fallbackCount < fbc) {
-      return conv.ask(Utils.playSimple(audiourl));
-    } else {
-      return conv.followup('2_4event', {
-        response: "one"
-      });
-    }
-  });
+  // app.intent('2_3handuja - fallback', (conv) => {
+  //   const audiourl = host + '121K.mp3';
+  //   conv.data.fallbackCount++;
+  //   if (conv.data.fallbackCount < fbc) {
+  //     return conv.ask(Utils.playSimple(audiourl));
+  //   } else {
+  //     return conv.followup('2_4event', {
+  //       response: "one"
+  //     });
+  //   }
+  // });
 
-  app.intent('2_4kelo - fallback', (conv) => {
-    const audiourl = host + '123K.mp3';
-    conv.data.fallbackCount++;
-    if (conv.data.fallbackCount < fbc) {
-      return conv.ask(Utils.playSimple(audiourl));
-    } else {
-      return conv.followup('2_5event', {
-        response: "two"
-      });
-    }
-  });
+  // app.intent('2_4kelo - fallback', (conv) => {
+  //   const audiourl = host + '123K.mp3';
+  //   conv.data.fallbackCount++;
+  //   if (conv.data.fallbackCount < fbc) {
+  //     return conv.ask(Utils.playSimple(audiourl));
+  //   } else {
+  //     return conv.followup('2_5event', {
+  //       response: "two"
+  //     });
+  //   }
+  // });
 
   app.intent('2_5choice - fallback', (conv) => {
     var audiourl = '';
@@ -2970,7 +2970,7 @@ app.intent('1_1Start NoInput', (conv) => {
   app.intent('21_4prep - fallback', (conv) => {
     const audiourl = host + valmis;
     var eve = '22D_1event';
-    if (conv.data.previous[1] === 'one') {
+    if (conv.data.previous[1] === 'two') {
       conv.contexts.set('int22A_E',1,{});
       eve = '22A_1event';
     } else {
@@ -2994,15 +2994,20 @@ app.intent('1_1Start NoInput', (conv) => {
   app.intent('24car - fallback', (conv) => {
     const audiourl = conv.data.kysurl;
     conv.data.fallbackCount++;
+    const eve = conv.data.previous[0];
+    var indx = eve.indexOf('e');
+    var nmbr = parseInt(eve[indx-1],10)+1;
+    if (nmbr === 3 && !conv.data.kyyhky) {
+      nmbr += 1
+    }
+    var ctx = 'int24_' + (nmbr).toString();
+    conv.contexts.set(ctx, 1, {});
     if (conv.data.fallbackCount < fbc) {
       return conv.ask(Utils.playSimple(audiourl));
     } else {
-      const eve = conv.data.previous[0];
-      var indx = eve.indexOf('e');
-      var nmbr = (eve[indx-1].toInt+1).toString;
-      next_eve = eve; //replace indx-1 character with nmbr
+      const next_eve = '24_' + nmbr.toString() + 'event';
       conv.data.fallbackCount = 0;
-      return conv.followup('24_3event', {
+      return conv.followup(next_eve, {
         response: 'one'
       });
     }
@@ -3033,18 +3038,6 @@ app.intent('1_1Start NoInput', (conv) => {
       });
     }
   });
-
-//  OLD!! exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response) => {
-//   const agent = new WebhookClient({ request, response });
-//
-//   function defInt (agent) {
-//       agent.add(`This works! But does it work for you?`);
-//   }
-//   let intentMap = new Map();
-//   intentMap.set('1_1Start', defInt);  // maps the intent to the function '
-//   agent.handleRequest(intentMap);
-// });
-
 
 //SHORTCUTS
 app.intent('shortcut1', (conv) => {
