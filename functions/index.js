@@ -766,7 +766,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
 
   app.intent('5C_2police', (conv) => {
     conv.data.fallbackCount = 0;
-    conv.data.previous = ['5_2Cevent','one','int5C_1'];
+    conv.data.previous = ['5C_2event','one','int5C_1'];
     var audiourl = host + '153.mp3';
     if (conv.data.day === 2) {
       audiourl = host + '202C.mp3';
@@ -822,7 +822,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     var audiourl = host;
     if (conv.data.minipeli < 0) {
       audiourl += '157';
-    } else if (conv.data.minipeli > 2) {
+    } else if (conv.data.minipeli > 2å) {
       audiourl += '155';
     } else {
       audiourl += '156';
