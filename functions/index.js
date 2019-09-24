@@ -782,13 +782,47 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.ask(Utils.playSimple(audiourl));
   });
 
+  app.intent('5router', (conv, {response}) => {
+    const answ = response;
+    var eves = [];
+    var resps = [];
+    if (conv.data.experts.indexOf('A') === -1) {
+      eves.push('5A_1event');
+      resps.push('professor');
+    }
+    if (conv.data.experts.indexOf('B') === -1) {
+      eves.push('5B_1event');
+      resps.push('physician');
+    }
+    if (conv.data.experts.indexOf('C') === -1) {
+      eves.push('5B_1event');
+      resps.push('police');
+    }
+    if (eves.length < 2) {
+      return conv.followup('repeat', {
+        response: 'repeat'
+      });
+    }
+    else {
+      if (answ === 'one') {
+        return conv.followup(eves[0], {
+          response: resps[0]
+        });
+        } else {
+        return conv.followup(eves[1], {
+          response: resps[1]
+        });
+      }
+    }
+  });
+
   app.intent('6_1ilta', (conv) => {
     conv.data.fallbackCount = 0;
     conv.data.previous = ['6_1event','ready','int6E'];
     var audiourl = host;
     if (conv.data.minipeli < 0) {
       audiourl += '157';
-    } else if (conv.data.minipeli > 0) {
+    } else if (conv.data.minipeli > 2) {
       audiourl += '155';
     } else {
       audiourl += '156';
@@ -1970,7 +2004,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
         conv.data.rethink += 'A';
       }
       conv.contexts.set('int25A',1,{});
-    } else {
+    } else if (binarr === 'no'){
       audiourl = host + '448.mp3';
       if (conv.data.rethink.indexOf('B') !== -1) {
         audiourl = host + '449.mp3';
@@ -1978,6 +2012,12 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
         conv.data.rethink += 'B';
       }
       conv.contexts.set('int25B',1,{});
+    } else {
+      conv.data.rethink += 'C';
+      conv.contexts.set('int25_3',1,{});
+      return conv.followup('25_4event', {
+        response: 'ready'
+      });
     }
     conv.data.previous = ['25_5event',binarr,'int25_4'];
     conv.ask(Utils.playSimple(audiourl));
@@ -3000,11 +3040,16 @@ app.intent('1_1Start NoInput', (conv) => {
     if (nmbr === 3 && !conv.data.kyyhky) {
       nmbr += 1
     }
-    var ctx = 'int24_' + (nmbr).toString();
+    var ctx = 'int24_' + (nmbr-1).toString();
     conv.contexts.set(ctx, 1, {});
-    if (conv.data.fallbackCount < fbc) {
+    const repromptCount = parseInt(conv.arguments.get('REPROMPT_COUNT'));
+    if (conv.data.fallbackCount < fbc && repromptCount < repc) {
       return conv.ask(Utils.playSimple(audiourl));
-    } else {
+    } else if (repromptCount === 1) {
+       return conv.followup('repeat', {
+         response: 'repeat'
+       });
+     } else {
       const next_eve = '24_' + nmbr.toString() + 'event';
       conv.data.fallbackCount = 0;
       return conv.followup(next_eve, {
