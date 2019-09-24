@@ -822,7 +822,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     var audiourl = host;
     if (conv.data.minipeli < 0) {
       audiourl += '157';
-    } else if (conv.data.minipeli > 2å) {
+    } else if (conv.data.minipeli > 2) {
       audiourl += '155';
     } else {
       audiourl += '156';
@@ -1181,12 +1181,12 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   app.intent('11C_3cafe', (conv, {response,ent11C_3}) => {
     conv.data.fallbackCount = 0;
     var audiourl = host;
-    var answ = 'two';
+    var answ = 'one';
     //Vaimon luona ei olla käyty
     if (conv.data.visits.indexOf('B') === -1) {
       conv.contexts.set('int11B_E', 1, {});
-      if (response === 'one' || ent11C_3 === 'ask') {
-        answ = 'one';
+      if (response === 'two' || ent11C_3 === 'ask') {
+        answ = 'two';
         audiourl += '236.mp3';
       } else {
         audiourl += '239.mp3';
@@ -1194,16 +1194,16 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     } else if (conv.data.visits.indexOf('A') === -1) {
       //sanomaa ei ole kirjoitettu
       conv.contexts.set('int11A_E', 1, {});
-      if (response === 'one' || ent11C_3 === 'ask') {
-        answ = 'one';
+      if (response === 'two' || ent11C_3 === 'ask') {
+        answ = 'two';
         audiourl += '234.mp3';
       } else {
         audiourl += '237.mp3';
       }
     } else {
       conv.contexts.set('int12_E', 1, {});
-      if (response === 'one' || ent11C_3 === 'ask') {
-        answ = 'one';
+      if (response === 'two' || ent11C_3 === 'ask') {
+        answ = 'two';
         audiourl += '235.mp3';
       } else {
         audiourl += '238.mp3';
