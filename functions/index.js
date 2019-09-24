@@ -38,7 +38,6 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
       //testday = conv.user.storage.day;
     }
     if (conv.user.last.seen) {
-      conv.ask('Welcome back to the dead are speaking!')
       conv.contexts.set('loadgame',5,{})
       if (testday > 0) {
         conv.contexts.set('loadgame',5,{})
@@ -47,7 +46,6 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
         conv.ask(Utils.playSimple(audiourl));
       }
     } else {
-      conv.ask('Welcome to the dead are speaking!')
       conv.ask(Utils.playSimple(audiourl));
     }
 });
