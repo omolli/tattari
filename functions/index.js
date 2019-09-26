@@ -31,7 +31,7 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
     conv.data.nice = false;
     conv.data.previous = ['Welcome','start again','welcome'];
     conv.data.peliansw = [0,0,0];
-    const audiourl = host + '101.mp3';
+    const audiourl = host + '101.ogg';
     conv.data.kysurl = '';
     var testday = 0;
     if (conv.user.verification === 'VERIFIED') {
@@ -52,7 +52,7 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
 //app.intent('pause', (conv) => { });
 
 app.intent('NewGame', (conv) => {
-  const audiourl = host + '101.mp3';
+  const audiourl = host + '101.ogg';
   conv.data.previous = ['newgame','new game','DefaultWelcomeIntent-followup'];
   conv.ask(Utils.playSimple(audiourl));
 });
@@ -300,7 +300,7 @@ app.intent('CheckTest', (conv) => {
 app.intent('1_1Start', (conv) => {
     conv.data.fallbackCount = 0;
     conv.data.previous = ['1_1event','ready','DefaultWelcomeIntent-followup'];
-    const audiourl = host + '102.mp3';
+    const audiourl = host + '102.ogg';
     const ssml = Utils.playSimple(audiourl);
     const txt = 'Bloody hellfire, are you listening to me?';
     conv.ask(new SimpleResponse({speech: ssml, text: txt}));
@@ -309,7 +309,7 @@ app.intent('1_1Start', (conv) => {
 
 app.intent('1_2boss', (conv) => {
     conv.data.previous = ['1_2event','ready','int1_1'];
-    const audiourl = host + '197.mp3';
+    const audiourl = host + '197.ogg';
     conv.ask(Utils.playSimple(audiourl));
 });
 
