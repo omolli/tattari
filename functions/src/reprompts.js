@@ -21,7 +21,7 @@ const reprompts = {
       case '2_2event':
         return ['117K','int2_2','2_3event','two'];
       case '2_3event':
-        return ['121K','int2_3','2_3event','one'];
+        return ['121K','int2_3','2_4event','one'];
       case '2_4event':
         return ['123K','int2_4','2_5event','two'];
       case '3A_1event':
