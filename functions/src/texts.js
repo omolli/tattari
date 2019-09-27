@@ -6,7 +6,7 @@ const texts = {
       case '1_1event':
         return 'Intro';
       case '1_2event':
-        return ['Uusi Helsinki newsroom. “Half the bloody edition unsold!”';
+        return 'Uusi Helsinki newsroom. “Half the bloody edition unsold!”';
       case '1_3event':
         return ['104K','int1_3','1_4event','one'];
       case '1_4event':
@@ -30,7 +30,7 @@ const texts = {
       case '1_1event':
         return 'Intro';
       case '1_2event':
-        return ['Uusi Helsinki newsroom. “Half the bloody edition unsold!”';
+        return 'Uusi Helsinki newsroom. “Half the bloody edition unsold!”';
       case '1_3event':
         return ['104K','int1_3','1_4event','one'];
       case '1_4event':
@@ -46,6 +46,6 @@ const texts = {
       return 'Say “ready” to continue'
 
     }
-
+  }
 }
 module.exports = texts

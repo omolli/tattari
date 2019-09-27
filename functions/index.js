@@ -4,6 +4,7 @@ const functions = require('firebase-functions');
 const {google} = require('googleapis');
 const Utils = require('./src/utils')
 const Reprompts = require('./src/reprompts')
+const Texts = require('./src/texts')
 const app = dialogflow({debug: true});
 const host = 'https://tattar-oudbew.web.app/';
 const {WebhookClient} = require('dialogflow-fulfillment');
@@ -317,7 +318,7 @@ app.intent('1_2boss', (conv) => {
     const qtxt = '1. 2. or 3?'
     const varass = `<speak>a</speak>`
     conv.ask(new SimpleResponse({speech: ssml, text: txt}));
-    conv.ask(new SimpleResponse({text: qtxt}));
+    conv.ask(new SimpleResponse({speech: varass, text: qtxt}));
 });
 
 app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
