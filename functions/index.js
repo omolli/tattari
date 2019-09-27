@@ -34,6 +34,8 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
     const audiourl = host + '101.ogg';
     conv.data.kysurl = '';
     var testday = 0;
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
     if (conv.user.verification === 'VERIFIED') {
       //testday = conv.user.storage.day;
     }
@@ -43,10 +45,10 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
         conv.contexts.set('loadgame',5,{})
         conv.ask('If you wish to continue a saved game, say load game. For a new game say ready.')
       } else {
-        conv.ask(Utils.playSimple(audiourl));
+        conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       }
     } else {
-      conv.ask(Utils.playSimple(audiourl));
+      conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     }
 });
 //app.intent('pause', (conv) => { });
@@ -301,8 +303,8 @@ app.intent('1_1Start', (conv) => {
     conv.data.fallbackCount = 0;
     conv.data.previous = ['1_1event','ready','DefaultWelcomeIntent-followup'];
     const audiourl = host + '102.ogg';
+    const txt = Texts.bubble(conv.data.previous[0]);
     const ssml = Utils.playSimple(audiourl);
-    const txt = 'Bloody hellfire, are you listening to me?';
     conv.ask(new SimpleResponse({speech: ssml, text: txt}));
 
 });
@@ -310,7 +312,12 @@ app.intent('1_1Start', (conv) => {
 app.intent('1_2boss', (conv) => {
     conv.data.previous = ['1_2event','ready','int1_1'];
     const audiourl = host + '197.ogg';
-    conv.ask(Utils.playSimple(audiourl));
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    const qtxt = '1. 2. or 3?'
+    const varass = `<speak>a</speak>`
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+    conv.ask(new SimpleResponse({text: qtxt}));
 });
 
 app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
@@ -2127,15 +2134,18 @@ app.intent('Default Welcome Intent - fallback', (conv) => {
 
 app.intent('1_1Start NoInput', (conv) => {
   var audiourl = host + '199K.mp3';
+  var txt = 'The dead are speaking is now closing! Goodbye!';
   const repromptCount = parseInt(conv.arguments.get('REPROMPT_COUNT'));
   if (repromptCount === 0) {
-    return conv.ask(Utils.playSimple(audiourl));
+    txt = 'Do you hear me or not?! Answer me!';
   } else if (conv.arguments.get('IS_FINAL_REPROMPT')){
-    conv.close('The talking dead is now closing. Try this another time.');
+    return conv.close('The talking dead is now closing. Try this another time.');
   } else {
     audiourl = host + '198K.mp3';
-    return conv.ask(Utils.playSimple(audiourl));
+    txt = 'When the game is quiet, it waits for your answer. Say something to the Editor in chief!';
   }
+    var ssml = Utils.playSimple(audiourl);
+    return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
 });
   app.intent('2_1kuski - fallback', (conv) => {
     var audiourl = '';
