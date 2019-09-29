@@ -119,7 +119,7 @@ const reprompts = {
       return ['311K','int17_1','17_2event','ready'];
       case '17_2event':
       return ['312K','int17_2','17_3event','one'];
-      case '17_4Aevent':
+      case '17_3event':
       return [valmis,'int18_E','18_1Aevent','ready'];
       case '17_4Bevent':
       return [valmis,'int18_E','18_1Aevent','ready'];

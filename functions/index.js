@@ -17,6 +17,7 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
     //Muuttujia
     conv.data.fallbackCount = 0;
     conv.data.day = 1;
+    conv.data.day = 1;
     conv.data.vpoints = 0;
     conv.data.bpoints = 0;
     conv.data.minipeli = -1;
@@ -34,18 +35,16 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
     conv.data.peliansw = [0,0,0];
     const audiourl = host + '101.ogg';
     conv.data.kysurl = '';
-    var testday = 0;
-    const txt = Texts.bubble(conv.data.previous[0]);
+    var txt = Texts.bubble(conv.data.previous[0]);
     const ssml = Utils.playSimple(audiourl);
-    if (conv.user.verification === 'VERIFIED') {
-      //testday = conv.user.storage.day;
-    }
-    if (conv.user.last.seen) {
-      conv.contexts.set('loadgame',5,{})
-      if (testday > 0) {
+    if (conv.user.verification === 'VERIFIED' && conv.user.last.seen) {
+      txt += 'the day is' + conv.user.storage.previous;
+      if (conv.user.storage.tday > 0 && conv.user.storage.tday < 5) {
         conv.contexts.set('loadgame',5,{})
-        conv.ask('If you wish to continue a saved game, say load game. For a new game say ready.')
+        conv.ask('You are back');
+        conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       } else {
+        conv.ask('hi');
         conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       }
     } else {
@@ -57,34 +56,33 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
 app.intent('NewGame', (conv) => {
   const audiourl = host + '101.ogg';
   conv.data.previous = ['newgame','new game','DefaultWelcomeIntent-followup'];
-  conv.ask(Utils.playSimple(audiourl));
+  conv.ask(new SimpleResponse({speech: ssml, text: txt}));
 });
 
 app.intent('Load', (conv) => {
+    conv.data.testi = 'ladattu aluilleen';
     conv.data.previous = ['1_1event','ready','DefaultWelcomeIntent-followup'];
     if (conv.user.verification === 'VERIFIED') {
-      const theday = conv.user.storage.day;
-      if (conv.user.storage.day > 0 && conv.user.storage.day < 5) {
-        conv.data.sum = conv.user.storage.sum;
-        conv.data.fallbackCount = conv.user.storage.fallbackCount;
-        conv.data.day = conv.user.storage.day;
-        conv.data.vpoints = conv.user.storage.vpoints;
-        conv.data.bpoints = conv.user.storage.bpoints;
-        conv.data.minipeli = conv.user.storage.minipeli;
-        conv.data.checkpoint = conv.user.storage.checkpoint;
-        conv.data.points = conv.user.storage.points;
-        conv.data.experts = conv.user.storage.experts;
-        conv.data.testi = conv.user.storage.testi;
-        conv.data.visits = conv.user.storage.visits;
-        conv.data.kyyhky = conv.user.storage.kyyhky;
-        conv.data.rethink = conv.user.storage.rethink;
-        conv.data.sreveal = conv.user.storage.sreveal;
-        conv.data.previous = conv.user.storage.previous;
-        conv.data.peliansw = conv.user.storage.peliansw;
-        conv.data.kysurl = conv.user.storage.kysurl;
-        conv.data.julkaise = conv.user.storage.kysurl;
-        conv.data.nice = conv.user.storage.nice;
-      }
+      conv.data.sum = conv.user.storage.sum;
+      conv.data.fallbackCount = conv.user.storage.fallbackCount;
+      conv.data.day = conv.user.storage.tday;
+      conv.data.vpoints = conv.user.storage.vpoints;
+      conv.data.bpoints = conv.user.storage.bpoints;
+      conv.data.minipeli = conv.user.storage.minipeli;
+      conv.data.checkpoint = conv.user.storage.checkpoint;
+      conv.data.points = conv.user.storage.points;
+      conv.data.experts = conv.user.storage.experts;
+      conv.data.testi = conv.user.storage.testi;
+      conv.data.visits = conv.user.storage.visits;
+      conv.data.kyyhky = conv.user.storage.kyyhky;
+      conv.data.rethink = conv.user.storage.rethink;
+      conv.data.sreveal = conv.user.storage.sreveal;
+      conv.data.previous = conv.user.storage.previous;
+      conv.data.peliansw = conv.user.storage.peliansw;
+      conv.data.kysurl = conv.user.storage.kysurl;
+      conv.data.julkaise = conv.user.storage.kysurl;
+      conv.data.nice = conv.user.storage.nice;
+      conv.data.testi = 'ladattu loppuun';
       conv.followup('repeat', {
         response: 'repeat'
       });
@@ -97,7 +95,7 @@ app.intent('Save', (conv) => {
   if (conv.user.verification === 'VERIFIED') {
     conv.user.storage.sum = conv.data.sum;
     conv.user.storage.fallbackCount = conv.data.fallbackCount;
-    conv.user.storage.day = conv.data.day;
+    conv.user.storage.tday = conv.data.day;
     conv.user.storage.vpoints = conv.data.vpoints;
     conv.user.storage.bpoints = conv.data.bpoints;
     conv.user.storage.minipeli = conv.data.minipeli;
@@ -165,12 +163,15 @@ app.intent('SaveContinue', (conv) => {
 });
 
 app.intent('Exit', (conv) => {
-    conv.user.storage.testi = conv.data.testi;
-    conv.close('Goodbye for now!');
+  if (conv.user.verification === 'VERIFIED') {
+    conv.user.storage.tday = 1;
+    conv.user.storage.previous = conv.data.previous;
+  }
+  conv.close('Goodbye for now!');
 });
 
 app.intent('Forget', (conv) => {
-    conv.ask('Are you sure you want to delete all information?')
+  conv.ask('Are you sure you want to delete all information?')
 });
 
 app.intent('Forgot', (conv, {binarr}) => {
@@ -219,7 +220,6 @@ app.intent('repeat', (conv) =>{
 
 //Default NoInput intent
 app.intent('NoInput', (conv) => {
-  conv.data.testi='ohonoinput';
   const repromptCount = parseInt(conv.arguments.get('REPROMPT_COUNT'));
   const cevent = conv.data.previous[0];
   const prompt = Reprompts.getURL(cevent);
@@ -250,7 +250,6 @@ app.intent('AnyNoInput', (conv) => {
 //Default fallback, i.e when no specific fallback is declared
 app.intent('Default Fallback Intent', (conv) => {
   conv.data.fallbackCount++;
-  conv.data.testi = 'defaultiin men';
   const cevent = conv.data.previous[0];
   const prompt = Reprompts.getURL(cevent);
   const audiourl = host + prompt[0] + '.mp3';
@@ -272,7 +271,9 @@ app.intent('Default Fallback Intent', (conv) => {
   if ((cevent === '1_2event' || cevent === '1_3event' || cevent === '1_5event' ||cevent === '1_6event' || cevent === '1_7event') && conv.data.fallbackCount > 1) {
     conv.ask(Utils.playSimple(host+'99K.mp3'))
   }
-  conv.ask(Utils.playSimple(audiourl));
+  const txt = Texts.bubblef(conv.data.previous[0]);
+  const ssml = Utils.playSimple(audiourl);
+  conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   } else {
     conv.data.fallbackCount = 0;
     conv.followup(eve, {
@@ -301,24 +302,46 @@ app.intent('CheckTest', (conv) => {
 
 });
 app.intent('1_1Start', (conv) => {
-    conv.data.fallbackCount = 0;
     conv.data.previous = ['1_1event','ready','DefaultWelcomeIntent-followup'];
+    var xd = 'notveri';
+    if (conv.user.verification === 'VERIFIED') {
+      xd = conv.user.storage.day;
+      conv.user.storage.sum = conv.data.sum;
+      conv.user.storage.fallbackCount = conv.data.fallbackCount;
+      conv.user.storage.day = conv.data.day;
+      conv.user.storage.vpoints = conv.data.vpoints;
+      conv.user.storage.bpoints = conv.data.bpoints;
+      conv.user.storage.minipeli = conv.data.minipeli;
+      conv.user.storage.checkpoint = conv.data.checkpoint;
+      conv.user.storage.points = conv.data.points;
+      conv.user.storage.experts = conv.data.experts;
+      conv.user.storage.testi = conv.data.testi;
+      conv.user.storage.visits = conv.data.visits;
+      conv.user.storage.kyyhky = conv.data.kyyhky;
+      conv.user.storage.rethink = conv.data.rethink;
+      conv.user.storage.sreveal = conv.data.sreveal;
+      conv.user.storage.previous = conv.data.previous;
+      conv.user.storage.peliansw = conv.data.peliansw;
+      conv.user.storage.kysurl = conv.data.kysurl;
+      conv.user.storage.julkaise = conv.data.julkaise;
+      conv.user.storage.nice = conv.data.nice;
+    }
     const audiourl = host + '102.ogg';
-    const txt = Texts.bubble(conv.data.previous[0]);
+    const txt = Texts.bubble(conv.data.previous[0]) + xd;
     const ssml = Utils.playSimple(audiourl);
     conv.ask(new SimpleResponse({speech: ssml, text: txt}));
 
 });
 
 app.intent('1_2boss', (conv) => {
+    conv.user.storage.tday = 1;
+    //conv.user.storage.day = conv.data.day;
     conv.data.previous = ['1_2event','ready','int1_1'];
     const audiourl = host + '197.ogg';
     const txt = Texts.bubble(conv.data.previous[0]);
     const ssml = Utils.playSimple(audiourl);
-    const qtxt = '1. 2. or 3?'
-    const varass = `<speak>a</speak>`
     conv.ask(new SimpleResponse({speech: ssml, text: txt}));
-    conv.ask(new SimpleResponse({speech: varass, text: qtxt}));
+
 });
 
 app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
@@ -342,8 +365,11 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     if (conv.user.verification === 'VERIFIED') {
       conv.user.storage.previous = conv.data.previous;
       conv.user.storage.bpoints = conv.data.bpoints;
+      conv.user.storage.testi = 'This is a test';
     }
-    conv.ask(Utils.playSimple(audiourl));
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
 });
 
   app.intent('1_4entervanamo', (conv, {response,ent1_4}) => {
@@ -358,16 +384,23 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
         }
     }
     conv.data.previous = ['1_4event',answ,'int1_3'];
-    conv.ask(Utils.playSimple(audiourl));
+    const txt = Texts.bubble(conv.data.previous[0]) + conv.user.storage.testi;
+    if (conv.user.verification === 'VERIFIED') {
+      conv.user.storage.vpoints = conv.data.vpoints;
+    }
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('1_5phone', (conv) => {
     conv.data.previous = ['1_5event','ready','int1_4'];
     const audiourl = host+ '109.mp3';
-    conv.ask(Utils.playSimple(audiourl));
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
-  app.intent('1_6koski', (conv, {response, ent1_6}) => {
+    app.intent('1_6koski', (conv, {response, ent1_6}) => {
     const audiourl = host + '110.mp3';
     var answ = 'two';
     if (response === 'one' || ent1_6 === 'fill') {
@@ -379,17 +412,19 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       }
     }
     conv.data.previous = ['1_6event',answ,'int1_5'];
-    conv.ask(Utils.playSimple(audiourl));
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('1_7matka', (conv, {response,ent1_7}) => {
-    conv.data.fallbackCount = 0;
     var answ = 'three';
-    const param = conv.data.nice;
     var audiourl = host + '111T.mp3';
+    var txt = 'On the way to Tattarisuo. “Just give me a chance!”';
     var urlc = '';
-    if (param) {
+    if (conv.data.nice) {
       urlc = host + '111';
+      txt = 'On the way to Tattarisuo. “A hand you say?”'
     } else {
       urlc = host + '112';
     }
@@ -405,10 +440,11 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.data.previous = ['1_7event',answ,'int1_6'];
     if (conv.user.verification === 'VERIFIED') {
       conv.user.storage.previous = conv.data.previous;
-      conv.user.storage.bpoints = conv.data.vpoints;
+      conv.user.storage.vpoints = conv.data.vpoints;
       conv.user.storage.nice = conv.data.nice;
     }
-    conv.ask(Utils.playSimple(audiourl));
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('2_1kuski', (conv, {response, ent2_1}) => {
@@ -1472,45 +1508,45 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
 
   app.intent('17_2kelo', (conv) => {
     conv.data.fallbackCount = 0;
-    const audiourl = host + '312.mp3';
+    const audiourl = host + '312.ogg';
     conv.data.previous = ['17_2event','ready','int17_1'];
     conv.ask(Utils.playSimple(audiourl));
   });
 
-  app.intent('17_3kelo', (conv,{response, ent17_3}) => {
-    conv.data.fallbackCount = 0;
-    var audiourl = host;
-    var answ = 'two';
-    if (response === 'one' || ent17_3 === 'meeting') {
-      answ = 'one';
-      conv.contexts.set('int17_3A',1,{});
-      audiourl += '313.mp3'
-    } else {
-      conv.contexts.set('int17_3B',1,{});
-      audiourl += '314.mp3'
-    }
-    conv.data.previous = ['17_3event',answ,'int17_2'];
-    conv.ask(Utils.playSimple(audiourl));
-  });
+  // app.intent('17_3kelo', (conv,{response, ent17_3}) => {
+  //   conv.data.fallbackCount = 0;
+  //   var audiourl = host;
+  //   var answ = 'two';
+  //   if (response === 'one' || ent17_3 === 'meeting') {
+  //     answ = 'one';
+  //     conv.contexts.set('int17_3A',1,{});
+  //     audiourl += '313.mp3'
+  //   } else {
+  //     conv.contexts.set('int17_3B',1,{});
+  //     audiourl += '314.mp3'
+  //   }
+  //   conv.data.previous = ['17_3event',answ,'int17_2'];
+  //   conv.ask(Utils.playSimple(audiourl));
+  // });
 
-  app.intent('17_4A', (conv) => {
-    var audiourl = host;
-    conv.data.previous = ['17_4Aevent','ready','int17_3A'];
-    if (conv.data.kyyhky) {
-      audiourl += '315.mp3'
-    } else {
-      audiourl += '316.mp3'
-    }
-    conv.ask(Utils.playSimple(audiourl));
-  });
+  // app.intent('17_4A', (conv) => {
+  //   var audiourl = host;
+  //   conv.data.previous = ['17_4Aevent','ready','int17_3A'];
+  //   if (conv.data.kyyhky) {
+  //     audiourl += '315.mp3'
+  //   } else {
+  //     audiourl += '316.mp3'
+  //   }
+  //   conv.ask(Utils.playSimple(audiourl));
+  // });
 
-  app.intent('17_4B', (conv) => {
+  app.intent('17_3kelo', (conv) => {
     var audiourl = host;
-    conv.data.previous = ['17_4Bevent','ready','int17_3B'];
+    conv.data.previous = ['17_3event','ready','int17_2'];
     if (conv.data.kyyhky) {
-      audiourl += '317.mp3'
+      audiourl += '317.ogg'
     } else {
-      audiourl += '318.mp3'
+      audiourl += '318.ogg'
     }
     conv.ask(Utils.playSimple(audiourl));
   });
