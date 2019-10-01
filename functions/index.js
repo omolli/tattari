@@ -281,7 +281,8 @@ app.intent('Default Fallback Intent', (conv) => {
     conv.data.fallbackCount = fbc;
   }
   if (conv.data.fallbackCount < fbc) {
-  if ((cevent === '1_2event' || cevent === '1_3event' || cevent === '1_5event' ||cevent === '1_6event' || cevent === '1_7event') && conv.data.fallbackCount > 1) {
+  // if ((cevent === '1_2event' || cevent === '1_3event' || cevent === '1_5event' ||cevent === '1_6event' || cevent === '1_7event') && conv.data.fallbackCount > 1) {
+    if (conv.data.fallbackCount > 1) {
     conv.ask(Utils.playSimple(host+'99K.ogg'))
   }
   const txt = Texts.bubblef(conv.data.previous[0]);
@@ -298,6 +299,7 @@ app.intent('Default Fallback Intent', (conv) => {
 app.intent('AnyFallback', (conv) => {
   const cevent = conv.data.previous[0];
   conv.data.testi = 'anyfall';
+  conv.data.fallbackCount = 0;
   const prompt = Reprompts.getURL(cevent);
   const ctx = prompt[1];
   const eve = prompt[2];
@@ -348,6 +350,7 @@ app.intent('1_1Start', (conv) => {
 
 app.intent('1_2boss', (conv) => {
     conv.user.storage.tday = 1;
+    conv.data.fallbackCount = 0;
     //conv.user.storage.day = conv.data.day;
     conv.data.previous = ['1_2event','ready','int1_1'];
     const audiourl = host + '197.ogg';
@@ -358,6 +361,7 @@ app.intent('1_2boss', (conv) => {
 });
 
 app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
+  conv.data.fallbackCount = 0;
     var answ = '';
     var audiourl = host;
     if (response === 'one' || ent1_3 === 'better') {
@@ -366,7 +370,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     } else if (answ === 'two' || ent1_3 === 'work') {
         audiourl += '105.ogg';
         answ = 'two';
-    } else if (answ === 'two' || ent1_3 === 'work') {
+    } else if (answ === 'three' || ent1_3 === 'sorry') {
       if (!conv.data.points.includes('1_3event')) {
         conv.data.bpoints++;
         conv.data.points.push('1_3event')
@@ -374,7 +378,8 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
         audiourl += '106.ogg';
         answ = 'three';
     } else {
-      conv.followup('fallevent', {
+      conv.data.testi = 'fallevent1_3';
+      return conv.followup('fallevent', {
         response: 'fallback'
       });
     }
@@ -390,6 +395,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
 });
 
   app.intent('1_4entervanamo', (conv, {response,ent1_4}) => {
+    conv.data.fallbackCount = 0;
     var answ = 'two';
     var audiourl = host;
     if (response === 'one' || ent1_4 === 'pleased') {
@@ -402,7 +408,8 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     } else if (response === 'two' || ent1_4 === 'father') {
         audiourl += '108.ogg';
     } else {
-      conv.followup('fallevent', {
+      conv.data.testi = 'fallevent1_4';
+      return conv.followup('fallevent', {
         response: 'fallback'
       });
     }
@@ -424,6 +431,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   });
 
     app.intent('1_6koski', (conv, {response, ent1_6}) => {
+    conv.data.fallbackCount = 0;
     const audiourl = host + '110.ogg';
     var answ = 'one';
     if (response === 'one' || ent1_6 === 'fill') {
@@ -435,7 +443,8 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     } else if (response === 'two' || ent1_6 === 'know') {
       answ = 'two';
     } else {
-      conv.followup('fallevent', {
+      conv.data.testi = 'fallevent1_6';
+      return conv.followup('fallevent', {
         response: 'fallback'
       });
     }
@@ -446,6 +455,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   });
 
   app.intent('1_7matka', (conv, {response,ent1_7}) => {
+    conv.data.fallbackCount = 0;
     var answ = 'three';
     var audiourl = host + '111T.ogg';
     var txt = 'On the way to Tattarisuo. “Just give me a chance!”';
@@ -465,7 +475,8 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     } else if (response === 'three' || ent1_7 === 'carriage') {
       audiourl = urlc + 'V.ogg';
     } else {
-      conv.followup('fallevent', {
+      conv.data.testi = 'fallevent1_7';
+      return conv.followup('fallevent', {
         response: 'fallback'
       });
     }
@@ -499,7 +510,8 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       audiourl = host + '116.ogg';
       conv.contexts.set('kysykuski', 5, {kys: 'D'});
     } else {
-      conv.followup('fallevent', {
+      conv.data.testi = 'fallevent2_1';
+      return conv.followup('fallevent', {
         response: 'fallback'
       });
     }
@@ -527,7 +539,9 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     } else if (answ2 === 'have'){
       audiourl = host + '120.ogg';
     } else {
-      conv.followup('fallevent', {
+      conv.data.testi = 'fallevent2_2';
+      conv.contexts.set('int2_1', 1, {});
+      return conv.followup('2_1fallevent', {
         response: 'fallback'
       });
     }
@@ -2203,18 +2217,6 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   });
 //FALLBACKS and NoInputs
 
-app.intent('Default Welcome Intent - fallback', (conv) => {
-  const audiourl = host + '101.ogg';
-  conv.data.fallbackCount++;
-  if (conv.data.fallbackCount < fbc) {
-    return conv.ask(Utils.playAudio(audiourl,23,60));
-  } else {
-    return conv.followup('2_3event', {
-      response: "two"
-    });
-  }
-});
-
 app.intent('1_1Start NoInput', (conv) => {
   var audiourl = host + '199K.ogg';
   var txt = 'The dead are speaking is now closing! Goodbye!';
@@ -2263,6 +2265,7 @@ app.intent('Pause NoInput', (conv) => {
     if (conv.data.fallbackCount < 2) {
       return conv.ask(Utils.playSimple(audiourl));
     } else {
+      conv.data.fallbackCount = 0;
       return conv.followup('2_2event', {
         response: "one"
       });
@@ -2275,6 +2278,7 @@ app.intent('Pause NoInput', (conv) => {
     if (conv.data.fallbackCount < fbc) {
       return conv.ask(Utils.playSimple(audiourl));
     } else {
+      conv.data.fallbackCount = 0;
       return conv.followup('2_3event', {
         response: "two"
       });
