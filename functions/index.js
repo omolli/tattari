@@ -667,11 +667,13 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.data.previous = ['3D_4event',answ,'int3D_3'];
     var audiourl = host + '133.ogg';
     if (conv.data.renewed) {
-      audiourl = host + '133C.ogg'
+      return conv.followup('3D_5event', {
+        response: "no"
+      });
     }
     const ssml = Utils.playSimple(audiourl);
     const txt = 'Alright. And ' + number + ' Fingers. Sounds tough. Wanna change numbers?';
-    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+    return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('3D_5minipeli', (conv, {response,binarr}) => {
@@ -681,7 +683,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     if (answ === 'one' || binarr === 'yes') {
       conv.contexts.set('int3A_4', 1, {});
       conv.data.minipeli = 0;
-      conv.data.renewd = true;
+      conv.data.renewed = true;
       return conv.followup('3D_1event', {
         response: "ready"
       });
@@ -2051,7 +2053,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.ask(Utils.playSimple(audiourl));
   });
 
-  app.intent('25_5choice', (conv,{binarr}) => {
+  app.intent('25_5choice', (conv,{binarr, ent25_5}) => {
     var audiourl = host + '447.ogg';
     if (binarr === 'yes') {
       if (conv.data.rethink.indexOf('A') !== -1) {
