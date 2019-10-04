@@ -516,7 +516,9 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       });
     }
     conv.data.previous = ['2_1event',answ,'int1_7'];
-    conv.ask(Utils.playSimple(audiourl));
+    const ssml = Utils.playSimple(audiourl);
+    const txt = Texts.bubble(conv.data.previous[0]);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('2_2kuski2', (conv, {response,ent2_1}) => {
@@ -545,8 +547,10 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
         response: 'fallback'
       });
     }
-    conv.data.previous = ['2_2event',answ2,'int2_1'];
-    conv.ask(Utils.playSimple(audiourl));
+    conv.data.previous = ['2_2event',answ2,'iconst ssml = Utils.playSimple(audiourl);
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('2_3handuja', (conv, {response, ent2_3}) => {
@@ -557,11 +561,17 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       answ = 'one';
       audiourl = host + '121.ogg';
       conv.data.sreveal = true;
-    } else {
+    } else if (response === 'two' || ent2_3 === 'bootlegger') {
       audiourl = host + '122.ogg';
+    } else {
+      return conv.followup('fallevent', {
+        response: 'fallback'
+      });
     }
     conv.data.previous = ['2_3event',answ,'int2_2'];
-    conv.ask(Utils.playSimple(audiourl));
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('2_4kelo', (conv) => {
@@ -593,7 +603,9 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.data.fallbackCount = 0;
     conv.data.previous = ['3A_1event','ready','stay3A'];
     const audiourl = host + '124.ogg';
-    conv.ask(Utils.playSimple(audiourl));
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('3A_2stay', (conv, {response,ent3A_2}) => {
@@ -605,12 +617,18 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
         answ = 'one';
         conv.contexts.set('int3A_W', 2, {});
         audiourl = host+ '125.ogg';
-    } else {
+    } else if (response === 'two' || ent3A_2 === 'walk') {
          audiourl = host + '126.ogg';
          conv.contexts.set('3Around', 2, {});
+    } else {
+      return conv.followup('fallevent', {
+        response: 'fallback'
+      });
     }
     conv.data.previous = ['3A_2event',answ,'int3A_1'];
-    conv.ask(Utils.playSimple(audiourl));
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('3A_3round', (conv, {response,binarr}) => {
@@ -622,24 +640,34 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     if (response === 'one' || binarr === 'yes') {
         answ = 'yes';
         audiourl = host + '127.ogg';
-    } else {
+    } else if (response === 'two' || binarr === 'no') {
         audiourl = host + '128.ogg';
+    } else {
+      return conv.followup('fallevent', {
+        response: 'fallback'
+      });
     }
     conv.data.previous = ['3A_3event',answ,'3Around'];
-    conv.ask(Utils.playSimple(audiourl));
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('3A_4wrap', (conv) => {
     conv.data.previous = ['3A_4event','ready','int3A_W'];
     conv.contexts.set('int3A_W', 0, {});
     const audiourl = host + '129.ogg';
-    conv.ask(Utils.playSimple(audiourl));
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('3B_Eleave', (conv) => {
     conv.data.previous = ['3B_Eevent','ready','leave3B'];
     const audiourl = host + '134.ogg';
-    conv.ask(Utils.playSimple(audiourl));
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('3B_1leave', (conv, {response,ent3B_1}) => {
@@ -648,29 +676,41 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
      if (response === 'one' || ent3B_1 === 'murder') {
          audiourl = host+ '135.ogg';
          answ = 'one';
-    } else {
+    } else if (response === 'one' || ent3B_1 === 'else'){
          audiourl = host+ '136.ogg';
+    } else {
+      return conv.followup('fallevent', {
+        response: 'fallback'
+      });
     }
     conv.data.previous = ['3B_1event',answ,'int3B_E'];
-    conv.ask(Utils.playSimple(audiourl));
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('3B_2sanoma', (conv) => {
     conv.data.previous = ['3B_2event','ready','int3B_1'];
     const audiourl = host + '137.ogg';
-    conv.ask(Utils.playSimple(audiourl));
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('3B_3call', (conv) => {
     conv.data.previous = ['3B_3event','ready','int3B_2'];
     const audiourl = host + '138.ogg';
-    conv.ask(Utils.playSimple(audiourl));
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('3B_4call', (conv) => {
     conv.data.previous = ['3B_4event','one','int3B_3'];
     const audiourl = host + '139.ogg';
-    conv.ask(Utils.playSimple(audiourl));
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('3D_1minipeli', (conv) => {
@@ -679,7 +719,9 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     if (conv.data.minipeli !== -1) {
       audiourl = host + '180.ogg';
     }
-    conv.ask(Utils.playSimple(audiourl));
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('3D_2minipeli', (conv, {number}) => {
@@ -740,7 +782,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       return conv.followup('3D_1event', {
         response: "ready"
       });
-    } else {
+    } else if (answ === 'two' || binarr === 'no') {
     if (!conv.data.points.includes('3D_5event')) {
       if (conv.data.minipeli > 0) {
         conv.data.bpoints += (conv.data.minipeli + 1) / 2;
@@ -748,17 +790,26 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       conv.data.points.push('3D_5event')
     }
     const audiourl = host + '133B.ogg';
-    conv.ask(Utils.playSimple(audiourl));
-    }
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+  } else {
+    return conv.followup('fallevent', {
+      response: 'fallback'
+    });
+  }
   });
 
   app.intent('4_1ilta', (conv) => {
     conv.data.fallbackCount = 0;
     conv.data.previous = ['4_1event','ready','int4_E'];
     const audiourl = host + '140.ogg';
-    conv.ask(Utils.playSimple(audiourl));
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
+  //TODO: tähän elseblokki?
   app.intent('4_2router', (conv, {response}) => {
     conv.data.fallbackCount = 0;
     const answ = response;
