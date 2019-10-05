@@ -492,21 +492,26 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
 
   app.intent('2_1kuski', (conv, {response, ent2_1}) => {
     conv.data.fallbackCount = 0;
+    var txt = '';
     var audiourl = '';
     var answ = 'four';
     if (response === 'one' || ent2_1 === 'why') {
       audiourl = host + '113.ogg';
       conv.contexts.set('kysykuski', 5, {kys: 'A'});
+      txt = 'Tattarisuo swamp. “I was driving along the Porvoo road.”';
       answ = 'one';
     } else if (response === 'two' || ent2_1 === 'see') {
+      txt = 'Tattarisuo swamp. “A few dead pigeons.”';
       audiourl = host + '114.ogg';
       conv.contexts.set('kysykuski', 5, {kys: 'B'});
       answ = 'two';
     } else if (response === 'three' || ent2_1 === 'when') {
+      txt = 'Tattarisuo swamp. “A bit before noon.”';
       audiourl = host + '115.ogg';
       conv.contexts.set('kysykuski', 5, {kys: 'C'});
       answ = 'three';
     } else if (response === 'four' || ent2_1 === 'have') {
+      txt = 'Tattarisuo swamp. “What do ya take me for?”';
       audiourl = host + '116.ogg';
       conv.contexts.set('kysykuski', 5, {kys: 'D'});
     } else {
@@ -517,13 +522,13 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     }
     conv.data.previous = ['2_1event',answ,'int1_7'];
     const ssml = Utils.playSimple(audiourl);
-    const txt = Texts.bubble(conv.data.previous[0]);
     conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('2_2kuski2', (conv, {response,ent2_1}) => {
     conv.data.fallbackCount = 0;
     var audiourl = '';
+    var txt = '';
     var answ = response;
     const ctx = conv.contexts.get('kysykuski').parameters['kys'];
     var answ2 = Utils.switcher(answ,ctx);
@@ -533,12 +538,16 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.contexts.set('kysykuski', 5, {kys: ctx})
 
     if (answ2 === 'why') {
+      txt = 'Tattarisuo swamp. “I was driving along the Porvoo road.”';
       audiourl = host + '117.ogg';
     } else if (answ2 === 'see') {
+      txt = 'Tattarisuo swamp. “A few dead pigeons.”';
       audiourl = host + '118.ogg';
     } else if (answ2 === 'when') {
+      txt = 'Tattarisuo swamp. “A bit before noon.”';
       audiourl = host + '119.ogg';
     } else if (answ2 === 'have'){
+      txt = 'Tattarisuo swamp. “What do ya take me for?”'
       audiourl = host + '120.ogg';
     } else {
       conv.data.testi = 'fallevent2_2';
@@ -548,7 +557,6 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       });
     }
     conv.data.previous = ['2_2event',answ2,'iconst ssml = Utils.playSimple(audiourl);
-    const txt = Texts.bubble(conv.data.previous[0]);
     const ssml = Utils.playSimple(audiourl);
     conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
@@ -611,22 +619,24 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   app.intent('3A_2stay', (conv, {response,ent3A_2}) => {
     conv.data.fallbackCount = 0;
     var answ = 'two';
+    var txt = '';
     conv.data.previous = ['3A_2event',answ,'int3A_1'];
     var audiourl = '';
      if (response === 'one' || ent3A_2 === 'comb') {
         answ = 'one';
         conv.contexts.set('int3A_W', 2, {});
         audiourl = host+ '125.ogg';
+        txt = 'Tattarisuo swamp. “Into the swamp with you.”';
     } else if (response === 'two' || ent3A_2 === 'walk') {
          audiourl = host + '126.ogg';
          conv.contexts.set('3Around', 2, {});
+         txt = 'Tattarisuo swamp. “There, look!”';
     } else {
       return conv.followup('fallevent', {
         response: 'fallback'
       });
     }
     conv.data.previous = ['3A_2event',answ,'int3A_1'];
-    const txt = Texts.bubble(conv.data.previous[0]);
     const ssml = Utils.playSimple(audiourl);
     conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
@@ -716,8 +726,10 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   app.intent('3D_1minipeli', (conv) => {
     conv.data.previous = ['3D_1event','ready','int3A_4'];
     var audiourl = host + '130.ogg';
+    var txt = 'Uusi Helsinki newsroom. “Where have you two been dawdling?”';
     if (conv.data.minipeli !== -1) {
       audiourl = host + '180.ogg';
+      txt = 'Uusi Helsinki newsroom. “Hands?”';
     }
     const txt = Texts.bubble(conv.data.previous[0]);
     const ssml = Utils.playSimple(audiourl);

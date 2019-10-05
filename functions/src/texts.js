@@ -15,6 +15,26 @@ const texts = {
         return 'Taipale’s office. “Guess what I saw? Would you believe it!”';
       case '1_6event':
         return 'Taipale’s office. “What can we afford?“';
+      case '2_3event':
+      return 'Tattarisuo swamp. “ It’s not looking good, is it.”';
+      case '2_4event'
+      return 'Tattarisuo swamp. “Go or stay?”';
+      case '3A_1event':
+      return 'Tattarisuo swamp. “We could always use an extra hand or two.”';
+      case '3A_2event'
+      return 'Tattarisuo swamp. “Go or stay?”';
+      case '3A_3event':
+      return 'Tattarisuo swamp. “What on earth happened here?”';
+      case '3A_4event'
+      return 'Tattarisuo swamp. “Civilians are requested to leave now.”';
+      case '3D_2event':
+      return 'Uusi Helsinki newsroom. “Feet?”';
+      case '3D_3event'
+      return 'Uusi Helsinki newsroom. “Fingers?”';
+      case '3D_4event'
+      return 'Uusi Helsinki newsroom. “Would you like to change the numbers?”';
+      case '3D_5event'
+      return 'Uusi Helsinki newsroom. “Get to it!”';
       default:
       return 'this is a default text'
 
