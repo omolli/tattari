@@ -16,7 +16,7 @@ const texts = {
       case '1_6event':
       return 'Taipale’s office. “What can we afford?“';
       case '2_3event':
-      return 'Tattarisuo swamp. “ It’s not looking good, is it.”';
+      return 'Tattarisuo swamp. “It’s not looking good, is it.”';
       case '2_4event':
       return 'Tattarisuo swamp. “Go or stay?”';
       case '3A_1event':
