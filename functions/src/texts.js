@@ -110,18 +110,13 @@ const texts = {
       case '11C_1event':
       return 'Aleksis Kiven katu. “Statutum est hominibus mori.”';
       case '11C_2event':
-      return 'Aleksis Kiven katu. “There’s the cafe – let's go in.”';
+      return 'Aleksis Kiven katu. “There’s the cafe – let\'s go in.”';
       case '11C_3event':
       return 'Sigu’s cafe. “I’m smarter than they think!”';
       case '11C_3event':
-      return 'Sigu’s cafe. “We don't trust the white butchers’ police.”'; //todo
-
-
-
+      return 'Sigu’s cafe. “We don\'t trust the white butchers\' police.”'; //todo
       default:
       return 'this is a default text'
-
-
 
 
     }
