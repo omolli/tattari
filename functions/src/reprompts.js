@@ -41,11 +41,11 @@ const reprompts = {
       case '3B_4event':
         return [valmis,'int4_E','4_1event','ready'];
       case '3D_1event':
-        return ['130K','int3D_1','3D_2event','one'];
+        return ['130K','int3D_1','3D_2event',1];
       case '3D_2event':
-        return ['131K','int3D_2','3D_3event','one'];
+        return ['131K','int3D_2','3D_3event',1];
       case '3D_3event':
-        return ['132K','int3D_3','3D_4event','one'];
+        return ['132K','int3D_3','3D_4event',1];
       case '3D_4event':
         return ['133K','int3D_4','3D_5event','two'];
       case '3D_5event':

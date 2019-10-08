@@ -173,7 +173,7 @@ app.intent('Exit', (conv) => {
     conv.user.storage.testi = 'Poistuttu';
     //conv.ask(host + 'QUITSAVED');
   }
-  conv.close('Goodbye for now! See you!');
+  conv.close('Goodbye for now!');
 });
 
 app.intent('Forget', (conv) => {
@@ -328,6 +328,11 @@ app.intent('Default Fallback Intent', (conv) => {
   const txt = Texts.bubblef(conv.data.previous[0]);
   const ssml = Utils.playSimple(audiourl);
   conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+  } else if (eve === '3D_2event' || eve === '3D_3event' || eve === '3D_4event') {
+    conv.data.fallbackCount = 0;
+    conv.followup(eve, {
+      number: cparam
+    });
   } else {
     conv.data.fallbackCount = 0;
     conv.followup(eve, {
@@ -511,11 +516,11 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.data.fallbackCount = 0;
     var answ = 'three';
     var audiourl = host + '111T.ogg';
-    var txt = 'On the way to Tattarisuo. “Just give me a chance!”';
+    var txt = 'Approaching Tattarisuo. “Just give me a chance!”';
     var urlc = '';
     if (conv.data.nice) {
       urlc = host + '111';
-      txt = 'On the way to Tattarisuo. “A hand you say?”'
+      txt = 'Approaching. “A hand you say?”'
     } else {
       urlc = host + '112';
     }
@@ -695,7 +700,6 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.data.fallbackCount = 0;
     var answ = 'two';
     var txt = '';
-    conv.data.previous = ['3A_2event',answ,'int3A_1'];
     var audiourl = '';
      if (response === 'one' || ent3A_2 === 'comb') {
         answ = 'one';
@@ -731,9 +735,10 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     } else if (response === 'two' || binarr === 'no') {
         audiourl = host + '128.ogg';
     } else {
-      return conv.followup('fallevent', {
-        response: 'fallback'
-      });
+       return conv.followup('3A_2rfallevent', {
+         response: 'fallback'
+       });
+      //audiourl = host + '128.ogg';
     }
     conv.data.previous = ['3A_3event',answ,'3Around'];
     if (conv.user.verification === 'VERIFIED') {
@@ -745,6 +750,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   });
 
   app.intent('3A_4wrap', (conv) => {
+    conv.data.fallbackCount = 0;
     conv.data.previous = ['3A_4event','ready','int3A_W'];
     conv.contexts.set('int3A_W', 0, {});
     const audiourl = host + '129.ogg';
@@ -757,6 +763,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   });
 
   app.intent('3B_Eleave', (conv) => {
+    conv.data.fallbackCount = 0;
     conv.data.previous = ['3B_Eevent','ready','leave3B'];
     const audiourl = host + '134.ogg';
     if (conv.user.verification === 'VERIFIED') {
@@ -768,17 +775,14 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   });
 
   app.intent('3B_1leave', (conv, {response,ent3B_1}) => {
+    conv.data.fallbackCount = 0;
     var answ = 'two';
     var audiourl = '';
      if (response === 'one' || ent3B_1 === 'murder') {
-         audiourl = host+ '135.ogg';
-         answ = 'one';
-    } else if (response === 'one' || ent3B_1 === 'else'){
-         audiourl = host+ '136.ogg';
+        audiourl = host+ '135.ogg';
+        answ = 'one';
     } else {
-      return conv.followup('fallevent', {
-        response: 'fallback'
-      });
+        audiourl = host+ '136.ogg';
     }
     conv.data.previous = ['3B_1event',answ,'int3B_E'];
     if (conv.user.verification === 'VERIFIED') {
@@ -790,6 +794,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   });
 
   app.intent('3B_2sanoma', (conv) => {
+    conv.data.fallbackCount = 0;
     conv.data.previous = ['3B_2event','ready','int3B_1'];
     const audiourl = host + '137.ogg';
     if (conv.user.verification === 'VERIFIED') {
@@ -801,6 +806,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   });
 
   app.intent('3B_3call', (conv) => {
+    conv.data.fallbackCount = 0;
     conv.data.previous = ['3B_3event','ready','int3B_2'];
     const audiourl = host + '138.ogg';
     if (conv.user.verification === 'VERIFIED') {
@@ -812,6 +818,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   });
 
   app.intent('3B_4call', (conv) => {
+    conv.data.fallbackCount = 0;
     conv.data.previous = ['3B_4event','one','int3B_3'];
     const audiourl = host + '139.ogg';
     if (conv.user.verification === 'VERIFIED') {
@@ -823,6 +830,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   });
 
   app.intent('3D_1minipeli', (conv) => {
+    conv.data.fallbackCount = 0;
     conv.data.previous = ['3D_1event','ready','int3A_4'];
     var audiourl = host + '130.ogg';
     var txt = 'Uusi Helsinki newsroom. “Where have you two been dawdling?”';
@@ -838,8 +846,15 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   });
 
   app.intent('3D_2minipeli', (conv, {number}) => {
+    conv.data.fallbackCount = 0;
     conv.data.minipeli = 0;
     const answ = number;
+    if (answ === '') {
+      conv.data.testi = 'testifall3D_2';
+      return conv.followup('fallevent', {
+        response: 'fallback'
+      });
+    }
     conv.data.peliansw[0] = answ;
     if (answ === '4') {
       conv.data.minipeli++;
@@ -891,7 +906,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     }
     if (conv.data.renewed) {
       return conv.followup('3D_5event', {
-        response: "no"
+        binarr: "no"
       });
     }
     const ssml = Utils.playSimple(audiourl);
@@ -899,11 +914,11 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
-  app.intent('3D_5minipeli', (conv, {response,binarr}) => {
+  app.intent('3D_5minipeli', (conv, {response,binarr,additionals}) => {
     conv.data.fallbackCount = 0;
     const answ = response;
     conv.data.previous = ['3D_5event',answ,'int3D_3'];
-    if (answ === 'one' || binarr === 'yes') {
+    if (answ === 'one' || binarr === 'yes' || additionals === 'change') {
       conv.contexts.set('int3A_4', 1, {});
       conv.data.minipeli = 0;
       conv.data.renewed = true;
@@ -914,7 +929,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       return conv.followup('3D_1event', {
         response: "ready"
       });
-    } else if (answ === 'two' || binarr === 'no') {
+    } else if (answ === 'two' || binarr === 'no' || additionals === 'donot') {
     if (!conv.data.points.includes('3D_5event')) {
       if (conv.data.minipeli > 0) {
         conv.data.bpoints += (conv.data.minipeli + 1) / 2;
@@ -2571,47 +2586,47 @@ app.intent('Pause NoInput', (conv) => {
   //   }
   // });
 
-  app.intent('3D_2minipeli - fallback', (conv) => {
-    const audiourl = host + '131K.ogg';
-    conv.data.fallbackCount++;
-    if (conv.data.fallbackCount < fbc) {
-      return conv.ask(Utils.playSimple(audiourl));
-    } else {
-      return conv.followup('3D_3event', {
-        response: 0
-      });
-    }
-  });
-
-  app.intent('3D_3minipeli - fallback', (conv) => {
-    const audiourl = host + '132K.ogg';
-    conv.data.fallbackCount++;
-    if (conv.data.fallbackCount < fbc) {
-      return conv.ask(Utils.playSimple(audiourl));
-    } else {
-      return conv.followup('3D_4event', {
-        response: 0
-      });
-    }
-  });
-
-  app.intent('3D_4minipeli - fallback', (conv) => {
-    const audiourl = host + '133K.ogg';
-    conv.data.fallbackCount++;
-    if (conv.data.fallbackCount < fbc) {
-      return conv.ask(Utils.playSimple(audiourl));
-    } else {
-      return conv.followup('3D_5event', {
-        response: 'one'
-      });
-    }
-  });
-
-  app.intent('3D_5minipeli - fallback', (conv) => {
-    return conv.followup('4_1event', {
-      response: 'ready'
-    });
-  });
+  // app.intent('3D_2minipeli - fallback', (conv) => {
+  //   const audiourl = host + '131K.ogg';
+  //   conv.data.fallbackCount++;
+  //   if (conv.data.fallbackCount < fbc) {
+  //     return conv.ask(Utils.playSimple(audiourl));
+  //   } else {
+  //     return conv.followup('3D_3event', {
+  //       response: 0
+  //     });
+  //   }
+  // });
+  //
+  // app.intent('3D_3minipeli - fallback', (conv) => {
+  //   const audiourl = host + '132K.ogg';
+  //   conv.data.fallbackCount++;
+  //   if (conv.data.fallbackCount < fbc) {
+  //     return conv.ask(Utils.playSimple(audiourl));
+  //   } else {
+  //     return conv.followup('3D_4event', {
+  //       response: 0
+  //     });
+  //   }
+  // });
+  //
+  // app.intent('3D_4minipeli - fallback', (conv) => {
+  //   const audiourl = host + '133K.ogg';
+  //   conv.data.fallbackCount++;
+  //   if (conv.data.fallbackCount < fbc) {
+  //     return conv.ask(Utils.playSimple(audiourl));
+  //   } else {
+  //     return conv.followup('3D_5event', {
+  //       response: 'one'
+  //     });
+  //   }
+  // });
+  //
+  // app.intent('3D_5minipeli - fallback', (conv) => {
+  //   return conv.followup('4_1event', {
+  //     response: 'ready'
+  //   });
+  // });
 
   app.intent('4_1ilta - fallback', (conv) => {
     const audiourl = host + '140K.ogg';
