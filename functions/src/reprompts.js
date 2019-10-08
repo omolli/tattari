@@ -16,8 +16,8 @@ const reprompts = {
         return ['109K','int1_5','1_6event','two'];
       case '1_6event':
         return ['110K','int1_6','1_7event','one'];
-	  case '1_7event':
-		return ['111K','int1_7','2_1event','one'];
+	     case '1_7event':
+		     return ['111K','int1_7','2_1event','one'];
       case '2_2event':
         return ['117K','int2_2','2_3event','two'];
       case '2_3event':
@@ -118,7 +118,7 @@ const reprompts = {
       case '17_1event':
       return ['311K','int17_1','17_2event','ready'];
       case '17_2event':
-      return ['312K','int17_2','17_3event','one'];
+      return [valmis,'int17_2','17_3event','one'];
       case '17_3event':
       return [valmis,'int18_E','18_1Aevent','ready'];
       case '17_4Bevent':

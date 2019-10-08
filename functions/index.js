@@ -39,8 +39,8 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
     var txt = Texts.bubble(conv.data.previous[0]);
     const ssml = Utils.playSimple(audiourl);
     if (conv.user.verification === 'VERIFIED' && conv.user.last.seen) {
-      txt += 'the day is' + conv.user.storage.previous;
-      if (conv.user.storage.tday > 0 && conv.user.storage.tday < 5) {
+      txt += 'the day is' + conv.user.storage.testi;
+      if (conv.user.storage.day > 0 && conv.user.storage.day < 5) {
         conv.contexts.set('loadgame',5,{})
         // conv.ask('You are back');
         conv.ask(new SimpleResponse({speech: ssml, text: txt}));
@@ -66,7 +66,7 @@ app.intent('Load', (conv) => {
     if (conv.user.verification === 'VERIFIED') {
       conv.data.sum = conv.user.storage.sum;
       conv.data.fallbackCount = conv.user.storage.fallbackCount;
-      conv.data.day = conv.user.storage.tday;
+      conv.data.day = conv.user.storage.day;
       conv.data.vpoints = conv.user.storage.vpoints;
       conv.data.bpoints = conv.user.storage.bpoints;
       conv.data.minipeli = conv.user.storage.minipeli;
@@ -96,14 +96,14 @@ app.intent('Save', (conv) => {
   if (conv.user.verification === 'VERIFIED') {
     conv.user.storage.sum = conv.data.sum;
     conv.user.storage.fallbackCount = conv.data.fallbackCount;
-    conv.user.storage.tday = conv.data.day;
+    conv.user.storage.day = conv.data.day;
     conv.user.storage.vpoints = conv.data.vpoints;
     conv.user.storage.bpoints = conv.data.bpoints;
     conv.user.storage.minipeli = conv.data.minipeli;
     conv.user.storage.checkpoint = conv.data.checkpoint;
     conv.user.storage.points = conv.data.points;
     conv.user.storage.experts = conv.data.experts;
-    conv.user.storage.testi = conv.data.testi;
+    conv.user.storage.testi = 'manual save';
     conv.user.storage.visits = conv.data.visits;
     conv.user.storage.kyyhky = conv.data.kyyhky;
     conv.user.storage.rethink = conv.data.rethink;
@@ -165,10 +165,10 @@ app.intent('SaveContinue', (conv) => {
 
 app.intent('Exit', (conv) => {
   if (conv.user.verification === 'VERIFIED') {
-    conv.user.storage.tday = 1;
-    conv.user.storage.previous = conv.data.previous;
+    //conv.user.storage.previous = conv.data.previous;
+    conv.user.storage.testi = 'Poistuttu';
   }
-  conv.close('Goodbye for now!');
+  conv.close('Goodbye for now! See you!');
 });
 
 app.intent('Forget', (conv) => {
@@ -221,7 +221,7 @@ app.intent('repeat', (conv) =>{
 
 app.intent('Pause', (conv) => {
   const audiourl = host + 'PAUSE.ogg';
-  conv.ask('The game is now paused. Say hey google, continue when you wish to continue.');
+  conv.ask('The game is now paused. Say “Hey google, continue”, when you wish to resume.');
   conv.ask(Utils.playSimple(audiourl));
 });
 
@@ -349,9 +349,8 @@ app.intent('1_1Start', (conv) => {
 });
 
 app.intent('1_2boss', (conv) => {
-    conv.user.storage.tday = 1;
+    conv.user.storage.day = 1;
     conv.data.fallbackCount = 0;
-    //conv.user.storage.day = conv.data.day;
     conv.data.previous = ['1_2event','ready','int1_1'];
     const audiourl = host + '197.ogg';
     const txt = Texts.bubble(conv.data.previous[0]);
@@ -416,6 +415,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.data.previous = ['1_4event',answ,'int1_3'];
     const txt = Texts.bubble(conv.data.previous[0]) + conv.user.storage.testi;
     if (conv.user.verification === 'VERIFIED') {
+      conv.user.storage.testi = 'vanamo my friend';
       conv.user.storage.vpoints = conv.data.vpoints;
     }
     const ssml = Utils.playSimple(audiourl);
@@ -487,6 +487,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       conv.user.storage.nice = conv.data.nice;
     }
     const ssml = Utils.playSimple(audiourl);
+    txt += ' answer was ' + conv.user.storage.previous[1] + ' vpoints are ' + conv.data.vpoints;
     conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
@@ -556,7 +557,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
         response: 'fallback'
       });
     }
-    conv.data.previous = ['2_2event',answ2,'iconst ssml = Utils.playSimple(audiourl);
+    conv.data.previous = ['2_2event',answ2,'int2_1'];
     const ssml = Utils.playSimple(audiourl);
     conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
@@ -585,7 +586,9 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   app.intent('2_4kelo', (conv) => {
     conv.data.previous = ['2_4event','one','int2_3'];
     const audiourl = host + '123.ogg';
-    conv.ask(Utils.playSimple(audiourl));
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('2_5choice', (conv, {response, ent2_5}) => {
@@ -599,12 +602,16 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       return conv.followup('3B_Eevent', {
         response: "ready"
       });
-    } else {
+    } else if (response === 'two' || ent2_5 === 'stay') {
         conv.contexts.set('stay3A', 1, {});
         return conv.followup('3A_1event', {
           response: "ready"
         });
-    }
+      } else {
+        return conv.followup('fallevent', {
+          response: 'fallback'
+        });
+      }
   });
 
   app.intent('3A_1stay', (conv) => {
@@ -731,7 +738,6 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       audiourl = host + '180.ogg';
       txt = 'Uusi Helsinki newsroom. “Hands?”';
     }
-    const txt = Texts.bubble(conv.data.previous[0]);
     const ssml = Utils.playSimple(audiourl);
     conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
@@ -2326,7 +2332,9 @@ app.intent('Pause NoInput', (conv) => {
         break;
     }
     if (conv.data.fallbackCount < 2) {
-      return conv.ask(Utils.playSimple(audiourl));
+      const ssml  = Utils.playSimple(audiourl);
+      const txt = Texts.bubblef(conv.data.previous[0]);
+      return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     } else {
       conv.data.fallbackCount = 0;
       return conv.followup('2_2event', {
@@ -2335,18 +2343,18 @@ app.intent('Pause NoInput', (conv) => {
     }
   });
 
-  app.intent('2_2kuski2 - fallback', (conv) => {
-    const audiourl = host + '117K.ogg';
-    conv.data.fallbackCount++;
-    if (conv.data.fallbackCount < fbc) {
-      return conv.ask(Utils.playSimple(audiourl));
-    } else {
-      conv.data.fallbackCount = 0;
-      return conv.followup('2_3event', {
-        response: "two"
-      });
-    }
-  });
+  // app.intent('2_2kuski2 - fallback', (conv) => {
+  //   const audiourl = host + '117K.ogg';
+  //   conv.data.fallbackCount++;
+  //   if (conv.data.fallbackCount < fbc) {
+  //     return conv.ask(Utils.playSimple(audiourl));
+  //   } else {
+  //     conv.data.fallbackCount = 0;
+  //     return conv.followup('2_3event', {
+  //       response: "two"
+  //     });
+  //   }
+  // });
 
   // app.intent('2_3handuja - fallback', (conv) => {
   //   const audiourl = host + '121K.ogg';
@@ -2372,27 +2380,27 @@ app.intent('Pause NoInput', (conv) => {
   //   }
   // });
 
-  app.intent('2_5choice - fallback', (conv) => {
-    var audiourl = '';
-    var nextevent = '';
-    conv.data.fallbackCount++;
-    if (conv.contexts.get('stay3A').parameters['c']) {
-      conv.contexts.set('stay3A', 1, {c: true});
-      audiourl = host + '124K.ogg';
-      nextevent = '3A_1event';
-    } else {
-      conv.contexts.set('leave3B', 1, {});
-      audiourl = host + '134K.ogg';
-      nextevent = '3B_1event';
-    }
-    if (conv.data.fallbackCount < fbc) {
-      return conv.ask(Utils.playSimple(audiourl));
-    } else {
-      return conv.followup(nextevent, {
-        response: "one"
-      });
-    }
-  });
+  // app.intent('2_5choice - fallback', (conv) => {
+  //   var audiourl = '';
+  //   var nextevent = '';
+  //   conv.data.fallbackCount++;
+  //   if (conv.contexts.get('stay3A').parameters['c']) {
+  //     conv.contexts.set('stay3A', 1, {c: true});
+  //     audiourl = host + '124K.ogg';
+  //     nextevent = '3A_1event';
+  //   } else {
+  //     conv.contexts.set('leave3B', 1, {});
+  //     audiourl = host + '134K.ogg';
+  //     nextevent = '3B_1event';
+  //   }
+  //   if (conv.data.fallbackCount < fbc) {
+  //     return conv.ask(Utils.playSimple(audiourl));
+  //   } else {
+  //     return conv.followup(nextevent, {
+  //       response: "one"
+  //     });
+  //   }
+  // });
 
   app.intent('3A_2r - fallback', (conv) => {
     const audiourl = host + '126K.ogg';
@@ -2412,10 +2420,9 @@ app.intent('Pause NoInput', (conv) => {
   });
 
   app.intent('3A_2w - fallback', (conv) => {
-    const audiourl = host + valmis;
-      return conv.followup('3A_4event', {
-        response: 'ready'
-      });
+    return conv.followup('3A_4event', {
+      response: 'ready'
+    });
   });
 
   app.intent('3A_2w NoInput', (conv) => {
@@ -2430,17 +2437,17 @@ app.intent('Pause NoInput', (conv) => {
     }
   });
 
-  app.intent('3D_1minipeli - fallback', (conv) => {
-    const audiourl = host + '130K.ogg';
-    conv.data.fallbackCount++;
-    if (conv.data.fallbackCount < fbc) {
-      return conv.ask(Utils.playSimple(audiourl));
-    } else {
-      return conv.followup('3D_2event', {
-        response: 0
-      });
-    }
-  });
+  // app.intent('3D_1minipeli - fallback', (conv) => {
+  //   const audiourl = host + '130K.ogg';
+  //   conv.data.fallbackCount++;
+  //   if (conv.data.fallbackCount < fbc) {
+  //     return conv.ask(Utils.playSimple(audiourl));
+  //   } else {
+  //     return conv.followup('3D_2event', {
+  //       response: 0
+  //     });
+  //   }
+  // });
 
   app.intent('3D_2minipeli - fallback', (conv) => {
     const audiourl = host + '131K.ogg';
