@@ -625,7 +625,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       answ = 'one';
       audiourl = host + '121.ogg';
       conv.data.sreveal = true;
-    } else if (response === 'two' || ent2_3 === 'bootlegger') {
+    } else if (response === 'two' || ent2_3 === 'reveal') {
       audiourl = host + '122.ogg';
     } else {
       return conv.followup('fallevent', {
