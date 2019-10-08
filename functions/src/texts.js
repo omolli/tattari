@@ -51,7 +51,7 @@ const texts = {
       return 'University of Helsinki. “First, there’s the name: Tattarisuo!”';
       case '5A_3event':
       return 'University of Helsinki. “Where are we going next?”';
-      case '5A_3event':
+      case '5A_3eventB':
       return 'University of Helsinki. University of Helsinki. “Continue tomorrow.”'; //todo
       case '5B_1event':
       return 'Outside the Lapinlahti Hospital. “Fabritius.”';
@@ -59,9 +59,9 @@ const texts = {
       return 'Outside the Lapinlahti Hospital. “Abnormal person with deficient mental capacity.”';
       case '5B_3event':
       return 'Outside the Lapinlahti Hospital. “A lust murderer.”';
-      case '5B_3event':
+      case '5B_3eventB':
       return 'Outside the Lapinlahti Hospital. “The adjunct professor or the police?”'; //todo
-      case '5B_3event':
+      case '5B_3eventC':
       return 'Outside the Lapinlahti Hospital. “The Department of Anatomy.”'; //todo
       case '5C_1event':
       return 'Helsinki Police Department. “Could you spare us a moment?”';
@@ -69,7 +69,7 @@ const texts = {
       return 'Helsinki Police Department. “The Minister of the Interior?”';
       case '6_1event':
       return 'Uusi Helsinki newsroom. “You have to trust me and my skills.”';
-      case '6_1event':
+      case '6_1eventB':
       return 'Uusi Helsinki newsroom. “We worked well together!”'; //todo
       case '7_1event':
       return 'Tuesday, September 20th, 1931.';
@@ -77,7 +77,7 @@ const texts = {
       return 'The Department of Anatomy. “I hope I’m making myself clear!”';
       case '9_2event':
       return 'The Department of Anatomy. “Post mortem.”';
-      case '9_3event':
+      case '9_3eventB':
       return 'The Department of Anatomy. “No marks of excess violence.”';
       case '9_3event':
       return 'The Department of Anatomy. “Thank you for the information.”'; //todo
@@ -87,19 +87,19 @@ const texts = {
       return 'Helsinki Police Department interrogation room. “Start talking!”';
       case '10_2event':
       return 'Helsinki Police Department interrogation room. “Let the man say his piece!”';
-      case '10_2event':
+      case '10_2eventB':
       return 'Helsinki Police Department Interrogation room. “It’s your word against ours.”'; //todo
-      case '10_3event':
+      case '10_3eventB':
       return 'Helsinki Police Department interrogation room. “Pigeons?”';
       case '10_3event':
       return 'Helsinki Police Department interrogation room. “The Panacea Society.”';  //todo
-      case '10_3event':
+      case '10_3eventC':
       return 'Helsinki Police Department interrogation room. “Red guard.”'; //todo
       case '11A_1event':
       return 'Uusi Helsinki newsroom “Did he do it?”';
       case '11A_2event':
       return 'Uusi Helsinki newsroom “I’m actually a little hesitant.”';
-      case '11A_2event':
+      case '11A_2eventB':
       return 'Uusi Helsinki newsroom “Somehow, he was so very... sincere.”';  //todo
       case '11A_3event':
       return '“The suspect - an express edition.”';
@@ -113,7 +113,7 @@ const texts = {
       return 'Aleksis Kiven katu. “There’s the cafe – let\'s go in.”';
       case '11C_3event':
       return 'Sigu’s cafe. “I’m smarter than they think!”';
-      case '11C_3event':
+      case '11C_3eventB':
       return 'Sigu’s cafe. “We don\'t trust the white butchers\' police.”'; //todo
       default:
       return 'this is a default text'
@@ -123,6 +123,8 @@ const texts = {
   },
   bubblef(e){
     switch (e) {
+      case 'Welcome':
+      return 'Say “ready” to continue'
       case '1_2event':
         return 'How do you answer the editor in chief?';
       case '1_3event':

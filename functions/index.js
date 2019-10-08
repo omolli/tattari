@@ -867,7 +867,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     }
     const audiourl = host + '131.ogg';
     const ssml = Utils.playSimple(audiourl);
-    const txt = 'Alright. ' + number + ' hands you say? What about legs?';
+    const txt = 
     conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
