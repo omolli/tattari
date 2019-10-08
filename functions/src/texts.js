@@ -49,27 +49,27 @@ const texts = {
       return 'University of Helsinki. “Hammarström.”';
       case '5A_2event':
       return 'University of Helsinki. “First, there’s the name: Tattarisuo!”';
-      case '5A_3event':
+      case '5A_3A':
       return 'University of Helsinki. “Where are we going next?”';
-      case '5A_3eventB':
+      case '5A_3B':
       return 'University of Helsinki. University of Helsinki. “Continue tomorrow.”'; //todo
       case '5B_1event':
       return 'Outside the Lapinlahti Hospital. “Fabritius.”';
       case '5B_2event':
       return 'Outside the Lapinlahti Hospital. “Abnormal person with deficient mental capacity.”';
-      case '5B_3event':
+      case '5B_3A':
       return 'Outside the Lapinlahti Hospital. “A lust murderer.”';
-      case '5B_3eventB':
+      case '5B_3B':
       return 'Outside the Lapinlahti Hospital. “The adjunct professor or the police?”'; //todo
-      case '5B_3eventC':
+      case '5B_3C':
       return 'Outside the Lapinlahti Hospital. “The Department of Anatomy.”'; //todo
       case '5C_1event':
       return 'Helsinki Police Department. “Could you spare us a moment?”';
       case '5C_2event':
       return 'Helsinki Police Department. “The Minister of the Interior?”';
-      case '6_1event':
+      case '6_1A':
       return 'Uusi Helsinki newsroom. “You have to trust me and my skills.”';
-      case '6_1eventB':
+      case '6_1B':
       return 'Uusi Helsinki newsroom. “We worked well together!”'; //todo
       case '7_1event':
       return 'Tuesday, September 20th, 1931.';
@@ -77,9 +77,9 @@ const texts = {
       return 'The Department of Anatomy. “I hope I’m making myself clear!”';
       case '9_2event':
       return 'The Department of Anatomy. “Post mortem.”';
-      case '9_3eventB':
+      case '9_3A':
       return 'The Department of Anatomy. “No marks of excess violence.”';
-      case '9_3event':
+      case '9_3B':
       return 'The Department of Anatomy. “Thank you for the information.”'; //todo
       case '9_4event':
       return 'The Department of Anatomy hallway. “The mother-of-all-scoops!”';

@@ -867,7 +867,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     }
     const audiourl = host + '131.ogg';
     const ssml = Utils.playSimple(audiourl);
-    const txt = 
+    const txt =
     conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
@@ -988,19 +988,31 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.data.previous = ['5A_1event','professor','magnus'];
     conv.data.experts = Utils.appender(conv.data.experts,'A');
     const audiourl = host + '141.ogg';
-    conv.ask(Utils.playSimple(audiourl));
+    if (conv.user.verification === 'VERIFIED') {
+      conv.user.storage.previous = conv.data.previous;
+      conv.user.storage.experts = conv.data.experts;
+    }
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('5A_2magnus', (conv) => {
     conv.data.fallbackCount = 0;
     conv.data.previous = ['5A_2event','adjunct professor','int5A_1'];
     const audiourl = host + '142.ogg';
-    conv.ask(Utils.playSimple(audiourl));
+    if (conv.user.verification === 'VERIFIED') {
+      conv.user.storage.previous = conv.data.previous;
+    }
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('5A_3magnus', (conv) => {
     conv.data.fallbackCount = 0;
     conv.data.previous = ['5A_3event','ready','int5A_2'];
+    var eve = '5A_3A';
     var audiourl = host + '142.ogg';
     if (conv.data.day === 2) {
       conv.contexts.set('int9E', 1, {});
@@ -1010,11 +1022,17 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       conv.contexts.set('fabritius', 1, {});
       conv.contexts.set('hkipolice', 1, {});
     } else {
+      eve = '5A_3B';
       conv.contexts.set('int6E', 1, {});
       audiourl = host + '190.ogg';
       return conv.ask(Utils.playSimple(audiourl));
     }
-    conv.ask(Utils.playSimple(audiourl));
+    if (conv.user.verification === 'VERIFIED') {
+      conv.user.storage.previous = conv.data.previous;
+    }
+    const txt = Texts.bubble(eve);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('5B_1fabritius', (conv) => {
@@ -1022,7 +1040,13 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.data.previous = ['5B_1event','physician','fabritius'];
     conv.data.experts = Utils.appender(conv.data.experts,'B');
     const audiourl = host + '144.ogg';
-    conv.ask(Utils.playSimple(audiourl));
+    if (conv.user.verification === 'VERIFIED') {
+      conv.user.storage.previous = conv.data.previous;
+      conv.user.storage.experts = conv.data.experts;
+    }
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('5B_2fabritius', (conv, {response,binarr}) => {
@@ -1036,14 +1060,21 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       answ = 'two';
     }
     conv.data.previous = ['5B_2event',answ,'int5B_1'];
-    conv.ask(Utils.playSimple(audiourl));
+    if (conv.user.verification === 'VERIFIED') {
+      conv.user.storage.previous = conv.data.previous;
+    }
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('5B_3fabritius', (conv, {response,binarr}) => {
     conv.data.fallbackCount = 0;
     var answ = 'one';
+    var eve = '5B_3A';
     var audiourl = host + '144.ogg';
     if (conv.data.day === 2) {
+      eve = '5B_3C';
       conv.contexts.set('int9E', 1, {});
       if (response === 'one' || binarr === 'yes'){
         audiourl = host + '202BL.ogg';
@@ -1052,6 +1083,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
         audiourl = host + '202B.ogg';
       }
     } else if (conv.data.experts.length === 1) {
+      eve = '5B_3B';
       if (response === 'one' || binarr === 'yes'){
         audiourl = host + '148.ogg';
       } else {
@@ -1070,7 +1102,12 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       }
     }
     conv.data.previous = ['5B_3event',answ,'int5B_2'];
-    conv.ask(Utils.playSimple(audiourl));
+    if (conv.user.verification === 'VERIFIED') {
+      conv.user.storage.previous = conv.data.previous;
+    }
+    const txt = Texts.bubble(eve);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('5C_1police', (conv) => {
@@ -1078,7 +1115,13 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.data.experts = Utils.appender(conv.data.experts,'C');
     conv.data.previous = ['5C_1event','police','hkipolice'];
     const audiourl = host + '152.ogg';
-    conv.ask(Utils.playSimple(audiourl));
+    if (conv.user.verification === 'VERIFIED') {
+      conv.user.storage.previous = conv.data.previous;
+      conv.user.storage.experts = conv.data.experts;
+    }
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('5C_2police', (conv) => {
@@ -1096,7 +1139,12 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       conv.contexts.set('int6E', 1, {});
       audiourl = host + '154.ogg';
     }
-    conv.ask(Utils.playSimple(audiourl));
+    if (conv.user.verification === 'VERIFIED') {
+      conv.user.storage.previous = conv.data.previous;
+    }
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('5router', (conv, {response}) => {
@@ -1136,6 +1184,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
   app.intent('6_1ilta', (conv) => {
     conv.data.fallbackCount = 0;
     conv.data.previous = ['6_1event','ready','int6E'];
+    var eve = '6_1A';
     var audiourl = host;
     if (conv.data.minipeli < 0) {
       audiourl += '157';
@@ -1145,10 +1194,13 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       audiourl += '156';
     }
     if (conv.data.vpoints > 0) {
+      eve = '6_1B';
       audiourl += 'V';
     }
     audiourl += '.ogg'
-    conv.ask(Utils.playSimple(audiourl));
+    const txt = Texts.bubble(eve);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('7_1aamu', (conv, {response, ent7_1}) => {
@@ -1156,33 +1208,6 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.data.fallbackCount = 0;
     var answ = 'four';
     var accuse = 0;
-
-     if (!conv.data.checkpoint.includes('7_1event')) {
-       conv.data.checkpoint.push('7_1event');
-       // Wish this worked
-       // conv.followup('save_silently', {
-       //   response: 'save silently'
-       // });
-       conv.user.storage.sum = conv.data.sum;
-       conv.user.storage.fallbackCount = conv.data.fallbackCount;
-       conv.user.storage.day = conv.data.day;
-       conv.user.storage.vpoints = conv.data.vpoints;
-       conv.user.storage.bpoints = conv.data.bpoints;
-       conv.user.storage.minipeli = conv.data.minipeli;
-       conv.user.storage.checkpoint = conv.data.checkpoint;
-       conv.user.storage.points = conv.data.points;
-       conv.user.storage.experts = conv.data.experts;
-       conv.user.storage.testi = conv.data.testi;
-       conv.user.storage.visits = conv.data.visits;
-       conv.user.storage.kyyhky = conv.data.kyyhky;
-       conv.user.storage.rethink = conv.data.rethink;
-       conv.user.storage.sreveal = conv.data.sreveal;
-       conv.user.storage.previous = conv.data.previous;
-       conv.user.storage.peliansw = conv.data.peliansw;
-       conv.user.storage.kysurl = conv.data.kysurl;
-       conv.user.storage.julkaise = conv.data.julkaise;
-       conv.user.storage.nice = conv.data.nice;
-     }
     //Himomurhaajaan Pomo +1
     //Anatomian laitoksen opiskelijoihin
     //Romaanien hautajaismenoihin Pomo +1
@@ -1217,7 +1242,15 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       audiourl += 'P.ogg';
       conv.contexts.set('hkipolice', 1, {});
     }
-    conv.ask(Utils.playSimple(audiourl));
+    if (conv.user.verification === 'VERIFIED') {
+      conv.user.storage.previous = conv.data.previous;
+      conv.user.storage.day = conv.data.day;
+      conv.user.storage.bpoints = conv.data.bpoints;
+      conv.user.storage.points = conv.data.points;
+    }
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('7_2router', (conv, {response}) => {
@@ -1246,42 +1279,63 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.data.fallbackCount = 0;
     conv.data.previous = ['9_1event','anatomy','int9E'];
     const audiourl = host + '203.ogg';
-    conv.ask(Utils.playSimple(audiourl));
+    if (conv.user.verification === 'VERIFIED') {
+      conv.user.storage.previous = conv.data.previous;
+    }
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('9_2anatomy', (conv) => {
     conv.data.fallbackCount = 0;
     conv.data.previous = ['9_2event','yes','int9_1'];
     const audiourl = host + '204.ogg';
-    conv.ask(Utils.playSimple(audiourl));
+    if (conv.user.verification === 'VERIFIED') {
+      conv.user.storage.previous = conv.data.previous;
+    }
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('9_3anatomy', (conv, {binarr,response}) => {
     conv.data.fallbackCount = 0;
     var answ = 'no';
+    var eve = '9_3A';
     var audiourl = host;
     if (binarr === 'yes' || response === 'one') {
       audiourl += '205.ogg';
       answ = 'yes';
     } else {
+      eve = '9_3B';
       audiourl += '206.ogg';
     }
     conv.data.previous = ['9_3event',answ,'int9_2'];
-    conv.ask(Utils.playSimple(audiourl));
+    if (conv.user.verification === 'VERIFIED') {
+      conv.user.storage.previous = conv.data.previous;
+    }
+    const txt = Texts.bubble(eve);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('9_4anatomy', (conv) => {
     conv.data.fallbackCount = 0;
     conv.data.previous = ['9_4event','ready','int9_3'];
     const audiourl = host + '207.ogg';
-    conv.ask(Utils.playSimple(audiourl));
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('10_1kuulustelu', (conv) => {
     conv.data.fallbackCount = 0;
     conv.data.previous = ['10_1event','ready','int9_4'];
     const audiourl = host + '208.ogg';
-    conv.ask(Utils.playSimple(audiourl));
+    const txt = Texts.bubble(conv.data.previous[0]);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('10_2kuulustelu', (conv, {response,ent10_2}) => {
