@@ -43,8 +43,8 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
       txt += 'the day is' + conv.user.storage.testi;
       if (conv.user.storage.day > 0 && conv.user.storage.day < 5) {
         conv.contexts.set('loadgame',5,{})
-        // conv.ask('You are back');
-        conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+        conv.ask('Welcome back to the dead are speaking. Do you wish to continue a saved game or start a new game?');
+        //conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       } else {
         // conv.ask('hi');
         conv.ask(new SimpleResponse({speech: ssml, text: txt}));
@@ -58,6 +58,8 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
 app.intent('NewGame', (conv) => {
   const audiourl = host + '101.ogg';
   conv.data.previous = ['newgame','new game','DefaultWelcomeIntent-followup'];
+  const txt = Texts.bubble('Welcome');
+  const ssml = Utils.playSimple(audiourl);
   conv.ask(new SimpleResponse({speech: ssml, text: txt}));
 });
 
@@ -90,7 +92,7 @@ app.intent('Load', (conv) => {
         response: 'repeat'
       });
   } else {
-    conv.ask('Loading is possible only for verified users.')
+    conv.ask('Loading is possible only for verified users.');
   }
 });
 
@@ -169,6 +171,7 @@ app.intent('Exit', (conv) => {
   if (conv.user.verification === 'VERIFIED') {
     //conv.user.storage.previous = conv.data.previous;
     conv.user.storage.testi = 'Poistuttu';
+    //conv.ask(host + 'QUITSAVED');
   }
   conv.close('Goodbye for now! See you!');
 });
@@ -187,6 +190,41 @@ app.intent('Forgot', (conv, {binarr}) => {
 });
 
 app.intent('repeat', (conv) =>{
+  //helper intent for replaying the current event (intent) with the current choice
+  const cevent = conv.data.previous[0];
+  const cparam = conv.data.previous[1];
+  const ccontext = conv.data.previous[2];
+  conv.contexts.set(ccontext,1,{})
+  //const param = Reprompts.getParam(cevent);
+  const param = Reprompts.getType(cparam);
+  if (param === 'binarr') {
+    conv.followup(cevent, {
+      binarr: cparam
+    });
+  } else if (cevent === '2_2event') {
+    conv.followup(cevent, {
+      ent2_1: cparam
+    });
+  } else if (cevent === '3D_2event' || cevent === '3D_3event' || cevent === '3D_4event') {
+    conv.followup(cevent, {
+      number: cparam
+    });
+  } else if (cevent === '23_2event') {
+    conv.followup(cevent, {
+      ent23_2: cparam
+    });
+  } else if (cevent === '24_3event' || cevent === '24_4event' || cevent === '24_5event') {
+    conv.followup(cevent, {
+      ent24: cparam
+    });
+  } else {
+  conv.followup(cevent, {
+    response: cparam
+  });
+  }
+});
+
+app.intent('repeat2', (conv) =>{
   //helper intent for replaying the current event (intent) with the current choice
   const cevent = conv.data.previous[0];
   const cparam = conv.data.previous[1];
@@ -342,7 +380,7 @@ app.intent('1_1Start', (conv) => {
       conv.user.storage.nice = conv.data.nice;
     }
     const audiourl = host + '102.ogg';
-    const txt = Texts.bubble(conv.data.previous[0]) + xd;
+    const txt = Texts.bubble(conv.data.previous[0]);
     const ssml = Utils.playSimple(audiourl);
     conv.ask(new SimpleResponse({speech: ssml, text: txt}));
 
@@ -369,10 +407,10 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     if (response === 'one' || ent1_3 === 'better') {
         answ = 'one';
         audiourl += '104.ogg';
-    } else if (answ === 'two' || ent1_3 === 'work') {
+    } else if (response === 'two' || ent1_3 === 'work') {
         audiourl += '105.ogg';
         answ = 'two';
-    } else if (answ === 'three' || ent1_3 === 'sorry') {
+    } else if (response === 'three' || ent1_3 === 'sorry') {
       if (!conv.data.points.includes('1_3event')) {
         conv.data.bpoints++;
         conv.data.points.push('1_3event')
