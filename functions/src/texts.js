@@ -115,6 +115,132 @@ const texts = {
       return 'Sigu’s cafe. “I’m smarter than they think!”';
       case '11C_3eventB':
       return 'Sigu’s cafe. “We don\'t trust the white butchers\' police.”'; //todo
+      case '12_1event':
+      return 'Malmi Cemetery. “Malmi is my beat.”';
+      case '12_2event':
+      return 'Malmi Cemetery. “Down you go, into the grave.”';
+      case '12_3event':
+      return 'Malmi Cemetery. “We have to get hold of those papers!”';
+      case '12_4event':
+      return 'Malmi Cemetery. “What do you want?”';
+      case '12_5event':
+      return 'Malmi Cemetery. “They’ve found something strange in a grave!”';
+      case '12_5eventB':
+      return 'Malmi Cemetery. “This investigation is no longer his business.”'; //todo
+      case '12_5eventC':
+      return 'Malmi Cemetery. “What a frightful state!”'; //todo
+      case '12_5eventD':
+      return 'Malmi Cemetery. “What a disgrace.”'; //todo
+      case '12_6event':
+      return 'Malmi Cemetery. “What is it this time?”';
+      case '12_7event':
+      return 'Malmi Cemetery. “They’ve found something strange in a grave!”';
+      case '12_7eventB':
+      return 'Malmi Cemetery. “What a frightful state!”'; //todo
+      case '12_7eventC':
+      return 'Malmi Cemetery. “What a disgrace.”'; //todo
+      case '13_1event':
+      return 'Uusi Helsinki newsroom. “These papers must be made public!”';
+      case '13_2event':
+      return 'Uusi Helsinki newsroom. “It’s going to be a great article!”';
+      case '13_2eventB':
+      return 'Uusi Helsinki newsroom. “Oh well, it’s your decision.”'; //todo
+      case '14_1event':
+      return 'Wednesday, September 21st, 1931.';
+      case '14_2event':
+      return 'Uusi Helsinki newsroom. “I published the papers after you\’d left.”';
+      case '15_1event':
+      return 'Uusi Helsinki newsroom. “There’s quite a bunch of letters…”';
+      case '15_2event':
+      return 'Uusi Helsinki newsroom. “The moles of the Lapua Movement.”';
+      case '15_3event':
+      return 'Uusi Helsinki newsroom. “The dream.”';
+      case '15_4event':
+      return 'Uusi Helsinki newsroom. “A mental outpatient!”';
+      case '15_5event':
+      return 'Uusi Helsinki newsroom. “Damnation and grief! May explode!”';
+      case '16_1event':
+      return 'Uusi Helsinki newsroom. “Consider yourselves lucky.”';
+      case '16_2event':
+      return 'Uusi Helsinki newsroom. “Surely you have some common sense!”';
+      case '16_2eventB':
+      return 'Uusi Helsinki newsroom. “This is police business!”'; //todo
+      case '17_1event':
+      return 'Uusi Helsinki newsroom. “We’re supposed to write something for tomorrow’s paper.”';
+      case '17_2event':
+      return 'Uusi Helsinki newsroom. “Good luck with the investigation.”';
+      case '17_3event':
+      return 'Uusi Helsinki newsroom. “An appointment with the fortune-teller Widen?”';
+      case '18_1event':
+      return 'Josafatinkatu, fortune teller\’s home. “What\’s your business then?”';
+      case '18_2event':
+      return 'Josafatinkatu, fortune teller\’s home. “We’ll see if there's anything coming your way.”';
+      case '18_3event':
+      return 'Josafatinkatu, fortune teller\’s home. “I must concentrate!”';
+      case '18_4event':
+      return 'Josafatinkatu “Quite an extraordinary meeting.”';
+      case '19_1event':
+      return 'Thursday, September 22nd, 1931.';
+      case '19_2event':
+      return 'Uusi Helsinki newsroom. “Who would send us something like this?”;
+      case '19_3event':
+      return 'Uusi Helsinki newsroom. “Looks quite fresh to me.”';
+      case '19_3eventB':
+      return 'Uusi Helsinki newsroom. “Good idea.”'; //todo
+      case '20_1event':
+      return 'Uusi Helsinki newsroom. “I need your help.”';
+      case '20_2event':
+      return 'Uusi Helsinki newsroom. “You can\’t tell me?”';
+      case '20_2eventB':
+      return 'Uusi Helsinki newsroom. “Last night?”'; //todo
+      case '20_3event':
+      return 'Uusi Helsinki newsroom. “ It was marked only with your name..”';
+      case '21_1event':
+      return 'Malmi Cemetery. “Would you say you\’re a brave person?”';
+      case '21_2event':
+      return 'Malmi Cemetery. “My plan\’s this…”';
+      case '21_3event':
+      return 'Malmi Cemetery. “I knew I could rely on you.”';
+      case '21_3eventB':
+      return 'Malmi Cemetery. “In that case, I will.”'; //todo
+      case '21_4event':
+      return 'Malmi Cemetery. “The decision has been made.”';
+      case '21_4eventB':
+      return 'Malmi Cemetery. “I knew I could rely on you.”'; //todo
+      case '22A_1event':
+      return 'Malmi Cemetery. “Not much padding in a pauper\’s coffin…”';
+      case '22A_2event':
+      return 'Malmi Cemetery. “Be careful.”';
+      case '22A_3event':
+      return 'Malmi Cemetery. “We may have a long night ahead of us…”';
+      case '22B_1event':
+      return 'Malmi Cemetery. “The dead are speaking.”';
+      case '22B_2event':
+      return 'Malmi Cemetery. “Brother of the Minister of the Interior!”';
+      case '22D_1event':
+      return 'Malmi Cemetery.  “It feels really bad to put you in there, Miss.”';
+      case '22D_2event':
+      return 'Malmi Cemetery. “All we can do is wait.”';
+      case '22D_3event':
+      return 'Malmi Cemetery. “Something’s happening here!”';
+      case '22D_4event':
+      return 'Malmi Cemetery. “Something\’s happening here!”';
+      case '23_1event':
+      return 'Malmi Cemetery. “He\’s losing blood fast!”';
+      case '23_2event':
+      return 'Malmi Cemetery. “You can ride in the back of the car with the grave robbers.”';
+      case '24_1event':
+      return 'Police car. “The dead will arise for the great reckoning.”';
+      case '25_1event':
+      return 'Uusi Helsinki newsroom. “It\’s unbelievable that the third person was Minister Rivasto\’s brother!”';
+      case '25_2event':
+      return 'Uusi Helsinki newsroom. “Black sheep of the family.';
+      case '25_3event':
+      return 'Uusi Helsinki newsroom. “Good evening and good luck.”';
+      case '25_4event':
+      return 'Malmi Cemetery. “What are we going to do?”';
+      case '25_5event':
+      return 'Malmi Cemetery. “Are you sure?”';
       default:
       return 'this is a default text'
 
