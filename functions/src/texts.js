@@ -8,7 +8,7 @@ const texts = {
       case '1_2event':
       return 'Uusi Helsinki newsroom. “Half the bloody edition unsold!”';
       case '1_3event':
-      return 'Uusi Helsinki newsroom “Miss Vanamo.”';
+      return 'Uusi Helsinki newsroom. “Miss Vanamo!”';
       case '1_4event':
       return 'Uusi Helsinki newsroom. “All it takes is a good story to get us off the hook!”';
       case '1_5event':
@@ -96,11 +96,11 @@ const texts = {
       case '10_3eventC':
       return 'Helsinki Police Department interrogation room. “Red guard.”'; //todo
       case '11A_1event':
-      return 'Uusi Helsinki newsroom “Did he do it?”';
+      return 'Uusi Helsinki newsroom. “Did he do it?”';
       case '11A_2event':
-      return 'Uusi Helsinki newsroom “I’m actually a little hesitant.”';
+      return 'Uusi Helsinki newsroom. “I’m actually a little hesitant.”';
       case '11A_2eventB':
-      return 'Uusi Helsinki newsroom “Somehow, he was so very... sincere.”';  //todo
+      return 'Uusi Helsinki newsroom. “Somehow, he was so very... sincere.”';  //todo
       case '11A_3event':
       return '“The suspect - an express edition.”';
       case '11B_1event':
