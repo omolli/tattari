@@ -460,7 +460,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       });
     }
     conv.data.previous = ['1_4event',answ,'int1_3'];
-    const txt = Texts.bubble(conv.data.previous[0]) + conv.user.storage.testi;
+    const txt = Texts.bubble(conv.data.previous[0]);
     if (conv.user.verification === 'VERIFIED') {
       conv.user.storage.testi = 'vanamo my friend';
       conv.user.storage.previous = conv.data.previous;
@@ -640,6 +640,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.data.previous = ['2_3event',answ,'int2_2'];
     if (conv.user.verification === 'VERIFIED') {
       conv.user.storage.previous = conv.data.previous;
+      conv.user.storage.sreveal = conv.data.sreveal;
     }
     const txt = Texts.bubble(conv.data.previous[0]);
     const ssml = Utils.playSimple(audiourl);
@@ -743,6 +744,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.data.previous = ['3A_3event',answ,'3Around'];
     if (conv.user.verification === 'VERIFIED') {
       conv.user.storage.previous = conv.data.previous;
+      conv.user.storage.kyyhky = conv.data.kyyhky;
     }
     const txt = Texts.bubble(conv.data.previous[0]);
     const ssml = Utils.playSimple(audiourl);
@@ -1324,6 +1326,9 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.data.fallbackCount = 0;
     conv.data.previous = ['9_4event','ready','int9_3'];
     const audiourl = host + '207.ogg';
+    if (conv.user.verification === 'VERIFIED') {
+      conv.user.storage.previous = conv.data.previous;
+    }
     const txt = Texts.bubble(conv.data.previous[0]);
     const ssml = Utils.playSimple(audiourl);
     conv.ask(new SimpleResponse({speech: ssml, text: txt}));
@@ -1333,6 +1338,9 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.data.fallbackCount = 0;
     conv.data.previous = ['10_1event','ready','int9_4'];
     const audiourl = host + '208.ogg';
+    if (conv.user.verification === 'VERIFIED') {
+      conv.user.storage.previous = conv.data.previous;
+    }
     const txt = Texts.bubble(conv.data.previous[0]);
     const ssml = Utils.playSimple(audiourl);
     conv.ask(new SimpleResponse({speech: ssml, text: txt}));
@@ -1360,6 +1368,11 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     }
     audiourl += '.ogg';
     conv.data.previous = ['10_2event',answ,'int10_1'];
+    if (conv.user.verification === 'VERIFIED') {
+      conv.user.storage.vpoints = conv.data.vpoints;
+      conv.user.storage.points = conv.data.points;
+      conv.user.storage.previous = conv.data.previous;
+    }
     conv.ask(Utils.playSimple(audiourl));
   });
 
@@ -1388,6 +1401,9 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       }
     }
     conv.data.previous = ['10_3event',answ,'int10_2'];
+    if (conv.user.verification === 'VERIFIED') {
+      conv.user.storage.previous = conv.data.previous;
+    }
     conv.ask(Utils.playSimple(audiourl));
   });
   //Helper intent for selecting where to go
@@ -1419,6 +1435,10 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     } else {
       audiourl = host + '214A.ogg';
     }
+    if (conv.user.verification === 'VERIFIED') {
+      conv.user.storage.visits = conv.data.visits;
+      conv.user.storage.previous = conv.data.previous;
+    }
     conv.ask(Utils.playSimple(audiourl));
   });
 
@@ -1441,6 +1461,9 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       }
     }
     conv.data.previous = ['11A_2event',answ,'int11A_1'];
+    if (conv.user.verification === 'VERIFIED') {
+      conv.user.storage.previous = conv.data.previous;
+    }
     conv.ask(Utils.playSimple(audiourl));
   });
 
@@ -1462,6 +1485,9 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       conv.contexts.set('int11B_E', 1, {});
       audiourl += 'A.ogg';
     }
+    if (conv.user.verification === 'VERIFIED') {
+      conv.user.storage.previous = conv.data.previous;
+    }
     conv.ask(Utils.playSimple(audiourl));
   });
 
@@ -1470,6 +1496,10 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.data.visits = Utils.appender(conv.data.visits,'B');
     conv.data.previous = ['11B_1event','wife','int11B_E'];
     const audiourl = host + '220.ogg';
+    if (conv.user.verification === 'VERIFIED') {
+      conv.user.storage.visits = conv.data.visits;
+      conv.user.storage.previous = conv.data.previous;
+    }
     conv.ask(Utils.playSimple(audiourl));
   });
 
@@ -1515,6 +1545,9 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       }
     }
     conv.data.previous = ['11B_2event',answ,'int11B_1'];
+    if (conv.user.verification === 'VERIFIED') {
+      conv.user.storage.previous = conv.data.previous;
+    }
     conv.ask(Utils.playSimple(audiourl));
   });
 
@@ -1523,6 +1556,9 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.data.previous = ['11C_1event','cafe','int11C_E'];
     //oikeesti eri
     const audiourl = host + '299.ogg';
+    if (conv.user.verification === 'VERIFIED') {
+      conv.user.storage.previous = conv.data.previous;
+    }
     conv.ask(Utils.playSimple(audiourl));
   });
 
@@ -1546,6 +1582,10 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       }
     }
     conv.data.previous = ['11C_2event',answ,'int11C_1'];
+    if (conv.user.verification === 'VERIFIED') {
+      conv.user.storage.visits = conv.data.visits;
+      conv.user.storage.previous = conv.data.previous;
+    }
     conv.ask(Utils.playSimple(audiourl));
   });
 
@@ -1588,6 +1628,9 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.data.fallbackCount = 0;
     conv.data.previous = ['12_1event','ready','int12_E'];
     const audiourl = host + '240.ogg';
+    if (conv.user.verification === 'VERIFIED') {
+      conv.user.storage.previous = conv.data.previous;
+    }
     conv.ask(Utils.playSimple(audiourl));
   });
 
