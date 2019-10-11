@@ -35,23 +35,20 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
     conv.data.renewed = false;
     conv.data.previous = ['Welcome','start again','welcome'];
     conv.data.peliansw = [0,0,0];
-    const audiourl = host + '101.ogg';
     conv.data.kysurl = '';
+    var audiourl = host + '101.ogg';
     var txt = Texts.bubble(conv.data.previous[0]);
-    const ssml = Utils.playSimple(audiourl);
     if (conv.user.verification === 'VERIFIED' && conv.user.last.seen) {
-      txt += 'the day is' + conv.user.storage.testi;
       if (conv.user.storage.day > 0 && conv.user.storage.day < 5) {
         conv.contexts.set('loadgame',5,{})
-        conv.ask('Welcome back to the dead are speaking. Do you wish to continue a saved game or start a new game?');
+        audiourl = host + '101B.ogg';
         //conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       } else {
-        // conv.ask('hi');
-        conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+        txt += ' Welcome back anew!';
       }
-    } else {
-      conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     }
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
 });
 //app.intent('pause', (conv) => { });
 
@@ -168,12 +165,11 @@ app.intent('SaveContinue', (conv) => {
 });
 
 app.intent('Exit', (conv) => {
+  var audiourl = host + 'QUITNOTSAVED.ogg';
   if (conv.user.verification === 'VERIFIED') {
-    //conv.user.storage.previous = conv.data.previous;
-    conv.user.storage.testi = 'Poistuttu';
-    //conv.ask(host + 'QUITSAVED');
+    audiourl = host + 'QUITSAVED.ogg';
   }
-  conv.close('Goodbye for now!');
+  conv.close(new SimpleResponse({speech: Utils.playSimple(audiourl), text: 'Goodbye for now!'}));
 });
 
 app.intent('Forget', (conv) => {
