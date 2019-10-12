@@ -72,6 +72,9 @@ const utils = {
   pusher(str) {
     var choices = [];
     var url = '';
+    if (str.length < 1) {
+      return ['XXX',['do','part','long']]
+    }
     if (str.indexOf('A') === -1) {
       choices.push('do');
       url += '1';

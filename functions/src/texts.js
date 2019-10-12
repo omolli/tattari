@@ -233,7 +233,7 @@ const texts = {
       return 'Police car. “The pond was demanding seals”';
       case '24D':
       return 'Police car. “Pigeons fly where they like.”';
-      case '24D':
+      case '24E':
       return 'Police car. “Blood of young pigeons.”';
       case '25_1event':
       return 'Uusi Helsinki newsroom. “It\'s unbelievable that the third person was Minister Rivasto\'s brother!”';
@@ -241,12 +241,22 @@ const texts = {
       return 'Uusi Helsinki newsroom. “Black sheep of the family."';
       case '25_3event':
       return 'Uusi Helsinki newsroom. “Good evening and good luck.”';
-      case '25_4event':
+      case '25_4A':
       return 'Uusi Helsinki newsroom. “What are we going to do?”';
+      case '25_4B':
+      return '“Are we going to expose the minister\'s brother or not?”';
       case '25_5event':
       return 'Uusi Helsinki newsroom. “Are you sure?”';
+      case '25':
+      return 'Uusi Helsinki newsroom. “I really hope you made the right decision.”';
+      case '25V':
+      return 'Uusi Helsinki newsroom. “Whatever happens tomorrow or in the future…”';
+      case 'END':
+      return '“This is the daily news from Yleisradio.”'
+      case 'CREDITS':
+      return '“Thank you for playing The Dead Are Speaking.”'
       default:
-      return 'this is a default text'
+      return 'this is a default text';
 
 
     }
@@ -489,6 +499,8 @@ const texts = {
       return 'Malmi Cemetery. “You can ride in the back of the car with the grave robbers.”';
       case '24_1event':
       return 'Police car. “The dead will arise for the great reckoning.”';
+      case '24f':
+      return 'What do you ask?';
       case '25_1event':
       return 'How do you answer Minister Rivasto?';
       case '25_2event':
@@ -500,7 +512,7 @@ const texts = {
       case '25_5event':
       return '“Are you absolutely sure?”';
       default:
-      return 'Text not yet implemented';
+      return 'Say “ready” to continue';
 
     }
   }

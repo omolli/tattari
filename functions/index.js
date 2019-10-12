@@ -84,6 +84,7 @@ app.intent('Load', (conv) => {
       conv.data.julkaise = conv.user.storage.kysurl;
       conv.data.nice = conv.user.storage.nice;
       conv.data.kuskikys = conv.user.storage.kuskikys;
+      conv.data.pakys = conv.user.storage.pakys;
       conv.data.testi = 'ladattu loppuun';
       conv.followup('repeat', {
         response: 'repeat'
@@ -2159,7 +2160,7 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     conv.data.nice = false;
     var audiourl = host + '408.ogg';
     var answ = 'two';
-    var eve '20_2B';
+    var eve = '20_2B';
     if (ent20_2 ==='robbed' || response === 'one') {
       audiourl = host + '407.ogg';
       conv.data.nice = true;
@@ -2435,6 +2436,7 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       audiourl2 += '124';
       audiourl += '433';
     }
+    const eve = '24' + conv.data.pakys.charAt(conv.data.pakys.length - 1);
     if (!conv.data.kyyhky) {
       conv.data.pakys += 'E';
     }
@@ -2447,7 +2449,7 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       conv.user.storage.pakys = conv.data.pakys;
       conv.user.storage.kysurl = conv.data.kysurl;
     }
-    const txt = `The question was ${answ}.`;
+    const txt = Texts.bubble(eve);
     const ssml = Utils.playMulti(`<media xml:id="audio1">
       <audio src="${audiourl}"/></media>
     <media xml:id="audio2" begin="audio1.end-0.0s">
@@ -2504,7 +2506,8 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       conv.user.storage.pakys = conv.data.pakys;
       conv.user.storage.kysurl = conv.data.kysurl;
     }
-    const txt = `The question was ${answ}.`;
+    const eve = '24' + conv.data.pakys.charAt(conv.data.pakys.length - 1);
+    const txt = Texts.bubble(eve);
     const ssml = Utils.playMulti(`<media xml:id="audio1">
       <audio src="${audiourl}"/></media>
     <media xml:id="audio2" begin="audio1.end-0.0s">
@@ -2559,7 +2562,8 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       conv.user.storage.pakys = conv.data.pakys;
       conv.user.storage.kysurl = conv.data.kysurl;
     }
-    const txt = `The question was ${answ}.`;
+    const eve = '24' + conv.data.pakys.charAt(conv.data.pakys.length - 1);
+    const txt = Texts.bubble(eve);
     const ssml = Utils.playMulti(`<media xml:id="audio1">
       <audio src="${audiourl}"/></media>
     <media xml:id="audio2" begin="audio1.end-0.0s">
@@ -2605,8 +2609,8 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       conv.user.storage.previous = conv.data.previous;
       conv.user.storage.pakys = conv.data.pakys;
     }
-    //TODO NÄÄ TEKSTIT
-    const txt = `The question was ${answ}.`;
+    const eve = '24' + conv.data.pakys.charAt(conv.data.pakys.length - 1);
+    const txt = Texts.bubble(eve);
     const ssml = Utils.playSimple(audiourl);
     conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
@@ -2656,7 +2660,9 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
 
   app.intent('25_4choice', (conv) => {
     var audiourl = host + '446';
+    var eve = '25_4A';
     if (conv.data.rethink.length > 0) {
+      eve = '25_4B';
       audiourl += 'B';
     }
     audiourl += '.ogg';
@@ -2664,7 +2670,7 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     if (conv.user.verification === 'VERIFIED') {
       conv.user.storage.previous = conv.data.previous;
     }
-    const txt = Texts.bubble(conv.data.previous[0]);
+    const txt = Texts.bubble(eve);
     const ssml = Utils.playSimple(audiourl);
     conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
@@ -2695,12 +2701,13 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     }
     conv.data.previous = ['25_5event',binarr,'int25_4'];
     const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('25A_end', (conv,{binarr}) => {
     var audiourl = host;
+    var eve = '25';
     if (binarr === 'yes') {
       if (!conv.data.points.includes('25Aevent')) {
         conv.data.bpoints += 2;
@@ -2708,6 +2715,7 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       }
       conv.contexts.set('int26A',1,{});
       if (conv.data.vpoints > 3) {
+        eve += 'V';
         audiourl += '450.ogg';
       } else {
         audiourl += '451.ogg';
@@ -2719,16 +2727,18 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       });
     }
     conv.data.previous = ['25Aevent',binarr,'int25A'];
-    const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+    const txt = Texts.bubble(eve);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('25B_end', (conv,{binarr}) => {
     var audiourl = host;
+    var eve = '25';
     if (binarr === 'yes') {
       conv.contexts.set('int26B',1,{});
       if (conv.data.vpoints > 3) {
+        eve += 'V';
         audiourl += '450.ogg';
       } else {
         audiourl += '451.ogg';
@@ -2740,9 +2750,9 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       });
     }
     conv.data.previous = ['25Bevent',binarr,'int25B'];
-    const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+    const txt = Texts.bubble(eve);
+    const ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('26AEpilogue', (conv) => {
@@ -2761,10 +2771,12 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
         audiourl += 'END4.ogg';
       }
     }
-    const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-conv.ask(new SimpleResponse({speech: ssml, text: txt}));
-    conv.close(Utils.playSimple(host+'CREDITS.ogg'));
+    var txt = Texts.bubble('END');
+    var ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+    txt = Texts.bubble('CREDITS');
+    ssml = Utils.playSimple(host+'CREDITS.ogg');
+    conv.close(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('26BEpilogue', (conv) => {
@@ -2783,10 +2795,12 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
         audiourl += 'END8.ogg';
       }
     }
-    const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-conv.ask(new SimpleResponse({speech: ssml, text: txt}));
-    conv.close(Utils.playSimple(host+'CREDITS.ogg'));
+    var txt = Texts.bubble('END');
+    var ssml = Utils.playSimple(audiourl);
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+    txt = Texts.bubble('CREDITS');
+    ssml = Utils.playSimple(host+'CREDITS.ogg');
+    conv.close(new SimpleResponse({speech: ssml, text: txt}));
   });
 //FALLBACKS and NoInputs
 
@@ -3845,9 +3859,9 @@ return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     conv.contexts.set(ctx, 1, {});
     const repromptCount = parseInt(conv.arguments.get('REPROMPT_COUNT'));
     if (conv.data.fallbackCount < fbc && repromptCount < repc) {
-      const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+    const txt = Texts.bubble('24f');
+    const ssml = Utils.playSimple(audiourl);
+    return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     } else if (repromptCount === 1) {
        return conv.followup('repeat', {
          response: 'repeat'
