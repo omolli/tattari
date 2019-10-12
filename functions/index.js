@@ -3337,8 +3337,8 @@ return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     }
     if (repromptCount < repc) {
       const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+      const ssml = Utils.playSimple(audiourl);
+      return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     } else {
       return conv.followup('repeat', {
         response: 'repeat'
@@ -3351,8 +3351,8 @@ return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     conv.data.fallbackCount++;
     if (conv.data.fallbackCount < 2) {
       const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+      const ssml = Utils.playSimple(audiourl);
+      return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     } else {
       conv.data.fallbackCount = 0;
       return conv.followup('10_2event', {
@@ -3375,8 +3375,8 @@ return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     }
     if (conv.data.fallbackCount < fbc) {
       const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+      const ssml = Utils.playSimple(audiourl);
+      return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     } else {
       conv.data.fallbackCount = 0;
       return conv.followup('10_4event', {
@@ -3393,8 +3393,8 @@ return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     }
     if (repromptCount < repc) {
       const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+      const ssml = Utils.playSimple(audiourl);
+      return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     } else {
       return conv.followup('10_4event', {
         response: 'two'
@@ -3407,8 +3407,8 @@ return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     conv.data.fallbackCount++;
     if (conv.data.fallbackCount < fbc) {
       const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+      const ssml = Utils.playSimple(audiourl);
+      return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     } else {
       conv.data.fallbackCount = 0;
       return conv.followup('11A_1event', {
@@ -3422,8 +3422,8 @@ return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     const repromptCount = parseInt(conv.arguments.get('REPROMPT_COUNT'));
     if (repromptCount < repc) {
       const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+      const ssml = Utils.playSimple(audiourl);
+      return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     } else {
       return conv.followup('repeat', {
         response: 'repeat'
@@ -3436,8 +3436,8 @@ return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     conv.data.fallbackCount++;
     if (conv.data.fallbackCount < fbc) {
       const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+      const ssml = Utils.playSimple(audiourl);
+      return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     } else {
       conv.data.fallbackCount = 0;
       return conv.followup('11A_2event', {
@@ -3451,8 +3451,8 @@ return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     conv.data.fallbackCount++;
     if (conv.data.fallbackCount < fbc) {
       const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+      const ssml = Utils.playSimple(audiourl);
+      return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     } else {
       conv.data.fallbackCount = 0;
       return conv.followup('11A_3event', {
@@ -3474,8 +3474,8 @@ return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     conv.contexts.set('int11B_E', 1, {});
     if (conv.data.fallbackCount < fbc) {
       const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+      const ssml = Utils.playSimple(audiourl);
+      return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     } else {
       return conv.followup('11B_1event', {
         response: 'wife'
@@ -3503,8 +3503,8 @@ return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     conv.contexts.set('int11B_E', 1, {});
     if (repromptCount < repc) {
       const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+      const ssml = Utils.playSimple(audiourl);
+      return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     } else {
       return conv.followup('repeat', {
         response: 'repeat'
@@ -3517,8 +3517,8 @@ return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     conv.data.fallbackCount++;
     if (conv.data.fallbackCount < fbc) {
       const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+      const ssml = Utils.playSimple(audiourl);
+      return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     } else {
       return conv.followup('11B_2event', {
         response: 'one'
@@ -3533,8 +3533,8 @@ return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       conv.data.fallbackCount++;
       if (conv.data.fallbackCount < fbc) {
         const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+        const ssml = Utils.playSimple(audiourl);
+        return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       } else {
         return conv.followup('11C_2event', {
           response: 'one'
@@ -3561,8 +3561,8 @@ return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       conv.contexts.set('int11C_E', 1, {});
       if (repromptCount < repc) {
         const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+        const ssml = Utils.playSimple(audiourl);
+        return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       } else {
         return conv.followup('repeat', {
           response: 'repeat'
@@ -3582,8 +3582,8 @@ return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     } else {
       if (repromptCount < repc) {
         const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+        const ssml = Utils.playSimple(audiourl);
+        return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       } else {
         return conv.followup('repeat', {
           response: 'repeat'
@@ -3597,8 +3597,8 @@ return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     conv.data.fallbackCount++;
     if (conv.data.fallbackCount < fbc) {
       const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+      const ssml = Utils.playSimple(audiourl);
+      return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     } else {
       return conv.followup('11C_2event', {
         response: 'one'
@@ -3646,8 +3646,8 @@ return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       conv.contexts.set('int11B_E', 1, {});
       if (repromptCount < repc) {
         const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+        const ssml = Utils.playSimple(audiourl);
+        return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       } else {
         return conv.followup('repeat', {
           response: 'repeat'
@@ -3683,8 +3683,8 @@ return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     conv.data.fallbackCount++;
     if (conv.data.fallbackCount < fbc) {
       const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+    const ssml = Utils.playSimple(audiourl);
+    return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     } else {
       return conv.followup('12_5event', {
         response: 'two'
@@ -3736,8 +3736,8 @@ return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     }
     else if (repromptCount < repc) {
       const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+    const ssml = Utils.playSimple(audiourl);
+    return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     } else {
       return conv.followup('repeat', {
         response: 'repeat'
@@ -3775,8 +3775,8 @@ return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     const repromptCount = parseInt(conv.arguments.get('REPROMPT_COUNT'));
     if (repromptCount < repc) {
       const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+    const ssml = Utils.playSimple(audiourl);
+    return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     } else {
       return conv.followup('repeat', {
         response: 'repeat'
@@ -3806,8 +3806,8 @@ return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     const repromptCount = parseInt(conv.arguments.get('REPROMPT_COUNT'));
     if (conv.data.fallbackCount < fbc && repromptCount < repc) {
     const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+    const ssml = Utils.playSimple(audiourl);
+    return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     } else if (repromptCount === 1) {
        return conv.followup('repeat', {
          response: 'repeat'
@@ -3832,8 +3832,8 @@ return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     const repromptCount = parseInt(conv.arguments.get('REPROMPT_COUNT'));
     if (conv.data.fallbackCount < fbc && repromptCount < repc) {
     const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+    const ssml = Utils.playSimple(audiourl);
+    return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     } else if (repromptCount === 1) {
        return conv.followup('repeat', {
          response: 'repeat'
