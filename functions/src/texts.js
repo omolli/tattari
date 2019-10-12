@@ -52,7 +52,7 @@ const texts = {
       case '5A_3A':
       return 'University of Helsinki. “Where are we going next?”';
       case '5A_3B':
-      return 'University of Helsinki. University of Helsinki. “Continue tomorrow.”'; //todo
+      return 'University of Helsinki. University of Helsinki. “Continue tomorrow.”'; //todo 5A_3c
       case '5B_1event':
       return 'Outside the Lapinlahti Hospital. “Fabritius.”';
       case '5B_2event':
@@ -60,9 +60,9 @@ const texts = {
       case '5B_3A':
       return 'Outside the Lapinlahti Hospital. “A lust murderer.”';
       case '5B_3B':
-      return 'Outside the Lapinlahti Hospital. “The adjunct professor or the police?”'; //todo
+      return 'Outside the Lapinlahti Hospital. “The adjunct professor or the police?”';
       case '5B_3C':
-      return 'Outside the Lapinlahti Hospital. “The Department of Anatomy.”'; //todo
+      return 'Outside the Lapinlahti Hospital. “The Department of Anatomy.”';
       case '5C_1event':
       return 'Helsinki Police Department. “Could you spare us a moment?”';
       case '5C_2event':
@@ -70,7 +70,7 @@ const texts = {
       case '6_1A':
       return 'Uusi Helsinki newsroom. “You have to trust me and my skills.”';
       case '6_1B':
-      return 'Uusi Helsinki newsroom. “We worked well together!”'; //todo
+      return 'Uusi Helsinki newsroom. “We worked well together!”';
       case '7_1event':
       return 'Tuesday, September 20th, 1931.';
       case '9_1event':
@@ -80,27 +80,27 @@ const texts = {
       case '9_3A':
       return 'The Department of Anatomy. “No marks of excess violence.”';
       case '9_3B':
-      return 'The Department of Anatomy. “Thank you for the information.”'; //todo
+      return 'The Department of Anatomy. “Thank you for the information.”';
       case '9_4event':
       return 'The Department of Anatomy hallway. “The mother-of-all-scoops!”';
       case '10_1event':
       return 'Helsinki Police Department interrogation room. “Start talking!”';
-      case '10_2event':
+      case '10_2A':
       return 'Helsinki Police Department interrogation room. “Let the man say his piece!”';
-      case '10_2eventB':
-      return 'Helsinki Police Department Interrogation room. “It’s your word against ours.”'; //todo
-      case '10_3eventB':
-      return 'Helsinki Police Department interrogation room. “Pigeons?”'; //todo
-      case '10_3event':
-      return 'Helsinki Police Department interrogation room. “The Panacea Society.”';  //todo
-      case '10_3eventC':
-      return 'Helsinki Police Department interrogation room. “Red guard.”'; //todo
+      case '10_2B':
+      return 'Helsinki Police Department Interrogation room. “It’s your word against ours.”';
+      case '10_3A':
+      return 'Helsinki Police Department interrogation room. “Pigeons?”';
+      case '10_3B':
+      return 'Helsinki Police Department interrogation room. “The Panacea Society.”';
+      case '10_3C':
+      return 'Helsinki Police Department interrogation room. “Red guard.”';
       case '11A_1event':
       return 'Uusi Helsinki newsroom. “Did he do it?”';
-      case '11A_2event':
+      case '11A_2A':
       return 'Uusi Helsinki newsroom. “I’m actually a little hesitant.”';
-      case '11A_2eventB':
-      return 'Uusi Helsinki newsroom. “Somehow, he was so very... sincere.”';  //todo
+      case '11A_2B':
+      return 'Uusi Helsinki newsroom. “Somehow, he was so very... sincere.”';
       case '11A_3event':
       return '“The suspect - an express edition.”';
       case '11B_1event':
@@ -111,10 +111,10 @@ const texts = {
       return 'Aleksis Kiven katu. “Statutum est hominibus mori.”';
       case '11C_2event':
       return 'Aleksis Kiven katu. “There’s the cafe – let\'s go in.”';
-      case '11C_3event':
+      case '11C_3A':
       return 'Sigu\'s cafe. “I’m smarter than they think!”';
-      case '11C_3eventB':
-      return 'Sigu\'s cafe. “We don\'t trust the white butchers\' police.”'; //todo
+      case '11C_3B':
+      return 'Sigu\'s cafe. “We don\'t trust the white butchers\' police.”';
       case '12_1event':
       return 'Malmi Cemetery. “Malmi is my beat.”';
       case '12_2event':
@@ -123,28 +123,22 @@ const texts = {
       return 'Malmi Cemetery. “We have to get hold of those papers!”';
       case '12_4event':
       return 'Malmi Cemetery. “What do you want?”';
-      case '12_5event':
+      case '12_5A':
       return 'Malmi Cemetery. “They\'ve found something strange in a grave!”';
-      case '12_5eventB':
-      return 'Malmi Cemetery. “This investigation is no longer his business.”'; //todo
-      case '12_5eventC':
-      return 'Malmi Cemetery. “What a frightful state!”'; //todo
-      case '12_5eventD':
-      return 'Malmi Cemetery. “What a disgrace.”'; //todo
+      case '12_5B':
+      return 'Malmi Cemetery. “This investigation is no longer his business.”';
+      case '12_5C':
+      return 'Malmi Cemetery. “What a frightful state!”';
+      case '12_5D':
+      return 'Malmi Cemetery. “What a disgrace.”';
       case '12_6event':
       return 'Malmi Cemetery. “What is it this time?”';
-      case '12_7event':
-      return 'Malmi Cemetery. “They’ve found something strange in a grave!”';
-      case '12_7eventB':
-      return 'Malmi Cemetery. “What a frightful state!”'; //todo
-      case '12_7eventC':
-      return 'Malmi Cemetery. “What a disgrace.”'; //todo
       case '13_1event':
       return 'Uusi Helsinki newsroom. “These papers must be made public!”';
-      case '13_2event':
+      case '13_2A':
       return 'Uusi Helsinki newsroom. “It\'s going to be a great article!”';
-      case '13_2eventB':
-      return 'Uusi Helsinki newsroom. “Oh well, it\'s your decision.”'; //todo
+      case '13_2B':
+      return 'Uusi Helsinki newsroom. “Oh well, it\'s your decision.”';
       case '14_1event':
       return 'Wednesday, September 21st, 1931.';
       case '14_2event':
@@ -161,10 +155,10 @@ const texts = {
       return 'Uusi Helsinki newsroom. “Damnation and grief! May explode!”';
       case '16_1event':
       return 'Uusi Helsinki newsroom. “Consider yourselves lucky.”';
-      case '16_2event':
+      case '16_2A':
       return 'Uusi Helsinki newsroom. “Surely you have some common sense!”';
-      case '16_2eventB':
-      return 'Uusi Helsinki newsroom. “This is police business!”'; //todo
+      case '16_2B':
+      return 'Uusi Helsinki newsroom. “This is police business!”';
       case '17_1event':
       return 'Uusi Helsinki newsroom. “We\'re supposed to write something for tomorrow’s paper.”';
       case '17_2event':
@@ -183,30 +177,30 @@ const texts = {
       return 'Thursday, September 22nd, 1931.';
       case '19_2event':
       return 'Uusi Helsinki newsroom. “Who would send us something like this?”';
-      case '19_3event':
+      case '19_3A':
       return 'Uusi Helsinki newsroom. “Looks quite fresh to me.”';
-      case '19_3eventB':
-      return 'Uusi Helsinki newsroom. “Good idea.”'; //todo
+      case '19_3B':
+      return 'Uusi Helsinki newsroom. “Good idea.”';
       case '20_1event':
       return 'Uusi Helsinki newsroom. “I need your help.”';
-      case '20_2event':
+      case '20_2A':
       return 'Uusi Helsinki newsroom. “You can\'t tell me?”';
-      case '20_2eventB':
-      return 'Uusi Helsinki newsroom. “Last night?”'; //todo
+      case '20_2B':
+      return 'Uusi Helsinki newsroom. “Last night?”';
       case '20_3event':
       return 'Uusi Helsinki newsroom. “It was marked only with your name..”';
       case '21_1event':
       return 'Malmi Cemetery. “Would you say you\'re a brave person?”';
       case '21_2event':
       return 'Malmi Cemetery. “My plan\'s this…”';
-      case '21_3event':
+      case '21_3A':
       return 'Malmi Cemetery. “I knew I could rely on you.”';
-      case '21_3eventB':
-      return 'Malmi Cemetery. “In that case, I will.”'; //todo
-      case '21_4event':
+      case '21_3B':
+      return 'Malmi Cemetery. “In that case, I will.”';
+      case '21_4A':
       return 'Malmi Cemetery. “The decision has been made.”';
-      case '21_4eventB':
-      return 'Malmi Cemetery. “I knew I could rely on you.”'; //todo
+      case '21_4B':
+      return 'Malmi Cemetery. “I knew I could rely on you.”';
       case '22A_1event':
       return 'Malmi Cemetery. “Not much padding in a pauper\'s coffin…”';
       case '22A_2event':
@@ -231,6 +225,16 @@ const texts = {
       return 'Malmi Cemetery. “You can ride in the back of the car with the grave robbers.”';
       case '24_1event':
       return 'Police car. “The dead will arise for the great reckoning.”';
+      case '24A':
+      return 'Police car. “We had no evil intentions.”';
+      case '24B':
+      return 'Police car. “Just the two of us.”';
+      case '24C':
+      return 'Police car. “The pond was demanding seals”';
+      case '24D':
+      return 'Police car. “Pigeons fly where they like.”';
+      case '24D':
+      return 'Police car. “Blood of young pigeons.”';
       case '25_1event':
       return 'Uusi Helsinki newsroom. “It\'s unbelievable that the third person was Minister Rivasto\'s brother!”';
       case '25_2event':
