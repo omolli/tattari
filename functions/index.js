@@ -1,5 +1,5 @@
 'use strict';
-const {dialogflow, SimpleResponse} = require('actions-on-google');
+const {dialogflow, SimpleResponse, BasicCard, Button, Image} = require('actions-on-google');
 const functions = require('firebase-functions');
 const {google} = require('googleapis');
 const Utils = require('./src/utils')
@@ -48,7 +48,26 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
       }
     }
     const ssml = Utils.playSimple(audiourl);
-    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+    conv.ask(new SimpleResponse({speech: ssml, text: ''}));
+    if (conv.screen) {
+      conv.ask(new BasicCard({
+      text: txt,
+      subtitle: 'Tsup tsap',
+      title: 'Dead are speaking',
+      buttons: new Button({
+        title: 'Mysterious button',
+        url: 'https://yle.fi/deadarespeaking',
+      }),
+      image: new Image({
+        url: 'https://tattar-oudbew.web.app/LOGO.png',
+        alt: 'Nice',
+      }),
+      display: 'CROPPED',
+    }));
+  } else {
+    //conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+    conv.data.testi = 'else';
+  }
 });
 //app.intent('pause', (conv) => { });
 
