@@ -211,6 +211,7 @@ app.intent('repeat', (conv) =>{
   const cparam = conv.data.previous[1];
   const ccontext = conv.data.previous[2];
   conv.contexts.set(ccontext,1,{})
+  conv.user.storage.testi = 'repeat';
   //const param = Reprompts.getParam(cevent);
   const param = Reprompts.getType(cparam);
   if (param === 'binarr') {
@@ -2401,6 +2402,7 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   // });
 
   app.intent('23_1aftermath', (conv) => {
+    conv.data.fallbackCount = 0;
     const audiourl = host + '427.ogg';
     conv.data.previous = ['23_1event','ready','int23_E'];
     if (conv.user.verification === 'VERIFIED') {
@@ -2426,6 +2428,7 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('24_1car', (conv) => {
+    conv.data.fallbackCount = 0;
     var audiourl = host + '430.ogg';
     conv.data.previous = ['24_1event','ready','int23_2'];
     if (conv.user.verification === 'VERIFIED') {
@@ -2437,6 +2440,7 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
   //TODO TÄSSÄ EHKÄ LOPUT KYSYMYKSET NEGATIIVISIKSI TRAINING FRAASEIKSI?
   app.intent('24_2car', (conv,{ent24,response}) => {
+    conv.data.fallbackCount = 0;
     var audiourl = host;
     var audiourl2 = host + 'PA';
     var answ = 'three';
@@ -2450,10 +2454,15 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       conv.data.pakys = 'B';
       audiourl2 += '134';
       audiourl += '432';
-    } else {
+    } else if (response === 'three' || ent24 === 'long') {
       conv.data.pakys = 'C';
       audiourl2 += '124';
       audiourl += '433';
+    } else {
+      conv.data.testi = 'fallevent24_2';
+      return conv.followup('fallevent', {
+        response: 'fallback'
+      });
     }
     const eve = '24' + conv.data.pakys.charAt(conv.data.pakys.length - 1);
     if (!conv.data.kyyhky) {
@@ -2479,6 +2488,7 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('24_3car', (conv,{ent24,response}) => {
+    conv.data.fallbackCount = 0;
     var audiourl = host;
     //extract the possible answers and the upcoming url
     var pos = conv.data.pakys;
@@ -2507,9 +2517,9 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       audiourl2 = audiourl2.replace('4','');
       audiourl += '434.ogg';
     } else {
-      //TOISTAISEKSI VAIN REPEAT, JOKU PAREMPI?
-      return conv.followup('repeat', {
-        response: "repeat"
+      conv.data.testi = 'fallevent24_3';
+      return conv.followup('fallevent24', {
+        response: 'fallback'
       });
     }
     if (conv.data.kyyhky) {
@@ -2537,6 +2547,7 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('24_4car', (conv,{ent24,response}) => {
+    conv.data.fallbackCount = 0;
     var audiourl = host;
     //extract the possible answers and the upcoming url
     const pushed = Utils.pusher(conv.data.pakys);
@@ -2568,9 +2579,9 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       audiourl2 = audiourl2.replace('5','');
       audiourl += '435.ogg';
     } else {
-      //TOISTAISEKSI VAIN REPEAT, JOKU PAREMPI?
-      return conv.followup('repeat', {
-        response: "repeat"
+      conv.data.testi = 'fallevent24_4';
+      return conv.followup('fallevent24', {
+        response: 'fallback'
       });
     }
     audiourl2 = host + audiourl2 + '.ogg';
@@ -2593,6 +2604,7 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('24_5car', (conv,{ent24,response}) => {
+    conv.data.fallbackCount = 0;
     var audiourl = host;
     //extract the possible answers and the upcoming url
     const pushed = Utils.pusher(conv.data.pakys);
@@ -2618,9 +2630,9 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       conv.data.pakys += 'E';
       audiourl += '440.ogg';
     } else {
-      //TOISTAISEKSI VAIN REPEAT, JOKU PAREMPI?
-      return conv.followup('repeat', {
-        response: "repeat"
+      conv.contexts.set('24fall',1,{});
+      return conv.followup('fallevent24', {
+        response: 'fallback'
       });
     }
     conv.data.previous = ['24_5event',answ,'int24_4'];
@@ -2635,6 +2647,7 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('25_1choice', (conv) => {
+    conv.data.fallbackCount = 0;
     const audiourl = host + '441.ogg';
     conv.data.previous = ['25_1event','ready','int24_5'];
     if (conv.user.verification === 'VERIFIED') {
@@ -2646,6 +2659,7 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       });
 
   app.intent('25_2choice', (conv,{ent25_2,response}) => {
+    conv.data.fallbackCount = 0;
     var audiourl = host + '443.ogg';
     var answ = 'two';
     if (ent25_2 === 'dunno' || response === 'one') {
@@ -2662,6 +2676,7 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('25_3choice', (conv,{ent25_3,response}) => {
+    conv.data.fallbackCount = 0;
     var audiourl = host + '445.ogg';
     var answ = 'two';
     if (ent25_3 === 'why' || response === 'one') {
@@ -2678,6 +2693,7 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('25_4choice', (conv) => {
+    conv.data.fallbackCount = 0;
     var audiourl = host + '446';
     var eve = '25_4A';
     if (conv.data.rethink.length > 0) {
@@ -2695,6 +2711,7 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
   app.intent('25_5choice', (conv,{binarr, ent25_5}) => {
+    conv.data.fallbackCount = 0;
     var audiourl = host + '447.ogg';
     if (binarr === 'yes') {
       if (conv.data.rethink.indexOf('A') !== -1) {
@@ -3871,14 +3888,18 @@ return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     const eve = conv.data.previous[0];
     var indx = eve.indexOf('e');
     var nmbr = parseInt(eve[indx-1],10)+1;
-    if (nmbr === 3 && !conv.data.kyyhky) {
+    if (nmbr === 4 && !conv.data.kyyhky) {
       nmbr += 1
     }
     var ctx = 'int24_' + (nmbr-1).toString();
+    conv.data.testi2 = 'eve:' + eve + '-indx:' + indx + '-nmbr:' + nmbr + '-ctx:' + ctx;
     conv.contexts.set(ctx, 1, {});
+    var tt = conv.arguments.get('REPROMPT_COUNT');
     const repromptCount = parseInt(conv.arguments.get('REPROMPT_COUNT'));
-    if (conv.data.fallbackCount < fbc && repromptCount < repc) {
-    const txt = Texts.bubble('24f');
+    conv.data.testi = 'ctx:' + ctx + ' nmbr:' + nmbr;
+    if (conv.data.fallbackCount < fbc && (repromptCount < repc || isNaN(repromptCount))) {
+    conv.data.kuskikys = 'EFCDSA';
+    const txt = Texts.bubblef('24f');
     const ssml = Utils.playSimple(audiourl);
     return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     } else if (repromptCount === 1) {
@@ -3888,39 +3909,10 @@ return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
      } else {
       const next_eve = '24_' + nmbr.toString() + 'event';
       conv.data.fallbackCount = 0;
-      return conv.followup(next_eve, {
-        response: 'one'
-      });
-    }
-  });
-
-  app.intent('24_2car - fallback', (conv) => {
-    const audiourl = conv.data.kysurl;
-    conv.data.fallbackCount++;
-    if (conv.data.fallbackCount < fbc) {
-      const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
-    } else {
-      conv.data.fallbackCount = 0;
-      return conv.followup('24_3event', {
-        response: 'one'
-      });
-    }
-  });
-
-  app.intent('24_3car - fallback', (conv) => {
-    const audiourl = conv.data.kysurl;
-    conv.data.fallbackCount++;
-    if (conv.data.fallbackCount < fbc) {
-      const txt = Texts.bubble(conv.data.previous[0]);
-const ssml = Utils.playSimple(audiourl);
-return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
-    } else {
-      conv.data.fallbackCount = 0;
-      return conv.followup('24_3event', {
-        response: 'one'
-      });
+      conv.ask('Why are we here? ' + next_eve)
+      // return conv.followup(next_eve, {
+      //   response: 'one'
+      // });
     }
   });
 
