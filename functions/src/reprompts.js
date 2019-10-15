@@ -179,6 +179,10 @@ const reprompts = {
       return [valmis,'int25_3','25_4event','ready'];
       case '25_4event':
       return ['446K','int25_4','25_5event','one'];
+      case '26Aevent':
+      return [valmis, 'int25A','26Aevent','ready'];
+      case '26Bevent':
+      return [valmis, 'int25B','26Bevent','ready'];
       default:
       return ['repeater','int5','1_5event','one'];
     }

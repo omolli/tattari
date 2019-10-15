@@ -52,7 +52,9 @@ const texts = {
       case '5A_3A':
       return 'University of Helsinki. “Where are we going next?”';
       case '5A_3B':
-      return 'University of Helsinki. University of Helsinki. “Continue tomorrow.”'; //todo 5A_3c
+      return 'University of Helsinki. “Continue tomorrow.”';
+      case '5A_3C':
+      return 'University of Helsinki. “The Department of Anatomy.”';
       case '5B_1event':
       return 'Outside the Lapinlahti Hospital. “Fabritius.”';
       case '5B_2event':
@@ -320,7 +322,9 @@ const texts = {
       case '5A_3A':
       return 'University of Helsinki. “Where are we going next?”';
       case '5A_3B':
-      return 'University of Helsinki. University of Helsinki. “Continue tomorrow.”'; //todo
+      return 'University of Helsinki. University of Helsinki. “Continue tomorrow.”';
+      case '5A_3C':
+      return 'Outside the Lapinlahti Hospital. “The Department of Anatomy.”';
       case '5B_1event':
       return '“Are you already familiar with the hospital?”';
       case '5B_2event':
@@ -328,61 +332,46 @@ const texts = {
       case '5B_3A':
       return 'Outside the Lapinlahti Hospital. “A lust murderer.”';
       case '5B_3B':
-      return 'Outside the Lapinlahti Hospital. “The adjunct professor or the police?”'; //todo
+      return 'Outside the Lapinlahti Hospital. “The adjunct professor or the police?”';
       case '5B_3C':
-      return 'Outside the Lapinlahti Hospital. “The Department of Anatomy.”'; //todo
+      return 'Outside the Lapinlahti Hospital. “The Department of Anatomy.”';
       case '5C_1event':
       return 'Helsinki Police Department. “How do you answer the clerk?”';
       case '5C_2event':
       return 'Helsinki Police Department. “The Minister of the Interior?”';
       case '6_1A':
       return 'Who do you blame in the article?';
-      case '6_1B':
-      return 'Who do you blame in the article?'; //todo
-      case '7_1event':
-      return 'Tuesday, September 20th, 1931.'; //todo tahan en osaa laittaa K-versioita t. rauli
+      case '7_1A':
+      return 'Tuesday, September 20th, 1931. \n Adjunct professor or the Department of Anatomy?';
+      case '7_1B':
+      return 'Tuesday, September 20th, 1931. \n The physician or the Department of Anatomy?';
+      case '7_1C':
+      return 'Tuesday, September 20th, 1931. \n The police or the Department of Anatomy?';
       case '9_1event':
       return '“I hope I\'m making myself clear!”';
       case '9_2event':
       return '“Would you like to hear more?”';
-      case '9_3A':
-      return 'The Department of Anatomy. “No marks of excess violence.”';
-      case '9_3B':
-      return 'The Department of Anatomy. “Thank you for the information.”'; //todo
       case '9_4event':
       return 'The Department of Anatomy hallway. “The mother-of-all-scoops!”';
       case '10_1event':
       return 'What will you say?';
       case '10_2event':
-      return 'Helsinki Police Department interrogation room. “Let the man say his piece!”';
-      case '10_2eventB':
-      return 'Helsinki Police Department Interrogation room. “It\'s your word against ours.”'; //todo
-      case '10_3eventB':
-      return '“Article, wife or café?”'; //todo
+      return 'Do you ask about the pigeons, the Panacea Society or the Red Rebellion?';
       case '10_3event':
-      return '“Article, wife or café?”';  //todo
-      case '10_3eventC':
-      return '“Article, wife or café?”'; //todo
+      return '“Article, wife or café?”';
       case '11A_1event':
       return '“Did he do it?”';
       case '11A_2event':
       return 'Are you going to mention Saarenheimo\'s name in the express edition?';
-      case '11A_2eventB':
-      return 'Are you going to mention Saarenheimo\'s name in the express edition?';  //todo
       case '11A_3event':
       return '“The wife or the café owner?”';
       case '11B_1event':
       return '“What do you ask Alma Saarenheimo?”';
       case '11B_2event':
-      return 'How do you reply?';
       case '11C_1event':
       return 'How do you reply?';
       case '11C_2event':
       return 'What do you ask Signe Toivonen?';
-      case '11C_3event':
-      return 'Sigu\'s cafe. “I\'m smarter than they think!”';
-      case '11C_3eventB':
-      return 'Sigu\'s cafe. “We don\'t trust the white butchers\' police.”'; //todo
       case '12_1event':
       return '“How about a drink, Taipale?”';
       case '12_2event':
@@ -391,28 +380,8 @@ const texts = {
       return 'Malmi Cemetery. “We have to get hold of those papers!”';
       case '12_4event':
       return 'What will you say?';
-      case '12_5event':
-      return 'Malmi Cemetery. “They’ve found something strange in a grave!”';
-      case '12_5eventB':
-      return 'Malmi Cemetery. “This investigation is no longer his business.”'; //todo
-      case '12_5eventC':
-      return 'Malmi Cemetery. “What a frightful state!”'; //todo
-      case '12_5eventD':
-      return 'Malmi Cemetery. “What a disgrace.”'; //todo
-      case '12_6event':
-      return 'What will you say?';
-      case '12_7event':
-      return 'Malmi Cemetery. “They\'ve found something strange in a grave!”';
-      case '12_7eventB':
-      return 'Malmi Cemetery. “What a frightful state!”'; //todo
-      case '12_7eventC':
-      return 'Malmi Cemetery. “What a disgrace.”'; //todo
       case '13_1event':
       return 'Are you going to print the information?';
-      case '13_2event':
-      return 'Uusi Helsinki newsroom. “It’s going to be a great article!”';
-      case '13_2eventB':
-      return 'Uusi Helsinki newsroom. “Oh well, it’s your decision.”'; //todo
       case '14_1event':
       return 'Wednesday, September 21st, 1931.';
       case '14_2event':
@@ -426,13 +395,8 @@ const texts = {
       case '15_4event':
       return '“Should I read the last one?”';
       case '15_5event':
-      return 'How do you reply?';
       case '16_1event':
       return 'How do you reply?';
-      case '16_2event':
-      return 'Uusi Helsinki newsroom. “Surely you have some common sense!”';
-      case '16_2eventB':
-      return 'Uusi Helsinki newsroom. “This is police business!”'; //todo
       case '17_1event':
       return '“Is this reporter Taipale’s office?”';
       case '17_2event':
@@ -453,28 +417,16 @@ const texts = {
       return '“What do you tell Vanamo?”';
       case '19_3event':
       return '“Taipale, is that you?”';
-      case '19_3eventB':
-      return '“Taipale, is that you?”'; //todo
       case '20_1event':
       return 'How do you answer Vanamo?';
       case '20_2event':
       return 'How do you answer Vanamo?';
-      case '20_2eventB':
-      return 'How do you answer Vanamo?'; //todo
       case '20_3event':
       return 'Uusi Helsinki newsroom. “It was marked only with your name..”';
       case '21_1event':
       return 'How do you reply?';
       case '21_2event':
       return 'Malmi Cemetery. “My plan\'s this…”';
-      case '21_3event':
-      return 'Malmi Cemetery. “I knew I could rely on you.”';
-      case '21_3eventB':
-      return 'Malmi Cemetery. “In that case, I will.”'; //todo
-      case '21_4event':
-      return 'Malmi Cemetery. “The decision has been made.”';
-      case '21_4eventB':
-      return 'Malmi Cemetery. “I knew I could rely on you.”'; //todo
       case '22A_1event':
       return 'Invent a first name for Taipale.';
       case '22A_2event':
@@ -498,7 +450,6 @@ const texts = {
       case '23_2event':
       return 'Malmi Cemetery. “You can ride in the back of the car with the grave robbers.”';
       case '24_1event':
-      return 'Police car. “The dead will arise for the great reckoning.”';
       case '24f':
       return 'What do you ask?';
       case '25_1event':
