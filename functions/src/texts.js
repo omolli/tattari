@@ -3,6 +3,8 @@ const texts = {
     switch (e) {
       case 'Welcome':
       return 'Welcome to the Dead Are Speaking. This story contains violence and offensive language. Although a work of fiction, the story is based on actual events in Finland in the early 1930s.';
+      case 'WelcomeB':
+      return 'Welcome to The Dead Are Speaking. Do you want to load a saved game or start a new game?';
       case '1_1event':
       return 'Monday, September 19th, 1931.';
       case '1_2event':

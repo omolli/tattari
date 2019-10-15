@@ -38,19 +38,15 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
     conv.data.kysurl = '';
     var audiourl = host + '101.ogg';
     var txt = Texts.bubble(conv.data.previous[0]);
-    if (conv.user.verification === 'VERIFIED' && conv.user.last.seen) {
-      if (conv.user.storage.day > 0 && conv.user.storage.day < 5) {
-        conv.contexts.set('loadgame',5,{})
-        audiourl = host + '101B.ogg';
-        //conv.ask(new SimpleResponse({speech: ssml, text: txt}));
-      } else {
-        txt += ' Welcome back anew!';
-      }
-    }
-    var ssml = Utils.playSimple(audiourl);
     if (conv.surface.capabilities.has('actions.capability.WEB_BROWSER')) {
-      ssml = Utils.speak('Welcome to dead are testing');
+      audiourl = host + '101P.ogg';
     }
+    if (conv.user.verification === 'VERIFIED' && conv.user.last.seen && conv.user.storage.day > 0 && conv.user.storage.day < 5) {
+        txt = Texts.bubble('Welcome2');
+        conv.contexts.set('loadgame',5,{});
+        audiourl = host + '101B.ogg';
+      }
+    const ssml = Utils.playSimple(audiourl);
     conv.ask(new SimpleResponse({speech: ssml, text: ''}));
     if (conv.screen) {
       conv.ask(new BasicCard({
@@ -62,21 +58,18 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
       }),
       display: 'CROPPED',
     }));
-  } else {
-    //conv.ask(new SimpleResponse({speech: ssml, text: txt}));
-    conv.data.testi = 'else';
   }
 });
 //app.intent('pause', (conv) => { });
 
 app.intent('NewGame', (conv) => {
-  const audiourl = host + '101.ogg';
+  var audiourl = host + '101.ogg';
   conv.data.previous = ['newgame','new game','DefaultWelcomeIntent-followup'];
   const txt = Texts.bubble('Welcome');
-  var ssml = Utils.playSimple(audiourl);
   if (conv.surface.capabilities.has('actions.capability.WEB_BROWSER')) {
-    ssml = Utils.speak('Welcome to dead are testing');
+    audiourl = host + '101P.ogg';
   }
+  const ssml = Utils.playSimple(audiourl);
   conv.ask(new SimpleResponse({speech: ssml, text: txt}));
 });
 
@@ -347,7 +340,7 @@ app.intent('Default Fallback Intent', (conv) => {
   if (conv.data.fallbackCount < fbc) {
   // if ((cevent === '1_2event' || cevent === '1_3event' || cevent === '1_5event' ||cevent === '1_6event' || cevent === '1_7event') && conv.data.fallbackCount > 1) {
     if (conv.data.fallbackCount > 1 && !(cevent === '3D_1event' || cevent === '3D_2event' || cevent === '3D_3event')) {
-    conv.ask(Utils.playSimple(host+'99K.ogg'))
+    conv.ask(new SimpleResponse({speech: Utils.playSimple(host+'99K.ogg'), text: ''}));
   }
   const txt = Texts.bubblef(conv.data.previous[0]);
   const ssml = Utils.playSimple(audiourl);
@@ -2184,12 +2177,12 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     conv.data.nice = false;
     var audiourl = host + '408.ogg';
     var answ = 'two';
-    var eve = '20_2B';
+    var eve = '20_2A';
     if (ent20_2 ==='robbed' || response === 'one') {
       audiourl = host + '407.ogg';
       conv.data.nice = true;
       answ = 'one';
-      eve = '20_2A';
+      eve = '20_2B';
       //TODO
       if (!conv.data.points.includes('20_2event')) {
         conv.data.vpoints++;
@@ -2306,7 +2299,7 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     if (conv.user.verification === 'VERIFIED') {
       conv.user.storage.previous = conv.data.previous;
     }
-    const txt = Texts.bubble(conv.data.previous[0]);
+    const txt = Texts.bubble(eve);
     const ssml = Utils.playSimple(audiourl);
     conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
