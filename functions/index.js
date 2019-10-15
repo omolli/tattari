@@ -51,7 +51,7 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
     if (conv.screen) {
       conv.ask(new BasicCard({
       text: txt,
-      title: 'Dead are speaking',
+      title: 'The Dead Are Speaking',
       image: new Image({
         url: 'https://tattar-oudbew.web.app/LOGO.png',
         alt: 'Nice',
@@ -74,7 +74,7 @@ app.intent('NewGame', (conv) => {
   if (conv.screen) {
     conv.ask(new BasicCard({
     text: txt,
-    title: 'Dead are speaking',
+    title: 'The Dead Are Speaking',
     image: new Image({
       url: 'https://tattar-oudbew.web.app/LOGO.png',
       alt: 'Nice',
@@ -2817,23 +2817,7 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     var txt = Texts.bubble('END');
     var ssml = Utils.playSimple(audiourl);
     conv.ask(new SimpleResponse({speech: ssml, text: txt}));
-    txt = Texts.bubble('CREDITS');
     ssml = Utils.playSimple(host+'CREDITS.ogg');
-    if (conv.screen) {
-      conv.ask(new BasicCard({
-      text: txt,
-      title: 'Dead are thanking',
-      buttons: new Button({
-        title: 'Find out what really happened!',
-        url: 'https://yle.fi/deadarespeaking',
-      }),
-      image: new Image({
-        url: 'https://tattar-oudbew.web.app/LOGO.png',
-        alt: 'Nice',
-      }),
-      display: 'CROPPED',
-    }));
-  }
     conv.close(new SimpleResponse({speech: ssml, text: ' '}));
   });
 
@@ -2855,62 +2839,45 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     }
     var txt = Texts.bubble('END');
     var ssml = Utils.playSimple(audiourl);
-    conv.ask(new SimpleResponse({speech: ssml, text: ' '}));
-    txt += '\n' + Texts.bubble('CREDITS');
+    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     ssml = Utils.playSimple(host+'CREDITS.ogg');
-    if (conv.screen) {
-      conv.ask(new BasicCard({
-      text: txt,
-      title: 'Dead are thanking',
-      buttons: new Button({
-        title: 'Find out what really happened!',
-        url: 'https://yle.fi/deadarespeaking',
-      }),
-      image: new Image({
-        url: 'https://tattar-oudbew.web.app/LOGO.png',
-        alt: 'Nice',
-      }),
-      display: 'CROPPED',
-    }));
-  }
-  conv.close(new SimpleResponse({speech: ssml, text: ' '}));
+    conv.close(new SimpleResponse({speech: ssml, text: ' '}));
   });
 
-  app.intent('Credits', (conv) => {
-    const txt = Texts.bubble('CREDITS');
-    const ssml = Utils.playSimple(host+'CREDITS.ogg');
-    conv.ask(new SimpleResponse({speech: ssml, text: ''}));
-    if (conv.screen) {
-      conv.ask(new BasicCard({
-      text: txt,
-      subtitle: 'Tsup tsap',
-      title: 'Dead are thanking',
-      buttons: new Button({
-        title: 'Find out what really happened!',
-        url: 'https://yle.fi/deadarespeaking',
-      }),
-      image: new Image({
-        url: 'https://tattar-oudbew.web.app/LOGO.png',
-        alt: 'Nice',
-      }),
-      display: 'CROPPED',
-    }));
-  }
-  conv.close('Goodbye');
-  });
+  // app.intent('Credits', (conv) => {
+  //   const txt = Texts.bubble('CREDITS');
+  //   const ssml = Utils.playSimple(host+'CREDITS.ogg');
+  //   conv.ask(new SimpleResponse({speech: ssml, text: ''}));
+  //   if (conv.screen) {
+  //     conv.ask(new BasicCard({
+  //     text: txt,
+  //     subtitle: 'Tsup tsap',
+  //     title: 'Dead are thanking',
+  //     buttons: new Button({
+  //       title: 'Find out what really happened!',
+  //       url: 'https://yle.fi/deadarespeaking',
+  //     }),
+  //     image: new Image({
+  //       url: 'https://tattar-oudbew.web.app/LOGO.png',
+  //       alt: 'Nice',
+  //     }),
+  //     display: 'CROPPED',
+  //   }));
+  // }
+  // conv.close('Goodbye');
+  // });
 //FALLBACKS and NoInputs
 
 app.intent('1_1Start NoInput', (conv) => {
   var audiourl = host + '199K.ogg';
-  var txt = 'The dead are speaking is now closing! Goodbye!';
+  var txt = 'The Dead Are Speaking is now closing! Goodbye!';
   const repromptCount = parseInt(conv.arguments.get('REPROMPT_COUNT'));
   if (repromptCount === 0) {
     txt = 'Do you hear me or not?! Answer me!';
   } else if (conv.arguments.get('IS_FINAL_REPROMPT')){
-    return conv.close('The talking dead is now closing. Try this another time.');
+    return conv.close(Utils.playSimple(host + 'QUITNOTSAVED.ogg'));
   } else {
     audiourl = host + '198K.ogg';
-    txt = 'When the game is quiet, it waits for your answer. Say something to the Editor in chief!';
   }
     var ssml = Utils.playSimple(audiourl);
     return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
@@ -3290,7 +3257,7 @@ return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       resp = 'police';
     }
     if (conv.data.fallbackCount < fbc) {
-      const txt = Texts.bubblef(conv.data.previous[0]);
+      const txt = Texts.bubblef(txteve);
       const ssml = Utils.playSimple(audiourl);
       return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     } else {
