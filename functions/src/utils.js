@@ -6,6 +6,9 @@ const utils = {
   playSimple(srcurl){
     return `<speak><par><media><audio src="${srcurl}" /></media></par><prosody volume ="silent">a</prosody></speak>`
   },
+  playTest(srcurl){
+    return `<speak><media><audio src="${srcurl}" /></media></speak>`
+  },
   speak(content){
     return `<speak>${content}</speak>`
 },

@@ -42,12 +42,12 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
       audiourl = host + '101P.ogg';
     }
     if (conv.user.verification === 'VERIFIED' && conv.user.last.seen && conv.user.storage.day > 0 && conv.user.storage.day < 5) {
-        txt = Texts.bubble('Welcome2');
+        txt = Texts.bubble('WelcomeB');
         conv.contexts.set('loadgame',5,{});
         audiourl = host + '101B.ogg';
       }
     const ssml = Utils.playSimple(audiourl);
-    conv.ask(new SimpleResponse({speech: ssml, text: ''}));
+    conv.ask(new SimpleResponse({speech: ssml, text: ' '}));
     if (conv.screen) {
       conv.ask(new BasicCard({
       text: txt,
@@ -70,7 +70,18 @@ app.intent('NewGame', (conv) => {
     audiourl = host + '101P.ogg';
   }
   const ssml = Utils.playSimple(audiourl);
-  conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+  conv.ask(new SimpleResponse({speech: ssml, text: ' '}));
+  if (conv.screen) {
+    conv.ask(new BasicCard({
+    text: txt,
+    title: 'Dead are speaking',
+    image: new Image({
+      url: 'https://tattar-oudbew.web.app/LOGO.png',
+      alt: 'Nice',
+    }),
+    display: 'CROPPED',
+  }));
+}
 });
 
 app.intent('Load', (conv) => {
@@ -185,7 +196,7 @@ app.intent('Exit', (conv) => {
     audiourl = host + 'QUITSAVED.ogg';
     text = 'Your progress has been saved. ' + text;
   }
-  conv.close(new SimpleResponse({speech: Utils.playSimple(audiourl), text: 'Goodbye for now!'}));
+  conv.close(new SimpleResponse({speech: Utils.playSimple(audiourl), text: text}));
 });
 
 app.intent('Forget', (conv) => {
@@ -275,9 +286,8 @@ app.intent('repeat2', (conv) =>{
 app.intent('Pause', (conv) => {
   const audiourl = host + 'PAUSE.ogg';
   conv.ask('The game is now paused. Say “Hey google, continue”, when you wish to resume.');
-  const txt = 'Paused';
   const ssml = Utils.playSimple(audiourl);
-  conv.ask(new SimpleResponse({speech: ssml, text: txt}));
+  conv.ask(new SimpleResponse({speech: ssml, text: ' '}));
 });
 
 app.intent('PauseRelease', (conv) => {
@@ -340,7 +350,7 @@ app.intent('Default Fallback Intent', (conv) => {
   if (conv.data.fallbackCount < fbc) {
   // if ((cevent === '1_2event' || cevent === '1_3event' || cevent === '1_5event' ||cevent === '1_6event' || cevent === '1_7event') && conv.data.fallbackCount > 1) {
     if (conv.data.fallbackCount > 1 && !(cevent === '3D_1event' || cevent === '3D_2event' || cevent === '3D_3event')) {
-    conv.ask(new SimpleResponse({speech: Utils.playSimple(host+'99K.ogg'), text: ''}));
+    conv.ask(new SimpleResponse({speech: Utils.playSimple(host+'99K.ogg'), text: 'When making a choice, you can also use numbers.'}));
   }
   const txt = Texts.bubblef(conv.data.previous[0]);
   const ssml = Utils.playSimple(audiourl);
@@ -2319,7 +2329,7 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       conv.user.storage.previous = conv.data.previous;
     }
     const ssml = Utils.playSimple(audiourl);
-    const txt = `${conv.input.raw}. Right, now we know that. Listen ${conv.input.raw}, or nevermind.`;
+    const txt = Texts.bubble(conv.data.previous[0])
     conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
@@ -2375,7 +2385,7 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       conv.user.storage.previous = conv.data.previous;
     }
     const ssml = Utils.playSimple(audiourl);
-    const txt = `${conv.input.raw}. Right, now we know that. Listen ${conv.input.raw}, or nevermind.`;
+    const txt = Texts.bubble(conv.data.previous[0]);
     conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
 
@@ -2812,7 +2822,6 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     if (conv.screen) {
       conv.ask(new BasicCard({
       text: txt,
-      subtitle: 'Tsup tsap',
       title: 'Dead are thanking',
       buttons: new Button({
         title: 'Find out what really happened!',
@@ -2825,7 +2834,7 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       display: 'CROPPED',
     }));
   }
-    conv.close(new SimpleResponse({speech: ssml, text: ''}));
+    conv.close(new SimpleResponse({speech: ssml, text: ' '}));
   });
 
   app.intent('26BEpilogue', (conv) => {
@@ -2846,13 +2855,25 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     }
     var txt = Texts.bubble('END');
     var ssml = Utils.playSimple(audiourl);
-    conv.ask(new SimpleResponse({speech: ssml, text: txt}));
-    txt = Texts.bubble('CREDITS');
+    conv.ask(new SimpleResponse({speech: ssml, text: ' '}));
+    txt += '\n' + Texts.bubble('CREDITS');
     ssml = Utils.playSimple(host+'CREDITS.ogg');
-    //conv.close(new SimpleResponse({speech: ssml, text: txt}));
-    return conv.followup('creditsevent', {
-      response: 'credits'
-    });
+    if (conv.screen) {
+      conv.ask(new BasicCard({
+      text: txt,
+      title: 'Dead are thanking',
+      buttons: new Button({
+        title: 'Find out what really happened!',
+        url: 'https://yle.fi/deadarespeaking',
+      }),
+      image: new Image({
+        url: 'https://tattar-oudbew.web.app/LOGO.png',
+        alt: 'Nice',
+      }),
+      display: 'CROPPED',
+    }));
+  }
+  conv.close(new SimpleResponse({speech: ssml, text: ' '}));
   });
 
   app.intent('Credits', (conv) => {

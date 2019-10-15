@@ -220,9 +220,7 @@ const texts = {
       case '22D_2event':
       return 'Malmi Cemetery. “All we can do is wait.”';
       case '22D_3event':
-      return 'Malmi Cemetery. “Something\'s happening here!”';
-      case '22D_4event':
-      return 'Malmi Cemetery. “Something\'s happening here!”';
+      return 'Malmi Cemetery. “Something\'s happening there!”';
       case '23_1event':
       return 'Malmi Cemetery. “He\'s losing blood fast!”';
       case '23_2event':
