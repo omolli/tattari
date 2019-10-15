@@ -760,6 +760,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     } else if (response === 'two' || binarr === 'no') {
         audiourl = host + '128.ogg';
     } else {
+      conv.contexts.set('3Around', 1, {});
        return conv.followup('3A_2rfallevent', {
          response: 'fallback'
        });
@@ -1811,7 +1812,7 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     if (conv.user.verification === 'VERIFIED') {
       conv.user.storage.previous = conv.data.previous;
     }
-    const txt = Texts.bubble(conv.data.previous[0]);
+    const txt = Texts.bubble(eve);
     const ssml = Utils.playSimple(audiourl);
     conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
@@ -1994,7 +1995,7 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     if (conv.user.verification === 'VERIFIED') {
       conv.user.storage.previous = conv.data.previous;
     }
-    const txt = Texts.bubble(conv.data.previous[0]);
+    const txt = Texts.bubble(eve);
     const ssml = Utils.playSimple(audiourl);
     conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   });
