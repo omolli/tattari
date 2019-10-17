@@ -60,7 +60,6 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
     }));
   }
 });
-//app.intent('pause', (conv) => { });
 
 app.intent('NewGame', (conv) => {
   var audiourl = host + '101.ogg';
@@ -115,34 +114,6 @@ app.intent('Load', (conv) => {
       });
   } else {
     conv.ask('Loading is possible only for verified users.');
-  }
-});
-
-app.intent('Save', (conv) => {
-  if (conv.user.verification === 'VERIFIED') {
-    conv.user.storage.sum = conv.data.sum;
-    conv.user.storage.fallbackCount = conv.data.fallbackCount;
-    conv.user.storage.day = conv.data.day;
-    conv.user.storage.vpoints = conv.data.vpoints;
-    conv.user.storage.bpoints = conv.data.bpoints;
-    conv.user.storage.minipeli = conv.data.minipeli;
-    conv.user.storage.checkpoint = conv.data.checkpoint;
-    conv.user.storage.points = conv.data.points;
-    conv.user.storage.experts = conv.data.experts;
-    conv.user.storage.testi = 'manual save';
-    conv.user.storage.visits = conv.data.visits;
-    conv.user.storage.kyyhky = conv.data.kyyhky;
-    conv.user.storage.rethink = conv.data.rethink;
-    conv.user.storage.sreveal = conv.data.sreveal;
-    conv.user.storage.previous = conv.data.previous;
-    conv.user.storage.peliansw = conv.data.peliansw;
-    conv.user.storage.kysurl = conv.data.kysurl;
-    conv.user.storage.julkaise = conv.data.julkaise;
-    conv.user.storage.nice = conv.data.nice;
-   //conv.close(`The game is now saved!`);
-    conv.close('The game is now saved!');
-  } else {
-    conv.ask('Only verified users can save progress. Say quit if you wish to exit and repeat if you wish to continue');
   }
 });
 
@@ -285,9 +256,13 @@ app.intent('repeat2', (conv) =>{
 
 app.intent('Pause', (conv) => {
   const audiourl = host + 'PAUSE.ogg';
-  conv.ask('The game is now paused. Say “Hey google, continue”, when you wish to resume.');
   const ssml = Utils.playSimple(audiourl);
-  conv.ask(new SimpleResponse({speech: ssml, text: ' '}));
+  if (!conv.surface.capabilities.has('actions.capability.WEB_BROWSER')) {
+    conv.ask('The game is now paused. Say “Hey google, continue”, when you wish to resume.');
+    conv.ask(new SimpleResponse({speech: ssml, text: ' '}));
+  } else {
+    conv.ask(new SimpleResponse({speech: ssml, text: 'The game is now paused. Say “Hey google, continue”, when you wish to resume.'}));
+  }
 });
 
 app.intent('PauseRelease', (conv) => {
