@@ -100,6 +100,13 @@ const utils = {
       }
       return [url,choices];
     },
+    notminigame(eve) {
+      if (eve === '3D_1event' || eve === '3D_2event' || eve === '3D_3event') {
+        return false;
+      } else {
+        return true;
+      }
+    },
 
     shortcutter(day,cut){
       switch (day) {
