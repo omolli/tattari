@@ -2,7 +2,7 @@ const texts = {
   bubble(e){
     switch (e) {
       case 'Welcome':
-      return 'Welcome to the Dead Are Speaking. This story contains violence and offensive language. Although a work of fiction, the story is based on actual events in Finland in the early 1930s.';
+      return 'Welcome to The Dead Are Speaking. This story contains violence and offensive language. Although a work of fiction, the story is based on actual events in Finland in the early 1930s.';
       case 'WelcomeB':
       return 'Welcome to The Dead Are Speaking. Do you want to continue a saved game or start a new game?';
       case '1_1event':
@@ -170,11 +170,11 @@ const texts = {
       case '17_3event':
       return 'Uusi Helsinki newsroom. “An appointment with the fortune-teller Widen?”';
       case '18_1event':
-      return 'Josafatinkatu, fortune teller\'s home. “What\'s your business then?”';
+      return 'Josafatinkatu, fortune-teller\'s home. “What\'s your business then?”';
       case '18_2event':
-      return 'Josafatinkatu, fortune teller\'s home. “We\'ll see if there\'s anything coming your way.”';
+      return 'Josafatinkatu, fortune-teller\'s home. “We\'ll see if there\'s anything coming your way.”';
       case '18_3event':
-      return 'Josafatinkatu, fortune teller\'s home. “I must concentrate!”';
+      return 'Josafatinkatu, fortune-teller\'s home. “I must concentrate!”';
       case '18_4event':
       return 'Josafatinkatu “Quite an extraordinary meeting.”';
       case '19_1event':
@@ -182,9 +182,9 @@ const texts = {
       case '19_2event':
       return 'Uusi Helsinki newsroom. “Who would send us something like this?”';
       case '19_3A':
-      return 'Uusi Helsinki newsroom. “Looks quite fresh to me.”';
-      case '19_3B':
       return 'Uusi Helsinki newsroom. “Good idea.”';
+      case '19_3B':
+      return 'Uusi Helsinki newsroom. “Looks quite fresh to me.”';
       case '20_1event':
       return 'Uusi Helsinki newsroom. “I need your help.”';
       case '20_2A':
