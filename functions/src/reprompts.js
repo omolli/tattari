@@ -75,7 +75,7 @@ const reprompts = {
       case '11A_2event':
         return ['215K','int11A_2','11A_3event','no'];
       case '11B_1event':
-        return ['220K','int9_3','9_4event','ready'];
+        return ['220K','int11B_1','11B_2event','one'];
       case '11C_1event':
         return ['227K','int11C_1','11C_2event','one'];
       case '11C_2event':

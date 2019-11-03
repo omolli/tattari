@@ -3837,7 +3837,6 @@ return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
      } else {
       const next_eve = '24_' + nmbr.toString() + 'event';
       conv.data.fallbackCount = 0;
-      conv.ask('Why are we here? ' + next_eve)
        return conv.followup(next_eve, {
          response: 'one'
        });
