@@ -54,7 +54,7 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
       title: 'The Dead Are Speaking',
       image: new Image({
         url: 'https://tattar-oudbew.web.app/LOGO.png',
-        alt: 'Nice',
+        alt: 'Dead are Speaking',
       }),
       display: 'CROPPED',
     }));

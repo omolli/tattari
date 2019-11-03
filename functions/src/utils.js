@@ -100,14 +100,13 @@ const utils = {
       }
       return [url,choices];
     },
-    notminigame(eve) {
-      if (eve === '3D_1event' || eve === '3D_2event' || eve === '3D_3event') {
+    tipsy(eve) {
+      if (eve === '3D_1event' || eve === '3D_2event' || eve === '3D_3event' || eve === '5A_1event') {
         return false;
       } else {
         return true;
       }
     },
-
     shortcutter(day,cut){
       switch (day) {
         case 'one':
@@ -128,8 +127,10 @@ const utils = {
           case 'one':
           return ['9_4event','ready','int9_3'];
           case 'two':
-          return ['12_1event','ready','int12_E'];
+          return ['10_3event','one','int10_2'];
           case 'three':
+          return ['12_1event','ready','int12_E'];
+          case 'four':
           return ['13_1event','ready','int13_E'];
           default:
           return ['notgood','ready','int13_E'];
