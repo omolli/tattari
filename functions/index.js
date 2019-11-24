@@ -47,7 +47,7 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
         audiourl = host + '101B.ogg';
       }
     const ssml = Utils.playSimple(audiourl);
-    txt = 'Welcome to the testversion of the Dead are Speaking!'
+    txt = 'Welcome to The Dead are Speaking!'
     conv.ask(new SimpleResponse({speech: ssml, text: ' '}));
     if (conv.screen) {
       conv.ask(new BasicCard({
@@ -118,39 +118,6 @@ app.intent('Load', (conv) => {
   }
 });
 
-app.intent('SaveSilent', (conv) => {
-  if (conv.user.verification === 'VERIFIED') {
-    conv.data.testi = 'VERIFIEEEEEDD';
-    conv.user.storage.sum = conv.data.sum;
-    conv.user.storage.fallbackCount = conv.data.fallbackCount;
-    conv.user.storage.day = conv.data.day;
-    conv.user.storage.vpoints = conv.data.vpoints;
-    conv.user.storage.bpoints = conv.data.bpoints;
-    conv.user.storage.minipeli = conv.data.minipeli;
-    conv.user.storage.checkpoint = conv.data.checkpoint;
-    conv.user.storage.points = conv.data.points;
-    conv.user.storage.experts = conv.data.experts;
-    conv.user.storage.testi = conv.data.testi;
-    conv.user.storage.visits = conv.data.visits;
-    conv.user.storage.kyyhky = conv.data.kyyhky;
-    conv.user.storage.rethink = conv.data.rethink;
-    conv.user.storage.sreveal = conv.data.sreveal;
-    conv.user.storage.previous = conv.data.previous;
-    conv.user.storage.peliansw = conv.data.peliansw;
-    conv.user.storage.kysurl = conv.data.kysurl;
-    conv.user.storage.julkaise = conv.data.julkaise;
-    conv.user.storage.nice = conv.data.nice;
-  }
-  const cevent = conv.data.previous[0];
-  const cparam = conv.data.previous[1];
-  const ccontext = conv.data.previous[2];
-  conv.contexts.set(ccontext,1,{})
-  conv.ask('Your game has been saved, say ready to continue!')
-   // conv.followup(cevent, {
-   //   response: cparam
-   // });
-});
-
 app.intent('SaveContinue', (conv) => {
   const cevent = conv.data.previous[0];
   const cparam = conv.data.previous[1];
@@ -172,15 +139,17 @@ app.intent('Exit', (conv) => {
 });
 
 app.intent('Forget', (conv) => {
-  conv.ask('Are you sure you want to delete all information?')
+  conv.ask('Are you sure you want to erase saved game data?')
 });
 
 app.intent('Forgot', (conv, {binarr}) => {
     if (binarr === 'yes') {
     conv.user.storage = {};
-    conv.close('Your information has been cleared');
+    conv.close('Your game data has been cleared');
   } else {
-    conv.close(`That's okay. Let's not do it now.`);
+    conv.followup('repeat', {
+      response: 'repeat'
+    });
   }
 });
 
@@ -259,7 +228,7 @@ app.intent('Pause', (conv) => {
   const audiourl = host + 'PAUSE.ogg';
   const ssml = Utils.playSimple(audiourl);
   if (!conv.surface.capabilities.has('actions.capability.WEB_BROWSER')) {
-    conv.ask('The game is now paused. Say “Hey google, continue”, when you wish to resume.');
+    conv.ask('The game is now paused. Say “Hey Google, continue”, when you wish to resume.');
     conv.ask(new SimpleResponse({speech: ssml, text: ' '}));
   } else {
     conv.ask(new SimpleResponse({speech: ssml, text: 'The game is now paused. Say “Hey google, continue”, when you wish to resume.'}));
@@ -325,7 +294,7 @@ app.intent('Default Fallback Intent', (conv) => {
   }
   if (conv.data.fallbackCount < fbc) {
   // if ((cevent === '1_2event' || cevent === '1_3event' || cevent === '1_5event' ||cevent === '1_6event' || cevent === '1_7event') && conv.data.fallbackCount > 1) {
-    if (conv.data.fallbackCount > 1 && Utils.tipsy(cevent) && cparam !== 'ready') {
+    if (conv.data.fallbackCount > 1 && Utils.tipsy(cevent) && cparam !== 'ready' && Reprompts.getType(cparam) !== 'binarr') {
     conv.ask(new SimpleResponse({speech: Utils.playSimple(host+'99K.ogg'), text: 'When making a choice, you can also use numbers.'}));
   }
   const txt = Texts.bubblef(conv.data.previous[0]);
@@ -1439,7 +1408,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
         eve = '10_3B';
         answ = 'two';
         audiourl += '212.ogg';
-      } else if (response === 'three' || ent10_3 === 'dove') {
+      } else if (response === 'three' || ent10_3 === 'rebellion') {
         answ = 'three';
         audiourl += '213.ogg';
       } else {
@@ -1452,7 +1421,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       if (response === 'one' || ent10_3 === 'panacea') {
         answ = 'one';
         audiourl += '212.ogg';
-      } else if (response === 'two' || ent10_3 === 'panacea') {
+      } else if (response === 'two' || ent10_3 === 'rebellion') {
         answ = 'two';
         audiourl += '213.ogg';
       } else {
@@ -2248,7 +2217,7 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
           conv.data.vpoints++;
         }
       }
-    } else if (ent20_3 === 'cemetery' || response === 'one') {
+    } else if (ent20_3 === 'tell' || response === 'two') {
         answ = 'two';
     } else {
       return conv.followup('fallevent', {
@@ -2340,13 +2309,16 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     if (ent21_4 === 'she' || response === 'one') {
       answ = 'one';
       audiourl += '417.ogg';
+      conv.data.testi = '214prepA';
       conv.contexts.set('int22D_E',1,{});
     } else if (ent21_4 === 'I' || response === 'two') {
       eve = '21_4B';
       conv.contexts.set('int22A_E',1,{});
+      conv.data.testi = '214prepB';
       audiourl += '415.ogg';
     } else {
       conv.contexts.set('int21_2',1,{});
+      conv.data.testi = '214prepFALL';
       return conv.followup('fallevent21_3', {
         response: 'fallback'
       });
