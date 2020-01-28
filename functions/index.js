@@ -36,6 +36,7 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
     conv.data.previous = ['Welcome','start again','welcome'];
     conv.data.peliansw = [0,0,0];
     conv.data.kysurl = '';
+    conv.data.pakys = '';
     var audiourl = host + '101.ogg';
     var txt = Texts.bubble(conv.data.previous[0]);
     if (conv.surface.capabilities.has('actions.capability.WEB_BROWSER')) {
@@ -55,9 +56,9 @@ app.intent('Default Welcome Intent', (conv, {response}) => {
       title: 'The Dead Are Speaking',
       image: new Image({
         url: 'https://tattar-oudbew.web.app/LOGO.png',
-        alt: 'Nice',
+        alt: 'Tattarisuo'
       }),
-      display: 'CROPPED',
+      display: 'CROPPED'
     }));
   }
 });
@@ -77,9 +78,9 @@ app.intent('NewGame', (conv) => {
     title: 'The Dead Are Speaking',
     image: new Image({
       url: 'https://tattar-oudbew.web.app/LOGO.png',
-      alt: 'Nice',
+      alt: 'Tattarisuo'
     }),
-    display: 'CROPPED',
+    display: 'CROPPED'
   }));
 }
 });
@@ -116,16 +117,6 @@ app.intent('Load', (conv) => {
   } else {
     conv.ask('Loading is possible only for verified users.');
   }
-});
-
-app.intent('SaveContinue', (conv) => {
-  const cevent = conv.data.previous[0];
-  const cparam = conv.data.previous[1];
-  const ccontext = conv.data.previous[2];
-  conv.contexts.set(ccontext,1,{})
-   conv.followup(cevent, {
-     response: cparam
-   });
 });
 
 app.intent('Exit', (conv) => {
@@ -432,7 +423,6 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     conv.data.previous = ['1_4event',answ,'int1_3'];
     const txt = Texts.bubble(conv.data.previous[0]);
     if (conv.user.verification === 'VERIFIED') {
-      conv.user.storage.testi = 'vanamo my friend';
       conv.user.storage.previous = conv.data.previous;
       conv.user.storage.points = conv.data.points;
       conv.user.storage.vpoints = conv.data.vpoints;
@@ -1074,6 +1064,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
         answ = 'two';
         audiourl = host + '202B.ogg';
       } else {
+        conv.data.testi = 'Fabritiusfall1';
         return conv.followup('fallevent', {
           response: 'fallback'
         });
@@ -1086,11 +1077,12 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
         answ = 'two';
         audiourl = host + '150.ogg';
       } else {
+        conv.data.testi = 'Fabritiusfall2';
         return conv.followup('fallevent', {
           response: 'fallback'
         });
       }
-      conv.contexts.set('fabritius', 1, {});
+      conv.contexts.set('magnus', 1, {});
       conv.contexts.set('hkipolice', 1, {});
       conv.contexts.set('route5', 1, {});
     } else {
@@ -1102,11 +1094,13 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
         audiourl = host + '151.ogg';
         answ = 'two';
       } else {
+        conv.data.testi = 'Fabritiusfall3';
         return conv.followup('fallevent', {
           response: 'fallback'
         });
       }
     }
+    conv.data.testi = 'Fabritiusnofall';
     conv.data.fallbackCount = 0;
     conv.data.previous = ['5B_3event',answ,'int5B_2'];
     if (conv.user.verification === 'VERIFIED') {
@@ -1159,6 +1153,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
     const answ = response;
     var eves = [];
     var resps = [];
+    conv.data.testi = 'Routeeriin men';
     if (conv.data.experts.indexOf('A') === -1) {
       eves.push('5A_1event');
       resps.push('professor');
@@ -1168,7 +1163,7 @@ app.intent('1_3bossresponse', (conv, {response,ent1_3}) => {
       resps.push('physician');
     }
     if (conv.data.experts.indexOf('C') === -1) {
-      eves.push('5B_1event');
+      eves.push('5C_1event');
       resps.push('police');
     }
     if (eves.length < 2) {
@@ -2369,7 +2364,6 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
   app.intent('22B_1action', (conv) => {
     conv.data.fallbackCount = 0;
     const audiourl = host + '421.ogg';
-    conv.data.testi = 'notsoany'
     conv.data.previous = ['22B_1event','ready','int22A_3'];
     if (conv.user.verification === 'VERIFIED') {
       conv.user.storage.previous = conv.data.previous;
@@ -2866,33 +2860,12 @@ conv.ask(new SimpleResponse({speech: ssml, text: txt}));
     conv.close(new SimpleResponse({speech: ssml, text: ' '}));
   });
 
-  // app.intent('Credits', (conv) => {
-  //   const txt = Texts.bubble('CREDITS');
-  //   const ssml = Utils.playSimple(host+'CREDITS.ogg');
-  //   conv.ask(new SimpleResponse({speech: ssml, text: ''}));
-  //   if (conv.screen) {
-  //     conv.ask(new BasicCard({
-  //     text: txt,
-  //     subtitle: 'Tsup tsap',
-  //     title: 'Dead are thanking',
-  //     buttons: new Button({
-  //       title: 'Find out what really happened!',
-  //       url: 'https://yle.fi/deadarespeaking',
-  //     }),
-  //     image: new Image({
-  //       url: 'https://tattar-oudbew.web.app/LOGO.png',
-  //       alt: 'Nice',
-  //     }),
-  //     display: 'CROPPED',
-  //   }));
-  // }
-  // conv.close('Goodbye');
-  // });
 //FALLBACKS and NoInputs
 
 app.intent('1_1Start NoInput', (conv) => {
   var audiourl = host + '199K.ogg';
   var txt = 'The Dead Are Speaking is now closing! Goodbye!';
+  conv.contexts.set('anyfall',1,{});
   const repromptCount = parseInt(conv.arguments.get('REPROMPT_COUNT'));
   if (repromptCount === 0) {
     txt = 'Do you hear me or not?! Answer me!';
@@ -3204,7 +3177,7 @@ return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
       }
     } else {
       conv.contexts.set('int6E', 1, {});
-      if (conv.data.fallbackCount < rfbc) {
+      if (conv.data.fallbackCount < fbc) {
         const txt = Texts.bubblef(conv.data.previous[0]);
         const ssml = Utils.playSimple(audiourl);
         return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
@@ -3817,7 +3790,6 @@ return conv.ask(new SimpleResponse({speech: ssml, text: txt}));
 
 //SHORTCUTS
 app.intent('shortcut1', (conv) => {
-  //conv.contexts.set('kysykuski', 15, {kys: 'D'});
   conv.contexts.set('shortcut', 1, {});
   conv.ask('To which day do you want to cut short?');
 });
